@@ -1,0 +1,171 @@
+﻿@model InventorySystem.Models.PO
+
+<div id="formAddBL">
+    @if (Model.POId == 0)
+    {
+        <h5 class="form-header">
+            Add New PO
+        </h5>
+    }
+    else
+    {
+        <h5 class="form-header">
+            Update PO
+        </h5>
+    }
+    @using (Html.BeginForm("AddEditSpec", "Specs", null, FormMethod.Post, new { @id = "myForm", @class = "forms-sample", enctype = "multipart/form-data", role = "form", onsubmit = "return validateForm(this)" }))
+    {
+
+        @Html.HiddenFor(model => model.POId)
+        @Html.HiddenFor(model => model.Date)
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>PO #</label>
+                    @Html.EditorFor(model => model.PONumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "PO Number", @required = "true" } })
+                    @Html.ValidationMessageFor(model => model.PONumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Ref #</label>
+                    @Html.EditorFor(model => model.RefNumber, new { htmlAttributes = new { @class = "form-control", @placeholder = "Ref Number", @required = "true" } })
+                    @Html.ValidationMessageFor(model => model.RefNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Delivery Date</label>
+                    @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control", @required = "true" })
+                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+
+                </div>
+
+                @*<div class="clearfix"></div>*@
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Vendor</label>
+                    <div id="SupplierId"></div>
+                    @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select name="Status" id="Status" class="form-control">
+                        <option>Draft</option>
+                        <option>Open</option>
+                        <option>Completed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Terms Of Payment (TOP)</label>
+                    @Html.TextBoxFor(model => model.TermsOfPayment, new { @class = "form-control", @required = "true" })
+                    @Html.ValidationMessageFor(model => model.TermsOfPayment, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    @Html.TextAreaFor(model => model.DeliveryAddress, new { @class = "form-control", @placeholder = "Delivery Address", @required = "true" })
+                    @Html.ValidationMessageFor(model => model.DeliveryAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Description</label>
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12" style="text-align:center">
+                <button type="button" class="btn btn-success" id="btnSubmit">
+                    <i class="fa fa-save"></i>   @if (Model.POId > 0)
+                    {<span>Update</span> }
+                    else
+                    {<span>Save</span>}
+                </button>
+                @if (Model.POId > 0)
+                {
+                    <button type="button" class="btn btn-primary" id="btnAddItems"><i class="fa fa-plus"></i>Add Item</button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-primary" style="display:none;" id="btnAddItems"><i class="fa fa-plus"></i>Add Item</button>
+                }
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>Close</button>
+
+            </div>
+        </div>
+    }
+</div>
+<input type="hidden" id="hdnPOId" />
+
+<script>
+
+    $(document).ready(function () {
+
+        //$('#DeliveryDate').datepicker({
+        //    changeMonth: true,
+        //    changeYear: true,
+        //    showButtonPanel: true,
+        //    format: 'dd/mm/yyyy',
+        //    onClose: function (dateText, inst) {
+        //        var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+        //        var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+        //        $(this).datepicker('setDate', new Date(year, month, 1));
+        //    }
+        //});
+
+        $('#DeliveryDate').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+
+        BindDropDownList("SupplierId", '/Supplier/Supplierdrp', true, "Select Supplier", null);
+
+        var _SupplierId = '@Model.SupplierId'
+        var _POId = '@Model.POId'
+
+        if (_POId > 0) {
+            $("#hdnPOId").val(_POId);
+        }
+        if (_SupplierId > 0)
+        {
+            $("#SelectSupplierId").val(_SupplierId);
+        }
+
+
+        $("#btnAddItems").click(function () {
+            var url = "/PoDetail/Index?Id=" + $("#hdnPOId").val();
+            window.location.replace(url);
+        });
+
+        $("#btnSubmit").click(function () {
+            var myformdata = $("#myForm").serialize();
+            console.log(myformdata);
+            if (!$("#myForm").valid()) {
+                return false;
+            }
+            formpost("/Po/SavePo", myformdata, GetFormStatus);
+        })
+
+    });
+    function GetFormStatus(data) {
+        //$("#ModelSubscription").modal("hide");
+
+        if (data != "false") {
+            BindGridWOption("PoList", "PoList", '/Po/GetPoList');
+            $("#hdnPOId").val(data.POId);
+            $("#btnAddItems").show();
+            showSuccessToast("Purchased Order saved Successfully.");
+        }
+        else {
+            if (data == 'false')
+                showErrorToast("Po Number already exists, please enter another one.");
+            else
+                showErrorToast("Something went wrong.");
+        }
+    }
+</script>

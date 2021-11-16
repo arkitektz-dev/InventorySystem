@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">*@
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        BindGrid("RealTimeList", "RealTimeList", '/Home/GetRealTimeList');
+        var chartDiv = $("#pieChart");
+        $.ajax({
+            type: "GET",
+            url: '/Home/PieChartDraw',
+            dataType: 'json',
+            success: function (data) {
+                ShowPie(data);
+            }
+        });
+
+        function ShowPie(data1) {
+            var myChart = new Chart(chartDiv, {
+                type: 'doughnut',
+                data: {
+                    labels: data1[0].Status_ListRazer,
+                    datasets: [
+                        {
+                            data: data1[0].Count_ListRazer,
+                            backgroundColor: ["#5797fc", "#e65252", "#4ecc48", "#ffcc29"],
+                            hoverBackgroundColor: ["#5797fc", "#e65252", "#4ecc48", "#ffcc29"],
+                            borderWidth: 2,
+                            hoverBorderColor: 'transparent'
+                        }]
+                },
+                options: {
+                    legend: {
+                        display: true,
+                        position: "bottom",
+                        labels: {
+                            fontColor: '#969da5',
+                            indexLabelPlacement: "outside",
+                            showInLegend: true,
+                            fontSize: 14,
+                            usePointStyle: true
+                        },
+
+
+                    },
+                    animation: {
+                        animateScale: true
+                    },
+                    cutoutPercentage: 50
+                }
+                //options: {
+                //    title: {
+                //        display: true,
+                //        text: 'Product Types'
+                //    },
+                //    responsive: true,
+                //    maintainAspectRatio: false,
+                //}
+            });
+
+        }
+
+        
+    });                               //-------------
+</script>
+<section class="content">
+    <div class="row" style="padding-bottom:10px;">
+        <div class="col-md-12">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua ml-1">
+                <div class="inner">
+                    <h3>2</h3>
+                    <p>Purchase Orders</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-file-text"></i>
+                </div>
+                <a href="/PO" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>0<sup style="font-size: 20px"></sup></h3>
+                    <p>Sales Orders</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-cart-plus"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>0</h3>
+                    <p>Receiving</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-truck"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red  mr-1">
+                <div class="inner">
+                    <h3>0</h3>
+                    <p>Shipment</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-plane"></i>
+                </div>
+                <a href="#" class="small-box-footer">
+                    More info <i class="fa fa-arrow-circle-right"></i>
+                </a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Product Type</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <canvas id="pieChart" style="height:250px"></canvas>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Sales vs Purchase (Last 6 Months)</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="chart">
+                        <canvas id="barChart" style="height:230px"></canvas>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+
+    </div>
+    
+</section>
+<div class="py-7">
+    <h4 class="text-left" style="margin-left: 20px;">Stocks Real Time</h4>
+
+    <div class="px-4 px-md-6">
+        <div class="table-responsive">
+            <div id="RealTimeList"></div>
+        </div>
+    </div>
+</div>

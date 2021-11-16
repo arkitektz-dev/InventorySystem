@@ -1,0 +1,1247 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B251C3D3-24A7-4DDE-9909-EC931BE26682}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InventorySystem</RootNamespace>
+    <AssemblyName>InventorySystem</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44343</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Mvc.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Routing.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Routing.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Routing.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.4.5.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="netstandard">
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.min.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.standalone.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.standalone.min.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker3.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker3.min.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker3.standalone.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker3.standalone.min.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\js\bootstrap-datepicker.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\js\bootstrap-datepicker.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker-en-CA.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ar-tn.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ar.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.az.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.bg.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.bn.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.br.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.bs.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ca.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.cs.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.cy.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.da.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.de.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.el.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.en-AU.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.en-CA.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.en-GB.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.en-IE.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.en-NZ.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.en-ZA.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.eo.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.es.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.et.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.eu.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.fa.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.fi.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.fo.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.fr-CH.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.fr.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.gl.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.he.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.hi.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.hr.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.hu.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.hy.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.id.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.is.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.it-CH.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.it.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ja.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ka.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.kh.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.kk.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.km.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ko.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.kr.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.lt.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.lv.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.me.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.mk.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.mn.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ms.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.nl-BE.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.nl.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.no.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.oc.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.pl.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.pt-BR.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.pt.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ro.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.rs-latin.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.rs.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ru.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.si.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.sk.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.sl.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.sq.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.sr-latin.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.sr.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.sv.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.sw.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.ta.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.tg.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.th.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.tk.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.tr.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.uk.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.uz-cyrl.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.uz-latn.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.vi.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.zh-CN.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\locales\bootstrap-datepicker.zh-TW.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\requirements.txt" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\demo_head.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\markup_component.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\markup_daterange.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\markup_inline.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\markup_input.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_calendarweeks.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_clearbtn.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_daysofweekdisabled.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_enddate.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_language.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_multidate.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_startdate.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_todaybtn.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_todayhighlight.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\option_weekstart.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\script\common.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\script\common.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\script\debug.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\script\html-imports.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_screenshots\script\screenshot.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\demo_head.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\markup_component.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\markup_daterange.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\markup_inline.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\markup_input.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_calendarweeks.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_clearbtn.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_daysofweekdisabled.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_enddate.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_language.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_multidate.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_startdate.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_todaybtn.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_todayhighlight.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\_static\screenshots\option_weekstart.png" />
+    <Content Include="Content\assets\bootstrap-datepicker\Gruntfile.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\bootstrap-datepicker.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker-en-CA.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ar-tn.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ar.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.az.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.bg.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.bn.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.br.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.bs.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ca.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.cs.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.cy.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.da.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.de.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.el.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.en-AU.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.en-CA.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.en-GB.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.en-IE.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.en-NZ.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.en-ZA.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.eo.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.es.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.et.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.eu.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.fa.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.fi.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.fo.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.fr-CH.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.fr.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.gl.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.he.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.hi.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.hr.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.hu.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.hy.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.id.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.is.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.it-CH.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.it.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ja.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ka.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.kh.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.kk.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.km.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ko.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.kr.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.lt.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.lv.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.me.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.mk.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.mn.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ms.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.nl-BE.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.nl.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.no.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.oc.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.pl.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.pt-BR.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.pt.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ro.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.rs-latin.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.rs.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ru.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.si.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.sk.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.sl.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.sq.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.sr-latin.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.sr.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.sv.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.sw.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.ta.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.tg.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.th.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.tk.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.tr.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.uk.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.uz-cyrl.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.uz-latn.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.vi.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.zh-CN.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\locales\bootstrap-datepicker.zh-TW.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\assets\coverage.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\assets\jquery-1.7.1.min.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\assets\mock.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\assets\qunit-logging.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\assets\qunit.css" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\assets\qunit.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\assets\utils.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\calendar-weeks.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\component.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\data-api.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\events.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\formats.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\inline.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\keyboard_navigation\2011.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\keyboard_navigation\2012.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\keyboard_navigation\all.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\methods.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\methods_jquery.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\mouse_navigation\2011.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\mouse_navigation\2012.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\mouse_navigation\all.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\noconflict.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\options.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\timezone.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\suites\touch_navigation\all.js" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\tests.html" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\timezone.html" />
+    <Content Include="Content\assets\cssAr\DailyReportAr.css" />
+    <Content Include="Content\assets\cssAr\fonts\beid.css" />
+    <Content Include="Content\assets\cssAr\fonts\etline-font.css" />
+    <Content Include="Content\assets\cssAr\fonts\etline-font.min.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\all.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\all.min.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\brands.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\brands.min.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\fontawesome.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\fontawesome.min.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\regular.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\regular.min.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\solid.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\solid.min.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\svg-with-js.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\svg-with-js.min.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\v4-shims.css" />
+    <Content Include="Content\assets\cssAr\fonts\fontawesome\v4-shims.min.css" />
+    <Content Include="Content\assets\cssAr\fonts\pe-icon-7-stroke.css" />
+    <Content Include="Content\assets\cssAr\mainAr.css" />
+    <Content Include="Content\assets\cssAr\stylesAr.css" />
+    <Content Include="Content\assets\css\DailyReport.css" />
+    <Content Include="Content\assets\css\fonts\beid.css" />
+    <Content Include="Content\assets\css\fonts\etline-font.css" />
+    <Content Include="Content\assets\css\fonts\etline-font.min.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\all.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\all.min.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\brands.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\brands.min.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\fontawesome.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\fontawesome.min.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\regular.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\regular.min.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\solid.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\solid.min.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\svg-with-js.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\svg-with-js.min.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\v4-shims.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\v4-shims.min.css" />
+    <Content Include="Content\assets\css\fonts\pe-icon-7-stroke.css" />
+    <Content Include="Content\assets\css\main.css" />
+    <Content Include="Content\assets\css\styles.css" />
+    <Content Include="Content\assets\css\StyleSheet1.css" />
+    <Content Include="Content\assets\DatePicker\css\bootstrap-datetimepicker.css" />
+    <Content Include="Content\assets\DatePicker\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\assets\DatePicker\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\assets\DatePicker\img\glyphicons-halflings.png" />
+    <Content Include="Content\assets\DatePicker\js\bootstrap-datetimepicker.js" />
+    <Content Include="Content\assets\DatePicker\js\bootstrap-datetimepicker.min.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ar.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.az.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.bg.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.bn.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ca.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.cs.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.da.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.de.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ee.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.el.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.es.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.fi.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.fr.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.he.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.hr.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.hu.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.hy.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.id.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.is.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.it.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ja.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ka.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ko.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.lt.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.lv.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ms.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.nb.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.nl.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.no.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.pl.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.pt-BR.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.pt.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ro.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.rs-latin.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.rs.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ru.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.sk.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.sl.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.sv.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.sw.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.th.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.tr.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.ua.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.uk.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.zh-CN.js" />
+    <Content Include="Content\assets\DatePicker\js\locales\bootstrap-datetimepicker.zh-TW.js" />
+    <Content Include="Content\assets\fonts\fa-brands-400.svg" />
+    <Content Include="Content\assets\fonts\fa-regular-400.svg" />
+    <Content Include="Content\assets\fonts\fa-solid-900.svg" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\assets\fonts\inter\inter.css" />
+    <Content Include="Content\assets\fonts\theme\icomoon.svg" />
+    <Content Include="Content\assets\img\apple-touch-icon.png" />
+    <Content Include="Content\assets\img\app\a-1.png" />
+    <Content Include="Content\assets\img\app\a-2.png" />
+    <Content Include="Content\assets\img\app\a-3.png" />
+    <Content Include="Content\assets\img\app\a-4.png" />
+    <Content Include="Content\assets\img\app\app_store-badge.png" />
+    <Content Include="Content\assets\img\app\arabic.svg" />
+    <Content Include="Content\assets\img\app\google_play-badge.png" />
+    <Content Include="Content\assets\img\app\Kuwait.svg" />
+    <Content Include="Content\assets\img\app\united-kingdom.svg" />
+    <Content Include="Content\assets\img\avatar\1 - Copy.jpg" />
+    <Content Include="Content\assets\img\avatar\1.png" />
+    <Content Include="Content\assets\img\avatar\10.jpg" />
+    <Content Include="Content\assets\img\avatar\2.jpg" />
+    <Content Include="Content\assets\img\avatar\3.jpg" />
+    <Content Include="Content\assets\img\avatar\4.jpg" />
+    <Content Include="Content\assets\img\avatar\5.jpg" />
+    <Content Include="Content\assets\img\avatar\6.jpg" />
+    <Content Include="Content\assets\img\avatar\7.jpg" />
+    <Content Include="Content\assets\img\avatar\8.jpg" />
+    <Content Include="Content\assets\img\avatar\9.jpg" />
+    <Content Include="Content\assets\img\bg\app-bg.jpg" />
+    <Content Include="Content\assets\img\bg\bg-1.jpg" />
+    <Content Include="Content\assets\img\bg\bg-2.jpg" />
+    <Content Include="Content\assets\img\bg\sidebar.png" />
+    <Content Include="Content\assets\img\calendar\april-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\aug-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\dec-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\feb-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\jan-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\july-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\june-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\may-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\nov-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\oct-bg.jpg" />
+    <Content Include="Content\assets\img\calendar\sep-bg.jpg" />
+    <Content Include="Content\assets\img\DailyReport\1.png" />
+    <Content Include="Content\assets\img\DailyReport\ArrowDown.png" />
+    <Content Include="Content\assets\img\DailyReport\ArrowUp.png" />
+    <Content Include="Content\assets\img\DailyReport\AUS.png" />
+    <Content Include="Content\assets\img\DailyReport\Canada.png" />
+    <Content Include="Content\assets\img\DailyReport\COil.png" />
+    <Content Include="Content\assets\img\DailyReport\DJhones.png" />
+    <Content Include="Content\assets\img\DailyReport\FR.png" />
+    <Content Include="Content\assets\img\DailyReport\Gold.png" />
+    <Content Include="Content\assets\img\DailyReport\JP.png" />
+    <Content Include="Content\assets\img\DailyReport\logo.png" />
+    <Content Include="Content\assets\img\DailyReport\NZ.png" />
+    <Content Include="Content\assets\img\DailyReport\SF.png" />
+    <Content Include="Content\assets\img\DailyReport\UK.png" />
+    <Content Include="Content\assets\img\eCommerce\eCe-01.jpg" />
+    <Content Include="Content\assets\img\eCommerce\eCe-02.jpg" />
+    <Content Include="Content\assets\img\eCommerce\eCe-03.jpg" />
+    <Content Include="Content\assets\img\eCommerce\eCe-04.jpg" />
+    <Content Include="Content\assets\img\eCommerce\eCe-05.jpg" />
+    <Content Include="Content\assets\img\favicon.png" />
+    <Content Include="Content\assets\img\Flags\A.png" />
+    <Content Include="Content\assets\img\Flags\Abkhazia.png" />
+    <Content Include="Content\assets\img\Flags\Afghanistan.png" />
+    <Content Include="Content\assets\img\Flags\aland-islands.png" />
+    <Content Include="Content\assets\img\Flags\albania.png" />
+    <Content Include="Content\assets\img\Flags\algeria.png" />
+    <Content Include="Content\assets\img\Flags\Andorra.png" />
+    <Content Include="Content\assets\img\Flags\angola.png" />
+    <Content Include="Content\assets\img\Flags\Anguilla.png" />
+    <Content Include="Content\assets\img\Flags\antigua-and-barbuda.png" />
+    <Content Include="Content\assets\img\Flags\argentina.png" />
+    <Content Include="Content\assets\img\Flags\Armenia.png" />
+    <Content Include="Content\assets\img\Flags\Aruba.png" />
+    <Content Include="Content\assets\img\Flags\Australia.png" />
+    <Content Include="Content\assets\img\Flags\Austria.png" />
+    <Content Include="Content\assets\img\Flags\azerbaijan.png" />
+    <Content Include="Content\assets\img\Flags\Azores-islands.png" />
+    <Content Include="Content\assets\img\Flags\bahamas.png" />
+    <Content Include="Content\assets\img\Flags\bahrain.png" />
+    <Content Include="Content\assets\img\Flags\balearic-islands.png" />
+    <Content Include="Content\assets\img\Flags\bangladesh.png" />
+    <Content Include="Content\assets\img\Flags\barbados.png" />
+    <Content Include="Content\assets\img\Flags\basque-country.png" />
+    <Content Include="Content\assets\img\Flags\belarus.png" />
+    <Content Include="Content\assets\img\Flags\belgium.png" />
+    <Content Include="Content\assets\img\Flags\Belize.png" />
+    <Content Include="Content\assets\img\Flags\Benin.png" />
+    <Content Include="Content\assets\img\Flags\bermuda.png" />
+    <Content Include="Content\assets\img\Flags\Bhutan.png" />
+    <Content Include="Content\assets\img\Flags\bolivia.png" />
+    <Content Include="Content\assets\img\Flags\bonaire.png" />
+    <Content Include="Content\assets\img\Flags\bosnia-and-herzegovina.png" />
+    <Content Include="Content\assets\img\Flags\botswana.png" />
+    <Content Include="Content\assets\img\Flags\brazil.png" />
+    <Content Include="Content\assets\img\Flags\british-columbia.png" />
+    <Content Include="Content\assets\img\Flags\british-indian-ocean-territory.png" />
+    <Content Include="Content\assets\img\Flags\British-virgin-islands.png" />
+    <Content Include="Content\assets\img\Flags\brunei.png" />
+    <Content Include="Content\assets\img\Flags\bulgaria.png" />
+    <Content Include="Content\assets\img\Flags\burkina-faso.png" />
+    <Content Include="Content\assets\img\Flags\Burundi.png" />
+    <Content Include="Content\assets\img\Flags\C.png" />
+    <Content Include="Content\assets\img\Flags\cambodia.png" />
+    <Content Include="Content\assets\img\Flags\Cameroon.png" />
+    <Content Include="Content\assets\img\Flags\Canada.png" />
+    <Content Include="Content\assets\img\Flags\Canary-islands.png" />
+    <Content Include="Content\assets\img\Flags\Cape-verde.png" />
+    <Content Include="Content\assets\img\Flags\Cayman-islands.png" />
+    <Content Include="Content\assets\img\Flags\Central-african-republic.png" />
+    <Content Include="Content\assets\img\Flags\Ceuta.png" />
+    <Content Include="Content\assets\img\Flags\Chad.png" />
+    <Content Include="Content\assets\img\Flags\chile.png" />
+    <Content Include="Content\assets\img\Flags\China.png" />
+    <Content Include="Content\assets\img\Flags\Christmas-island.png" />
+    <Content Include="Content\assets\img\Flags\Cocos-island.png" />
+    <Content Include="Content\assets\img\Flags\Comoros.png" />
+    <Content Include="Content\assets\img\Flags\Cook-islands.png" />
+    <Content Include="Content\assets\img\Flags\corsica.png" />
+    <Content Include="Content\assets\img\Flags\costa-rica.png" />
+    <Content Include="Content\assets\img\Flags\croatia.png" />
+    <Content Include="Content\assets\img\Flags\cuba.png" />
+    <Content Include="Content\assets\img\Flags\curacao.png" />
+    <Content Include="Content\assets\img\Flags\Cyprus.png" />
+    <Content Include="Content\assets\img\Flags\czech-republic.png" />
+    <Content Include="Content\assets\img\Flags\democratic-republic-of-congo.png" />
+    <Content Include="Content\assets\img\Flags\denmark.png" />
+    <Content Include="Content\assets\img\Flags\djibouti.png" />
+    <Content Include="Content\assets\img\Flags\dominica.png" />
+    <Content Include="Content\assets\img\Flags\Dominican-republic.png" />
+    <Content Include="Content\assets\img\Flags\E.png" />
+    <Content Include="Content\assets\img\Flags\east-timor.png" />
+    <Content Include="Content\assets\img\Flags\ecuador.png" />
+    <Content Include="Content\assets\img\Flags\Egypt.png" />
+    <Content Include="Content\assets\img\Flags\El-salvador.png" />
+    <Content Include="Content\assets\img\Flags\England.png" />
+    <Content Include="Content\assets\img\Flags\equatorial-guinea.png" />
+    <Content Include="Content\assets\img\Flags\Eritrea.png" />
+    <Content Include="Content\assets\img\Flags\Ethiopia.png" />
+    <Content Include="Content\assets\img\Flags\EU.png" />
+    <Content Include="Content\assets\img\Flags\falkland-islands.png" />
+    <Content Include="Content\assets\img\Flags\faroe-islands.png" />
+    <Content Include="Content\assets\img\Flags\fiji.png" />
+    <Content Include="Content\assets\img\Flags\Finland.png" />
+    <Content Include="Content\assets\img\Flags\france.png" />
+    <Content Include="Content\assets\img\Flags\french-polynesia.png" />
+    <Content Include="Content\assets\img\Flags\G.png" />
+    <Content Include="Content\assets\img\Flags\Gabon.png" />
+    <Content Include="Content\assets\img\Flags\galapagos-islands.png" />
+    <Content Include="Content\assets\img\Flags\gambia.png" />
+    <Content Include="Content\assets\img\Flags\georgia.png" />
+    <Content Include="Content\assets\img\Flags\germany.png" />
+    <Content Include="Content\assets\img\Flags\Gibraltar.png" />
+    <Content Include="Content\assets\img\Flags\greece.png" />
+    <Content Include="Content\assets\img\Flags\greenland.png" />
+    <Content Include="Content\assets\img\Flags\grenada.png" />
+    <Content Include="Content\assets\img\Flags\guam.png" />
+    <Content Include="Content\assets\img\Flags\guatemala.png" />
+    <Content Include="Content\assets\img\Flags\guernsey.png" />
+    <Content Include="Content\assets\img\Flags\Guinea-bissau.png" />
+    <Content Include="Content\assets\img\Flags\Guinea.png" />
+    <Content Include="Content\assets\img\Flags\H.png" />
+    <Content Include="Content\assets\img\Flags\haiti.png" />
+    <Content Include="Content\assets\img\Flags\hawaii.png" />
+    <Content Include="Content\assets\img\Flags\hong-kong.png" />
+    <Content Include="Content\assets\img\Flags\hungary.png" />
+    <Content Include="Content\assets\img\Flags\Iceland.png" />
+    <Content Include="Content\assets\img\Flags\India.png" />
+    <Content Include="Content\assets\img\Flags\indonesia.png" />
+    <Content Include="Content\assets\img\Flags\Iran.png" />
+    <Content Include="Content\assets\img\Flags\Iraq.png" />
+    <Content Include="Content\assets\img\Flags\ireland.png" />
+    <Content Include="Content\assets\img\Flags\isle-of-man.png" />
+    <Content Include="Content\assets\img\Flags\israel.png" />
+    <Content Include="Content\assets\img\Flags\Italy.png" />
+    <Content Include="Content\assets\img\Flags\ivory-coast.png" />
+    <Content Include="Content\assets\img\Flags\jamaica.png" />
+    <Content Include="Content\assets\img\Flags\Japan.png" />
+    <Content Include="Content\assets\img\Flags\Jersey.png" />
+    <Content Include="Content\assets\img\Flags\Jordan.png" />
+    <Content Include="Content\assets\img\Flags\Kazakhstan.png" />
+    <Content Include="Content\assets\img\Flags\kenya.png" />
+    <Content Include="Content\assets\img\Flags\kiribati.png" />
+    <Content Include="Content\assets\img\Flags\Kosovo.png" />
+    <Content Include="Content\assets\img\Flags\kuwait.png" />
+    <Content Include="Content\assets\img\Flags\kyrgyzstan.png" />
+    <Content Include="Content\assets\img\Flags\laos.png" />
+    <Content Include="Content\assets\img\Flags\Latvia.png" />
+    <Content Include="Content\assets\img\Flags\Lebanon.png" />
+    <Content Include="Content\assets\img\Flags\Lesotho.png" />
+    <Content Include="Content\assets\img\Flags\liberia.png" />
+    <Content Include="Content\assets\img\Flags\libya.png" />
+    <Content Include="Content\assets\img\Flags\liechtenstein.png" />
+    <Content Include="Content\assets\img\Flags\lithuania.png" />
+    <Content Include="Content\assets\img\Flags\Luxembourg.png" />
+    <Content Include="Content\assets\img\Flags\macao.png" />
+    <Content Include="Content\assets\img\Flags\Madagascar.png" />
+    <Content Include="Content\assets\img\Flags\madeira.png" />
+    <Content Include="Content\assets\img\Flags\Malasya.png" />
+    <Content Include="Content\assets\img\Flags\Malawi.png" />
+    <Content Include="Content\assets\img\Flags\Maldives.png" />
+    <Content Include="Content\assets\img\Flags\mali.png" />
+    <Content Include="Content\assets\img\Flags\malta.png" />
+    <Content Include="Content\assets\img\Flags\marshall-island.png" />
+    <Content Include="Content\assets\img\Flags\martinique.png" />
+    <Content Include="Content\assets\img\Flags\Mauritania.png" />
+    <Content Include="Content\assets\img\Flags\mauritius.png" />
+    <Content Include="Content\assets\img\Flags\melilla.png" />
+    <Content Include="Content\assets\img\Flags\Mexico.png" />
+    <Content Include="Content\assets\img\Flags\Micronesia.png" />
+    <Content Include="Content\assets\img\Flags\Moldova.png" />
+    <Content Include="Content\assets\img\Flags\monaco.png" />
+    <Content Include="Content\assets\img\Flags\mongolia.png" />
+    <Content Include="Content\assets\img\Flags\Montenegro.png" />
+    <Content Include="Content\assets\img\Flags\Montserrat.png" />
+    <Content Include="Content\assets\img\Flags\morocco.png" />
+    <Content Include="Content\assets\img\Flags\mozambique.png" />
+    <Content Include="Content\assets\img\Flags\Myanmar.png" />
+    <Content Include="Content\assets\img\Flags\N.png" />
+    <Content Include="Content\assets\img\Flags\Namibia.png" />
+    <Content Include="Content\assets\img\Flags\Nato.png" />
+    <Content Include="Content\assets\img\Flags\nauru.png" />
+    <Content Include="Content\assets\img\Flags\Nepal.png" />
+    <Content Include="Content\assets\img\Flags\Netherlands.png" />
+    <Content Include="Content\assets\img\Flags\New Zealand.png" />
+    <Content Include="Content\assets\img\Flags\niger.png" />
+    <Content Include="Content\assets\img\Flags\nigeria.png" />
+    <Content Include="Content\assets\img\Flags\niue.png" />
+    <Content Include="Content\assets\img\Flags\norfolk-island.png" />
+    <Content Include="Content\assets\img\Flags\North Korea.png" />
+    <Content Include="Content\assets\img\Flags\northern-cyprus.png" />
+    <Content Include="Content\assets\img\Flags\northern-marianas-islands.png" />
+    <Content Include="Content\assets\img\Flags\Norway.png" />
+    <Content Include="Content\assets\img\Flags\oman.png" />
+    <Content Include="Content\assets\img\Flags\ossetia.png" />
+    <Content Include="Content\assets\img\Flags\P.png" />
+    <Content Include="Content\assets\img\Flags\pakistan.png" />
+    <Content Include="Content\assets\img\Flags\palau.png" />
+    <Content Include="Content\assets\img\Flags\palestine.png" />
+    <Content Include="Content\assets\img\Flags\Panama.png" />
+    <Content Include="Content\assets\img\Flags\papua-new-guinea.png" />
+    <Content Include="Content\assets\img\Flags\peru.png" />
+    <Content Include="Content\assets\img\Flags\philippines.png" />
+    <Content Include="Content\assets\img\Flags\Pitcairn-islands.png" />
+    <Content Include="Content\assets\img\Flags\poland.png" />
+    <Content Include="Content\assets\img\Flags\Portugal.png" />
+    <Content Include="Content\assets\img\Flags\puerto-rico.png" />
+    <Content Include="Content\assets\img\Flags\qatar.png" />
+    <Content Include="Content\assets\img\Flags\Rapa-nui.png" />
+    <Content Include="Content\assets\img\Flags\Republic-of-macedonia.png" />
+    <Content Include="Content\assets\img\Flags\republic-of-the-congo.png" />
+    <Content Include="Content\assets\img\Flags\Romania.png" />
+    <Content Include="Content\assets\img\Flags\Russia.png" />
+    <Content Include="Content\assets\img\Flags\rwanda.png" />
+    <Content Include="Content\assets\img\Flags\Saba-island.png" />
+    <Content Include="Content\assets\img\Flags\sahrawi-arab-democratic-republic.png" />
+    <Content Include="Content\assets\img\Flags\Saint-kitts-and-nevis.png" />
+    <Content Include="Content\assets\img\Flags\Samoa.png" />
+    <Content Include="Content\assets\img\Flags\san-marino.png" />
+    <Content Include="Content\assets\img\Flags\Sao-tome-and-prince.png" />
+    <Content Include="Content\assets\img\Flags\sardinia.png" />
+    <Content Include="Content\assets\img\Flags\Saudi-arabia.png" />
+    <Content Include="Content\assets\img\Flags\scotland.png" />
+    <Content Include="Content\assets\img\Flags\Senegal.png" />
+    <Content Include="Content\assets\img\Flags\Serbia.png" />
+    <Content Include="Content\assets\img\Flags\Seychelles.png" />
+    <Content Include="Content\assets\img\Flags\sicily.png" />
+    <Content Include="Content\assets\img\Flags\sierra-leone.png" />
+    <Content Include="Content\assets\img\Flags\Singapore.png" />
+    <Content Include="Content\assets\img\Flags\Sint-eustatius.png" />
+    <Content Include="Content\assets\img\Flags\sint-maarten.png" />
+    <Content Include="Content\assets\img\Flags\slovakia.png" />
+    <Content Include="Content\assets\img\Flags\slovenia.png" />
+    <Content Include="Content\assets\img\Flags\solomon-islands.png" />
+    <Content Include="Content\assets\img\Flags\Somalia.png" />
+    <Content Include="Content\assets\img\Flags\Somaliland.png" />
+    <Content Include="Content\assets\img\Flags\South-africa.png" />
+    <Content Include="Content\assets\img\Flags\south-korea.png" />
+    <Content Include="Content\assets\img\Flags\South-sudan.png" />
+    <Content Include="Content\assets\img\Flags\Spain.png" />
+    <Content Include="Content\assets\img\Flags\Sri lanka.png" />
+    <Content Include="Content\assets\img\Flags\st-barts.png" />
+    <Content Include="Content\assets\img\Flags\st-lucia.png" />
+    <Content Include="Content\assets\img\Flags\St-vincent-and-the-grenadines.png" />
+    <Content Include="Content\assets\img\Flags\sudan.png" />
+    <Content Include="Content\assets\img\Flags\suriname.png" />
+    <Content Include="Content\assets\img\Flags\swaziland.png" />
+    <Content Include="Content\assets\img\Flags\sweden.png" />
+    <Content Include="Content\assets\img\Flags\switzerland.png" />
+    <Content Include="Content\assets\img\Flags\Syria.png" />
+    <Content Include="Content\assets\img\Flags\Taiwan.png" />
+    <Content Include="Content\assets\img\Flags\tajikistan.png" />
+    <Content Include="Content\assets\img\Flags\Tanzania.png" />
+    <Content Include="Content\assets\img\Flags\Thailand.png" />
+    <Content Include="Content\assets\img\Flags\tibet.png" />
+    <Content Include="Content\assets\img\Flags\togo.png" />
+    <Content Include="Content\assets\img\Flags\tokelau.png" />
+    <Content Include="Content\assets\img\Flags\tonga.png" />
+    <Content Include="Content\assets\img\Flags\transnistria.png" />
+    <Content Include="Content\assets\img\Flags\trinidad-and-tobago.png" />
+    <Content Include="Content\assets\img\Flags\tunisia.png" />
+    <Content Include="Content\assets\img\Flags\turkey.png" />
+    <Content Include="Content\assets\img\Flags\turkmenistan.png" />
+    <Content Include="Content\assets\img\Flags\Turks-and-caicos.png" />
+    <Content Include="Content\assets\img\Flags\tuvalu-1.png" />
+    <Content Include="Content\assets\img\Flags\tuvalu.png" />
+    <Content Include="Content\assets\img\Flags\Uganda.png" />
+    <Content Include="Content\assets\img\Flags\ukraine.png" />
+    <Content Include="Content\assets\img\Flags\United Kingdom.png" />
+    <Content Include="Content\assets\img\Flags\United States.png" />
+    <Content Include="Content\assets\img\Flags\united-arab-emirates.png" />
+    <Content Include="Content\assets\img\Flags\united-nations.png" />
+    <Content Include="Content\assets\img\Flags\Uruguay.png" />
+    <Content Include="Content\assets\img\Flags\uzbekistn.png" />
+    <Content Include="Content\assets\img\Flags\vanuatu.png" />
+    <Content Include="Content\assets\img\Flags\vatican-city.png" />
+    <Content Include="Content\assets\img\Flags\venezuela.png" />
+    <Content Include="Content\assets\img\Flags\Vietnam.png" />
+    <Content Include="Content\assets\img\Flags\Virgin-islands.png" />
+    <Content Include="Content\assets\img\Flags\Wales.png" />
+    <Content Include="Content\assets\img\Flags\yemen.png" />
+    <Content Include="Content\assets\img\Flags\Zambia.png" />
+    <Content Include="Content\assets\img\Flags\Zimbabwe.png" />
+    <Content Include="Content\assets\img\icons\cart.svg" />
+    <Content Include="Content\assets\img\icons\close.svg" />
+    <Content Include="Content\assets\img\icons\flag\au.svg" />
+    <Content Include="Content\assets\img\icons\flag\cn.svg" />
+    <Content Include="Content\assets\img\icons\flag\fr.svg" />
+    <Content Include="Content\assets\img\icons\flag\ger.svg" />
+    <Content Include="Content\assets\img\icons\flag\uk.svg" />
+    <Content Include="Content\assets\img\icons\flag\usa.svg" />
+    <Content Include="Content\assets\img\icons\headset.svg" />
+    <Content Include="Content\assets\img\icons\left-arrow.svg" />
+    <Content Include="Content\assets\img\icons\outbox.svg" />
+    <Content Include="Content\assets\img\icons\profit.svg" />
+    <Content Include="Content\assets\img\icons\right-arrow.svg" />
+    <Content Include="Content\assets\img\logo.png" />
+    <Content Include="Content\assets\img\map\marker.png" />
+    <Content Include="Content\assets\img\news\md\news-1.jpg" />
+    <Content Include="Content\assets\img\Not-Found.png" />
+    <Content Include="Content\assets\img\PaymentLogos\Cash.jpg" />
+    <Content Include="Content\assets\img\PaymentLogos\Credit Card.jpg" />
+    <Content Include="Content\assets\img\PaymentLogos\Exchange.jpg" />
+    <Content Include="Content\assets\img\PaymentLogos\Neteller .jpg" />
+    <Content Include="Content\assets\img\PaymentLogos\Perfect Money.jpg" />
+    <Content Include="Content\assets\img\PaymentLogos\Skrill.jpg" />
+    <Content Include="Content\assets\img\PaymentLogos\Web Money.jpg" />
+    <Content Include="Content\assets\img\PaymentLogos\Wire Transfer.jpg" />
+    <Content Include="Content\assets\img\preloader.svg" />
+    <Content Include="Content\assets\img\profile\post-bg.jpg" />
+    <Content Include="Content\assets\img\profile\profile-bg.jpg" />
+    <Content Include="Content\assets\img\profile\profile-img-02.jpg" />
+    <Content Include="Content\assets\img\profile\profile-img-03.jpg" />
+    <Content Include="Content\assets\img\profile\profile-img-04.jpg" />
+    <Content Include="Content\assets\img\profile\profile-img.jpg" />
+    <Content Include="Content\assets\js\bootstrap.min.js" />
+    <Content Include="Content\assets\js\context-menu.js" />
+    <Content Include="Content\assets\js\jquery.min.js" />
+    <Content Include="Content\assets\js\main.js" />
+    <Content Include="Content\assets\js\modules.js" />
+    <Content Include="Content\assets\js\popper.min.js" />
+    <Content Include="Content\assets\js\scripts.js" />
+    <Content Include="Content\assets\Logo\Lundia1.png" />
+    <Content Include="Content\assets\Logo\Venn Logo.png" />
+    <Content Include="Content\assets\Logo\Venn Logo_White.png" />
+    <Content Include="Content\assets\plugins\apexcharts\apexcharts.min.js" />
+    <Content Include="Content\assets\plugins\chart\Chart.bundle.js" />
+    <Content Include="Content\assets\plugins\chart\Chart.bundle.min.js" />
+    <Content Include="Content\assets\plugins\chart\Chart.js" />
+    <Content Include="Content\assets\plugins\chart\Chart.min.js" />
+    <Content Include="Content\assets\plugins\chart\chartjs-plugin-annotation.js" />
+    <Content Include="Content\assets\plugins\chart\chartjs-plugin-annotation.min.js" />
+    <Content Include="Content\assets\plugins\chart\chartjs-plugin-labels.js" />
+    <Content Include="Content\assets\plugins\contextMenu\jquery.contextMenu.css" />
+    <Content Include="Content\assets\plugins\contextMenu\jquery.contextMenu.js" />
+    <Content Include="Content\assets\plugins\contextMenu\jquery.contextMenu.min.css" />
+    <Content Include="Content\assets\plugins\contextMenu\jquery.contextMenu.min.js" />
+    <Content Include="Content\assets\plugins\contextMenu\jquery.ui.position.js" />
+    <Content Include="Content\assets\plugins\contextMenu\jquery.ui.position.min.js" />
+    <Content Include="Content\assets\plugins\countdown\jquery.countdown.min.js" />
+    <Content Include="Content\assets\plugins\dataTables\dataTables.bootstrap4.css" />
+    <Content Include="Content\assets\plugins\dataTables\datatables.js" />
+    <Content Include="Content\assets\plugins\dataTables\datatables.min.js" />
+    <Content Include="Content\assets\plugins\dataTables\images\sort_asc.png" />
+    <Content Include="Content\assets\plugins\dataTables\images\sort_asc_disabled.png" />
+    <Content Include="Content\assets\plugins\dataTables\images\sort_both.png" />
+    <Content Include="Content\assets\plugins\dataTables\images\sort_desc.png" />
+    <Content Include="Content\assets\plugins\dataTables\images\sort_desc_disabled.png" />
+    <Content Include="Content\assets\plugins\dataTables\jquery.dataTables.css" />
+    <Content Include="Content\assets\plugins\daterangepicker\daterangepicker.css" />
+    <Content Include="Content\assets\plugins\daterangepicker\daterangepicker.js" />
+    <Content Include="Content\assets\plugins\daterangepicker\moment.min.js" />
+    <Content Include="Content\assets\plugins\ion.rangeSlider\ion.rangeSlider.css" />
+    <Content Include="Content\assets\plugins\ion.rangeSlider\ion.rangeSlider.js" />
+    <Content Include="Content\assets\plugins\ion.rangeSlider\ion.rangeSlider.min.css" />
+    <Content Include="Content\assets\plugins\ion.rangeSlider\ion.rangeSlider.min.js" />
+    <Content Include="Content\assets\plugins\jqvmap\jquery.vmap.js" />
+    <Content Include="Content\assets\plugins\jqvmap\jquery.vmap.min.js" />
+    <Content Include="Content\assets\plugins\jqvmap\jqvmap.css" />
+    <Content Include="Content\assets\plugins\jqvmap\jqvmap.min.css" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\continents\jquery.vmap.africa.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\continents\jquery.vmap.asia.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\continents\jquery.vmap.australia.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\continents\jquery.vmap.europe.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\continents\jquery.vmap.north-america.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\continents\jquery.vmap.south-america.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.algeria.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.argentina.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.brazil.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.canada.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.croatia.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.europe.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.france.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.germany.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.greece.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.indonesia.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.iran.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.iraq.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.new_regions_france.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.russia.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.serbia.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.tunisia.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.turkey.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.ukraine.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.usa.counties.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.usa.districts.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.usa.js" />
+    <Content Include="Content\assets\plugins\jqvmap\maps\jquery.vmap.world.js" />
+    <Content Include="Content\assets\plugins\lib\moment\moment.min.js" />
+    <Content Include="Content\assets\plugins\lib\three\three.min.js" />
+    <Content Include="Content\assets\plugins\lib\TweenMax\TweenMax.min.js" />
+    <Content Include="Content\assets\plugins\medium-zoom\medium-zoom.css" />
+    <Content Include="Content\assets\plugins\medium-zoom\medium-zoom.js" />
+    <Content Include="Content\assets\plugins\owl.carousel\owl.carousel.css" />
+    <Content Include="Content\assets\plugins\owl.carousel\owl.carousel.js" />
+    <Content Include="Content\assets\plugins\owl.carousel\owl.carousel.min.css" />
+    <Content Include="Content\assets\plugins\owl.carousel\owl.carousel.min.js" />
+    <Content Include="Content\assets\plugins\parallax\parallax.js" />
+    <Content Include="Content\assets\plugins\parallax\parallax.min.js" />
+    <Content Include="Content\assets\plugins\rangeslider\rangeslider.css" />
+    <Content Include="Content\assets\plugins\rangeslider\rangeslider.js" />
+    <Content Include="Content\assets\plugins\rangeslider\rangeslider.min.js" />
+    <Content Include="Content\assets\plugins\scrollbar\jquery.nicescroll.js" />
+    <Content Include="Content\assets\plugins\scrollbar\jquery.nicescroll.min.js" />
+    <Content Include="Content\buttons.dataTables.min.css" />
+    <Content Include="Content\jquery.toast.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Models\InventorySystemModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InventorySystemModel.edmx</DependentUpon>
+      <LastGenOutput>InventorySystemModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\InventorySystemModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InventorySystemModel.edmx</DependentUpon>
+      <LastGenOutput>InventorySystemModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="scripts\ai.0.22.9-build00167.js" />
+    <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\app\DataTable.js" />
+    <Content Include="scripts\app\jsLayout.js" />
+    <Content Include="scripts\app\Stock.js" />
+    <Content Include="scripts\app\POItems.js" />
+    <Content Include="scripts\app\Supplier.js" />
+    <Content Include="scripts\app\Po.js" />
+    <Content Include="scripts\app\Warehouse.js" />
+    <Content Include="scripts\app\ProductType.js" />
+    <Content Include="scripts\app\Product.js" />
+    <Content Include="scripts\Controls\AllDateFormat.js" />
+    <Content Include="scripts\Controls\jsColumns.js" />
+    <Content Include="scripts\Controls\jsControls.min.js" />
+    <Content Include="scripts\Controls\jsCustomValidation.js" />
+    <Content Include="scripts\dist\core.js" />
+    <Content Include="scripts\dist\jquery.js" />
+    <Content Include="scripts\dist\jquery.min.js" />
+    <Content Include="scripts\dist\jquery.slim.js" />
+    <Content Include="scripts\dist\jquery.slim.min.js" />
+    <Content Include="scripts\Export\buttons.flash.min.js" />
+    <Content Include="scripts\Export\buttons.html5.min.js" />
+    <Content Include="scripts\Export\buttons.print.min.js" />
+    <Content Include="scripts\Export\dataTables.buttons.min.js" />
+    <Content Include="scripts\Export\jszip.min.js" />
+    <Content Include="scripts\Export\pdfmake.min.js" />
+    <Content Include="scripts\Export\vfs_fonts.js" />
+    <Content Include="scripts\jquery.signalR-2.4.1.js" />
+    <Content Include="scripts\jquery.signalR-2.4.1.min.js" />
+    <Content Include="scripts\jquery.toast.js" />
+    <Content Include="scripts\jquery.validate.min.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="scripts\jsDataTable\dataTables.bootstrap4.min.js" />
+    <Content Include="scripts\jsDataTable\dataTables.rowGroup.min.js" />
+    <Content Include="scripts\jsDataTable\jquery.dataTables.min.js" />
+    <Content Include="scripts\sweetalert\sweetalert.css" />
+    <Content Include="scripts\sweetalert\sweetalert.min.js" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\POController.cs" />
+    <Compile Include="Controllers\PoDetailController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="Controllers\Supplier.cs" />
+    <Compile Include="Controllers\TypeController.cs" />
+    <Compile Include="Controllers\WarehouseController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GridDataSource.cs" />
+    <Compile Include="Models\InventorySystemModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventorySystemModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventorySystemModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\InventorySystemModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InventorySystemModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PO.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PODetail.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PODetailV.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PoV.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductPicture.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductQtyV.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductStock.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductType.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductV.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RawMaterail.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Stock.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockV.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Supplier.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Warehouse.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="Content\assets\bootstrap-datepicker\.bower.json" />
+    <Content Include="Content\assets\bootstrap-datepicker\.editorconfig" />
+    <Content Include="Content\assets\bootstrap-datepicker\.github\ISSUE_TEMPLATE.md" />
+    <Content Include="Content\assets\bootstrap-datepicker\.github\PULL_REQUEST_TEMPLATE.md" />
+    <Content Include="Content\assets\bootstrap-datepicker\.gitignore" />
+    <Content Include="Content\assets\bootstrap-datepicker\.travis.yml" />
+    <Content Include="Content\assets\bootstrap-datepicker\bower.json" />
+    <Content Include="Content\assets\bootstrap-datepicker\build\build.less" />
+    <Content Include="Content\assets\bootstrap-datepicker\build\build3.less" />
+    <Content Include="Content\assets\bootstrap-datepicker\build\build_standalone.less" />
+    <Content Include="Content\assets\bootstrap-datepicker\build\build_standalone3.less" />
+    <Content Include="Content\assets\bootstrap-datepicker\CHANGELOG.md" />
+    <Content Include="Content\assets\bootstrap-datepicker\CODE_OF_CONDUCT.md" />
+    <Content Include="Content\assets\bootstrap-datepicker\composer.json" />
+    <Content Include="Content\assets\bootstrap-datepicker\CONTRIBUTING.md" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.css.map" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.standalone.css.map" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker3.css.map" />
+    <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker3.standalone.css.map" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\conf.py" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\events.rst" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\i18n.rst" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\index.rst" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\keyboard.rst" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\make.bat" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\Makefile" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\markup.rst" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\methods.rst" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\options.rst" />
+    <Content Include="Content\assets\bootstrap-datepicker\docs\README.md" />
+    <Content Include="Content\assets\bootstrap-datepicker\grunt\.jshintrc" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\.jscsrc" />
+    <Content Include="Content\assets\bootstrap-datepicker\js\.jshintrc" />
+    <Content Include="Content\assets\bootstrap-datepicker\less\.csslintrc" />
+    <Content Include="Content\assets\bootstrap-datepicker\less\datepicker.less" />
+    <Content Include="Content\assets\bootstrap-datepicker\less\datepicker3.less" />
+    <Content Include="Content\assets\bootstrap-datepicker\LICENSE" />
+    <Content Include="Content\assets\bootstrap-datepicker\package.json" />
+    <Content Include="Content\assets\bootstrap-datepicker\README.md" />
+    <Content Include="Content\assets\bootstrap-datepicker\tests\README.md" />
+    <Content Include="Content\assets\bootstrap-datepicker\yarn.lock" />
+    <Content Include="Content\assets\cssAr\mainAr.css.map" />
+    <Content Include="Content\assets\cssAr\stylesAr.css.map" />
+    <Content Include="Content\assets\css\main.css.map" />
+    <Content Include="Content\assets\css\styles.css.map" />
+    <Content Include="Content\assets\fonts\Cairo\Cairo-Bold.ttf" />
+    <Content Include="Content\assets\fonts\Cairo\Cairo-Regular.ttf" />
+    <Content Include="Content\assets\fonts\fa-brands-400.eot" />
+    <Content Include="Content\assets\fonts\fa-brands-400.ttf" />
+    <Content Include="Content\assets\fonts\fa-brands-400.woff" />
+    <Content Include="Content\assets\fonts\fa-brands-400.woff2" />
+    <Content Include="Content\assets\fonts\fa-regular-400.eot" />
+    <Content Include="Content\assets\fonts\fa-regular-400.ttf" />
+    <Content Include="Content\assets\fonts\fa-regular-400.woff" />
+    <Content Include="Content\assets\fonts\fa-regular-400.woff2" />
+    <Content Include="Content\assets\fonts\fa-solid-900.eot" />
+    <Content Include="Content\assets\fonts\fa-solid-900.ttf" />
+    <Content Include="Content\assets\fonts\fa-solid-900.woff" />
+    <Content Include="Content\assets\fonts\fa-solid-900.woff2" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\assets\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-Black.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-Black.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-BlackItalic.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-BlackItalic.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-Bold.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-Bold.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-BoldItalic.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-BoldItalic.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-ExtraBold.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-ExtraBold.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-ExtraBoldItalic.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-ExtraBoldItalic.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-ExtraLight-BETA.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-ExtraLight-BETA.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-ExtraLightItalic-BETA.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-ExtraLightItalic-BETA.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-italic.var.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-Italic.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-Italic.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-Light-BETA.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-Light-BETA.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-LightItalic-BETA.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-LightItalic-BETA.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-Medium.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-Medium.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-MediumItalic.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-MediumItalic.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-Regular.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-Regular.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-SemiBold.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-SemiBold.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-SemiBoldItalic.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-SemiBoldItalic.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-Thin-BETA.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-Thin-BETA.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-ThinItalic-BETA.woff" />
+    <Content Include="Content\assets\fonts\inter\Inter-ThinItalic-BETA.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter-upright.var.woff2" />
+    <Content Include="Content\assets\fonts\inter\Inter.var.woff2" />
+    <Content Include="Content\assets\fonts\theme\icomoon.eot" />
+    <Content Include="Content\assets\fonts\theme\icomoon.ttf" />
+    <Content Include="Content\assets\fonts\theme\icomoon.woff" />
+    <Content Include="Content\assets\img\PaymentLogos\Payment Logo.psd" />
+    <Content Include="Content\assets\plugins\contextMenu\font\context-menu-icons.eot" />
+    <Content Include="Content\assets\plugins\contextMenu\font\context-menu-icons.ttf" />
+    <Content Include="Content\assets\plugins\contextMenu\font\context-menu-icons.woff" />
+    <Content Include="Content\assets\plugins\contextMenu\font\context-menu-icons.woff2" />
+    <Content Include="Content\assets\plugins\contextMenu\jquery.contextMenu.min.css.map" />
+    <Content Include="Content\assets\plugins\contextMenu\jquery.contextMenu.min.js.map" />
+    <Content Include="Content\assets\plugins\daterangepicker\daterangepicker.css.map" />
+    <EntityDeploy Include="Models\InventorySystemModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InventorySystemModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\InventorySystemModel.edmx.diagram">
+      <DependentUpon>InventorySystemModel.edmx</DependentUpon>
+    </Content>
+    <None Include="packages.config" />
+    <Content Include="scripts\dist\jquery.min.map" />
+    <Content Include="scripts\dist\jquery.slim.min.map" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\Product\_AddEditProduct.cshtml" />
+    <Content Include="Views\Type\Index.cshtml" />
+    <Content Include="Views\Type\_AddEditType.cshtml" />
+    <Content Include="Views\Warehouse\Index.cshtml" />
+    <Content Include="Views\Warehouse\_AddEditWarehouse.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Supplier\_AddEditSupplier.cshtml" />
+    <Content Include="Views\PO\Index.cshtml" />
+    <Content Include="Views\PO\_AddEditPo.cshtml" />
+    <Content Include="Views\PoDetail\Index.cshtml" />
+    <Content Include="Views\PoDetail\_AddEditPoItem.cshtml" />
+    <Content Include="Views\Stock\Index.cshtml" />
+    <Content Include="Views\Stock\_AddEditStock.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\InventorySystem20211005185001 - Web Deploy.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Default\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>10297</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:44344/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

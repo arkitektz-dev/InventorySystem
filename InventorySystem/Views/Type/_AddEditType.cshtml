@@ -1,0 +1,78 @@
+﻿@model  InventorySystem.Models.ProductType
+
+<div id="formAddBL">
+    @if (Model.TypeId == 0)
+    {
+        <h5 class="form-header">
+            Add New Product Type
+        </h5>
+    }
+    else
+    {
+        <h5 class="form-header">
+            Update Product Type
+        </h5>
+    }
+    @using (Html.BeginForm("AddEditSpec", "Specs", null, FormMethod.Post, new { @id = "myForm", @class = "forms-sample", enctype = "multipart/form-data", role = "form", onsubmit = "return validateForm(this)" }))
+    {
+
+        @Html.HiddenFor(model => model.TypeId)
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Type</label>
+                    @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control", @placeholder = "Product Type", @required = "true" } })
+                    @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12" style="text-align:center">
+                <button type="button" class="btn btn-success" id="btnSubmit">
+                    <i class="fa fa-save"></i>   @if (Model.TypeId > 0)
+                    {<span>Update</span> }
+                    else
+                    {<span>Save</span>}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>Close</button>
+
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnSubmit").click(function () {
+            var myformdata = $("#myForm").serialize();
+            if (!$("#myForm").valid()) {
+                return false;
+            }
+            //_FullName = $("#FullName").val().trim();
+            formpost("/Type/SaveType", myformdata, GetFormStatus);
+        })
+
+    });
+    function GetFormStatus(data) {
+        
+        if (data == "true") {
+           
+            BindGrid("ProductTypeList", "ProductTypeList", '/Type/GetTypeList');
+            showSuccessToast("Product Type saved Successfully.");
+            $("#ModelSubscription").modal("hide");
+        }
+        else {
+            if (data == 'false')
+                showErrorToast("Type already exists.");
+            else
+                showErrorToast("Something Went Wrong");
+        }
+    }
+</script>

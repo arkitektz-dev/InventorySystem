@@ -1,0 +1,196 @@
+﻿@model  LoginViewModel
+@{
+    Layout = null;
+}
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="~/favicon.ico">
+    <link rel="icon" href="~/favicon.ico">
+
+
+    <link href="~/Content/assets/css/fonts/fontawesome/all.min.css" rel="stylesheet">
+    <link href="~/Content/assets/css/fonts/beid.css" rel="stylesheet">
+
+
+    <title>Login :: Inventory System</title>
+    <link href="~/Content/assets/css/main.css" rel="stylesheet">
+    <link href="~/Content/assets/css/styles.css" rel="stylesheet">
+
+    <link href="~/Content/assets/fonts/inter/inter.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <style>
+        .warning-gradient {
+            background: #59f1d8;
+            background: -webkit-linear-gradient(left, #59f1d8, #2af270);
+            background: linear-gradient(to right, #1b417d, #17437c);
+            background-position: center;
+        }
+
+            .warning-gradient, .warning-gradient h1, .warning-gradient h2, .warning-gradient h3, .warning-gradient h4, .warning-gradient h5, .warning-gradient h6, .warning-gradient .h1, .warning-gradient .h2, .warning-gradient .h3, .warning-gradient .h4, .warning-gradient .h5, .warning-gradient .h6 {
+                color: white !important;
+            }
+
+        .btn-warning {
+            color: #ffffff;
+            background-color: #17427c;
+            border-color: #17427c;
+        }
+
+            .btn-warning:hover {
+                color: white;
+                background-color: #e0393b;
+                border-color: #e0393b;
+            }
+
+        .input-light .input-group .input-group-text {
+            color: #e0393b;
+        }
+
+        .input-group:not(.input-line) {
+            background: #f8f9fa;
+            border-radius: 0.25rem;
+        }
+
+        /*input[placeholder], [placeholder], *[placeholder] {
+            color: red !important;
+        }*/
+    </style>
+</head>
+<body class="body">
+
+    <main>
+        <div class="main-container app-wow">
+
+            <div class="container h-100">
+                <div class="row align-items-center h-100">
+                    <div class="col-12 mx-auto">
+                        <div class="col-12 text-center">
+                            @*<img src="~/Content/assets/img/logo.png" width="250" />*@
+                            @*<img src="~/Content/assets/Logo/Venn Logo.png" width="250" style="color:white;" />*@
+                        </div>
+                        <div class="py-8">
+                            <div class="auth-box">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="d-flex align-items-center justify-content-center warning-gradient text-secondary px-4 py-6 h-100">
+                                            <div class="text-center">
+                                                <h5 class="text-uppercase">Welcome to</h5>
+                                                <h1 class="text-uppercase display-3" style="font-size:2.5rem !important">LUNDIA Inventory System</h1>
+                                                <span class="lead-1 fw-400">Advanced Inventory Dashboard</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="px-4 pr-md-7 py-6 pl-md-0">
+                                            <div class="row">
+                                                <h4 class="mb-6 text-light" style="color:black !important">Login</h4>
+                                                @*&nbsp;
+                                                    &nbsp;
+                                                    <a class="mb-6 text-right" href="#" id="dropdownAdmin_02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <img class="user-avatar mr-sm-3" src="~/Content/assets/img/app/united-kingdom.svg" alt="Profile Picture" width="35">
+                                                    </a>*@
+                                                <div class="dropdown-menu dropdown-menu-right shadow-1 py-3 position-absolute mt-2" aria-labelledby="dropdownAdmin">
+                                                    <a class="user-link nav-link d-inline-flex align-items-center h-100 small-1 pl-1 pl-sm-3 pr-0" href="/Culture/ChangeCulture">
+                                                        <img src="~/Content/assets/img/app/arabic.svg" width="35"> &nbsp; العربية
+                                                    </a>
+                                                </div>
+
+                                            </div>
+                                            <div>
+                                                @using (Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "input-light", role = "form" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                    <div class="input-group mb-5">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control" id="UserName" name="UserName" placeholder="User Name" style="margin-left: 15px;background: white;color: black;" required autofocus>
+                                                    </div>
+                                                    <div class="input-group mb-5">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                        </div>
+                                                        <input type="password" class="form-control" name="Password" placeholder="Password" required style="margin-left: 15px;background: white;color: black;">
+                                                    </div>
+
+                                                    @*<div class="form-group d-flex mb-0 mt-6">
+                                                            <div class="mt-1">
+                                                                <input type="checkbox" value="lsRememberMe" id="rememberMe" name="rememberMe" class="">
+                                                                <label for="rememberMe" class="text-white" style="margin-top: -0.5em;margin-left: 0.5em;font-size:15px;">Remember me</label>
+                                                            </div>
+                                                            <div class="ml-auto">
+                                                                <a href="/login/forgotpassword" class="text-white">Forgot Password ?</a>
+                                                            </div>
+                                                        </div>*@
+
+
+                                                    <div class="form-group d-flex mb-0 mt-6">
+                                                        <button class="btn btn-warning" type="submit" onclick="lsRememberMe();"><i class="fa fa-sign-in-alt" aria-hidden="true"></i> Login</button>
+
+                                                    </div>
+
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+
+    <div class="preloaderWrapper preloaderOut"></div>
+
+
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Content/assets/js/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/scripts.js"></script>
+    <script src="~/Content/assets/js/main.js" id="_mainJS" data-plugins="load"></script>
+    <script src="~/Content/assets/js/modules.js"></script>
+
+    <script>
+        var SessionTimeOut;
+        IsMobileApp = localStorage.getItem("isMobile");
+        SessionTimeOut = '@Session["isSessionTimeOut"]';
+
+        if (SessionTimeOut == '1' && IsMobileApp == "true") {
+            location.href = '/Login/LogoutApp?IsMobile=true';
+        }
+
+        const rmCheck = document.getElementById("rememberMe"),
+            emailInput = document.getElementById("UserName");
+
+        if (localStorage.checkbox && localStorage.checkbox !== "") {
+            rmCheck.setAttribute("checked", "checked");
+            emailInput.value = localStorage.username;
+        }
+        else {
+            rmCheck.removeAttribute("checked");
+            //emailInput.value = null;
+        }
+
+        function lsRememberMe() {
+            if (rmCheck.checked && emailInput.value !== "") {
+                localStorage.username = emailInput.value;
+                localStorage.checkbox = rmCheck.value;
+            } else {
+                localStorage.username = "";
+                localStorage.checkbox = "";
+            }
+        }
+    </script>
+</body>
+</html>

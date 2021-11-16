@@ -1,0 +1,229 @@
+﻿@model InventorySystem.Models.Product
+
+
+<div id="formAddBL">
+    @if (Model.ProductId == 0)
+    {
+        <h5 class="form-header">
+            Add New Product
+        </h5>
+    }
+    else
+    {
+        <h5 class="form-header">
+            Update Product
+        </h5>
+    }
+    @using (Html.BeginForm("AddEditSpec", "Specs", null, FormMethod.Post, new { @id = "myForm", @class = "forms-sample", enctype = "multipart/form-data", role = "form", onsubmit = "return validateForm(this)" }))
+    {
+
+        @Html.HiddenFor(model => model.ProductId)
+
+        <div class="card">
+            <div class="tabbable-responsive">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="first-tab" data-toggle="tab" href="#first" role="tab" aria-controls="first" aria-selected="true">Product Info</a>
+                        </li>
+                        @if (Model.ProductId > 0)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" id="second-tab" data-toggle="tab" href="#second" role="tab" aria-controls="second" aria-selected="false">Raw Materials</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <br />
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="first" role="tabpanel" aria-labelledby="first-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Barcode</label>
+                                    @Html.EditorFor(model => model.Barcode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Barcode", @required = "true" } })
+                                    @Html.ValidationMessageFor(model => model.Barcode, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Code</label>
+                                    @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control", @placeholder = "Product Code", @required = "true" } })
+                                    @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Warehouse</label>
+                                    <div id="WarehouseId"></div>
+                                    @Html.ValidationMessageFor(model => model.WarehouseId, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Price</label>
+                                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price", @required = "true", @type = "number" } })
+                                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                </div>
+                                @*<div class="clearfix"></div>*@
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Product Name", @required = "true" } })
+                                    @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Unit of Measure</label>
+                                    <select class="form-control" name="UnitOfMeasure" id="UnitOfMeasure">
+                                        <option value="">Select Unit Of Measure</option>
+                                        <option value="Pcs">Pcs</option>
+                                        <option value="Each">Each</option>
+                                        <option value="Kg">Kg</option>
+                                        <option value="Liter">Liter</option>
+                                        <option value="Box">Box</option>
+                                    </select>
+                                    @Html.ValidationMessageFor(model => model.UnitOfMeasure, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <label>Type</label>
+                                    <div id="ProductTypeId"></div>
+                                    @Html.ValidationMessageFor(model => model.ProductTypeId, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @placeholder = "Description", @required = "true" })
+                                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="checkbox" id="isRawM" />
+                                    <label>Raw Material</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12" style="text-align:center">
+                                <button type="button" class="btn btn-success" id="btnSubmit">
+                                    <i class="fa fa-save"></i>   @if (Model.ProductId > 0)
+                                    {<span>Update</span> }
+                                    else
+                                    {<span>Save</span>}
+                                </button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>Close</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="second" role="tabpanel" aria-labelledby="second-tab">
+                        <div class="px-4 px-md-6">
+                            <div class="row">
+                                <div class="col-6">
+
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" data-toggle="modal" data-target="" id="OnAddNewRM" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus"></i> Add New</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="display:none;" id="RM">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Product Code</label>
+                                    <input type="text" class="form-control" id="txtProductCode" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Quantity</label>
+                                    <input type="text" class="form-control" id="txtQty" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Note</label>
+                                    <input type="text" class="form-control" id="txtNote" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="MList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        var _Type = '@Model.ProductTypeId';
+        var _Warehouse = '@Model.WarehouseId'
+        var _UM = '@Model.UnitOfMeasure'
+        var _ProductId = '@Model.ProductId'
+
+        BindDropDownList("ProductTypeId", '/Type/Typedrp', true, "Select Product Type", null);
+        BindDropDownList("WarehouseId", '/Warehouse/Warehousedrp', true, "Select Warehouse", null);
+
+        //if (_ProductId > 0) {
+        //    BindGrid("MList", "MList", '/Product/GetRawMaterails?Id=' + _ProductId);
+        //}
+
+        if (_Type > 0)
+        {
+            $("#SelectProductTypeId").val(_Type);
+        }
+        if (_Warehouse > 0) {
+            $("#SelectWarehouseId").val(_Warehouse);
+        }
+        if (_UM !='') {
+            $("#UnitOfMeasure").val(_UM);
+        }
+
+        $("#OnAddNewRM").click(function () {
+            $("#RM").show();
+        });
+
+        $("#btnSubmit").click(function () {
+            var myformdata = $("#myForm").serialize();
+            if (!$("#myForm").valid()) {
+                return false;
+            }
+            //_FullName = $("#FullName").val().trim();
+            formpost("/Product/SaveProduct", myformdata, GetFormStatus);
+        })
+
+
+
+    });
+    function GetFormStatus(data) {
+        
+
+        if (data == "true") {
+            BindGridWOption("ProductList", "ProductList", '/Product/GetProductList');
+            showSuccessToast("Product saved Successfully.");
+            $("#ModelSubscription").modal("hide");
+        }
+        else {
+            if (data == '1') {
+                showErrorToast("Barcode already exists, please enter another one");
+                return;
+            }
+            else if (data == '2') {
+                showErrorToast("Product Code already exists, please enter another one");
+                return;
+            }
+            else {
+                showErrorToast("Something Went Wrong");
+            }
+        }
+    }
+</script>

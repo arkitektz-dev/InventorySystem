@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="~/favicon.ico">
+    <link rel="icon" href="~/favicon.ico">
+
+    <title>@ViewBag.Title :: Inventory System</title> 
+    <link href="~/Content/assets/css/StyleSheet1.css" rel="stylesheet" />
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Scripts/jsDataTable/jquery.dataTables.min.js"></script>
+    <link href="~/Content/assets/css/fonts/fontawesome/all.min.css" rel="stylesheet">
+    <link href="~/Content/assets/css/fonts/beid.css" rel="stylesheet">
+
+
+    <link href="~/Content/assets/css/main.css" rel="stylesheet">
+    <link href="~/Content/assets/css/styles.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/Content/assets/plugins/jqvmap/jqvmap.min.css" rel="stylesheet">
+    <link href="~/Content/assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link href="~/Content/assets/plugins/dataTables/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="~/Content/assets/plugins/dataTables/jquery.dataTables.css" rel="stylesheet" />
+    <link href="~/Content/assets/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/Content/assets/fonts/inter/inter.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />*@
+    @*<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />*@
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+
+
+    <!--Toaster Css-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
+
+    <script type="text/javascript">
+
+        var RootPath = '@Url.Content("~/")';
+    </script>
+
+    <script src="~/Scripts/Controls/jsControls.min.js"></script>
+    <script src="~/Content/assets/js/modules.js"></script>
+    <link href="~/Content/jquery.toast.css" rel="stylesheet" />
+    <link href="~/Scripts/sweetalert/sweetalert.css" rel="stylesheet" />
+
+    <style>
+        .table-condensed {
+            table-layout: unset !important;
+        }
+
+        table {
+            margin: 0 auto;
+            width: 100%;
+            clear: both;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .modal-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #00000d;
+            background-clip: padding-box;
+            border: 1px solid white;
+            border-radius: 0.3rem;
+            outline: 0;
+        }
+
+        @@media (max-width:950px) {
+            .mobe {
+                display: block !important;
+            }
+
+            .desk {
+                display: none;
+            }
+
+            .modal-dialog {
+                top: 10% !important;
+            }
+        }
+
+        .mobe {
+            display: none;
+        }
+
+        .logo {
+            height: 50px;
+            left: 40px;
+            padding-left: 30px;
+        }
+
+        .datepicker table tr td span:hover, .datepicker table tr td span.focused {
+            background: #01172e;
+        }
+
+        .datepicker table tr td.day:hover, .datepicker table tr td.day.focused {
+            background: #01172e;
+            cursor: pointer;
+        }
+
+        .datepicker .datepicker-switch:hover, .datepicker .prev:hover, .datepicker .next:hover, .datepicker tfoot tr th:hover {
+            background: #01172e;
+        }
+
+        .group-start {
+            background: #28e3a1 !important;
+            text-align: center;
+            color: #020022;
+        }
+
+
+        .btn-warning {
+            color: #ffffff;
+            background-color: #17427c;
+            border-color: #17427c;
+        }
+
+            .btn-warning:hover {
+                color: white;
+                background-color: #e0393b;
+                border-color: #e0393b;
+            }
+
+        .input-light .input-group .input-group-text {
+            color: #e0393b;
+        }
+
+        .input-group:not(.input-line) {
+            background: #f8f9fa;
+            border-radius: 0.25rem;
+        }
+
+        .inputNew {
+            background: white;
+            color: black;
+        }
+
+
+
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+            color: black;
+        }
+
+        .form-control:disabled, .form-control[readonly] {
+            background-color: #9d9fa229;
+            opacity: 1;
+        }
+
+        .dt-buttons {
+            text-align: center !important;
+        }
+    </style>
+</head>
+
+<body class="body">
+
+    <header class="main-header">
+        <nav class="main-navbar navbar navbar-expand-lg navbar-light shadow-2">
+            <div class="lnav-box d-flex">
+                <div class="logo-wrapper px-3 d-none d-md-flex">
+                    <img src="~/Content/assets/Logo/Venn Logo_White.png" style="max-width:unset;padding-left:0px;" alt="Logo" class="logo" />
+                </div>
+                <div class="sidebar-toggler-wrapper ml-auto">
+                    <button class="p-collapsing-sidebar-toggler sidebar-toggler-secondary transition rounded-circle" data-collapsing="partially" data-collapsing-target="#adminNav" type="button">
+                        <span class="icon-menu-options"></span>
+                    </button>
+                    @*<a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+                            <span class="sr-only">Toggle navigation</span>
+                        </a>*@
+                </div>
+            </div>
+            <div class="d-none d-lg-block ml-0 mr-auto pl-4">
+
+            </div>
+            <div class="pr-6">
+                <ul class="nav sec-nav navbar-nav flex-row">
+
+
+                    <li class="nav-item">
+                        <a href="javascript:void(0);" title="Refresh" onclick="DashboardBind();" class="notf-link nav-link d-inline-flex align-items-center h-100 small-1 pl-2 pl-md-3"><span class="icon-refresh" style="font-size:20px"></span></a>
+                    </li>
+                    <li class="user-item nav-item dropdown">
+                        <a class="user-link nav-link d-inline-flex align-items-center h-100 small-1 pl-1 pl-sm-3 pr-0" href="#" id="dropdownAdmin_02" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img class="user-avatar rounded-circle mr-sm-3" src="/Content/assets/img/avatar/1.png" alt="Profile Picture">
+
+                            <div class="d-none d-sm-block lh-1">
+                                <div class="lh-5">@Session["UserName"]</div>
+                                <span class="small-3"><i class="fas fa-circle text-warning small-5"></i> Online</span>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow-1 py-3 position-absolute mt-2" aria-labelledby="dropdownAdmin">
+
+                            <a id="btnLogOut" class="dropdown-item" href="/Login/Logout?IsMobile=false"><span class="icon-power-on-buton mr-2"></span>Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <nav id="adminNav" class="main-sidebar p-collapsing-sidebar sidebar-fixed sidebar-left d-flex flex-column" style="background:rgb(27, 65, 125);">
+            <div class="main-sidebar-inner" data-scrollbar="sidebar">
+                <ul class="sidebar-nav sidebar-nav-light-hover list-unstyled text-unset small-3 fw-600 content-list">
+                    <li class="nav-item text-light transition active">
+                        <div class="nav-collapse collapse show">
+                            @*<ul class="list-unstyled">*@
+                            <ul class="list-unstyled">
+                                <li class="active">
+                                    <a href="/Home" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-bar-chart"></i> <span>Dashboard</span>
+                                    </a>
+
+                                </li>
+                                <li class="active">
+                                    <a href="/Warehouse" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-cubes"></i> <span>Warehouse</span>
+                                    </a>
+
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Supplier" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-industry"></i> <span>Vendors</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/PO" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-file-text"></i> <span>Purchase Orders</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Type" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-bar-chart"></i> <span>Product Types</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Product" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-tags"></i> <span>Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Stock" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-cube"></i>  <span>Stock</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Receiving" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-truck"></i> <span>Receiving</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="/Shipment" class="p-collapsing-title nav-link">
+                                        <i class="fa fa-plane"></i><span> Shipment</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="main-container">
+            <div class="overflow-hidden">
+                @RenderBody()
+            </div>
+
+            <footer id="footer" class="footer">
+                <div class="container-fluid">
+                    <div class="row gutters-y align-items-center">
+                        <div class="col-md-6 col-lg-5">
+                            <div class="px-3 fw-400">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <div class="preloaderWrapper"></div>
+
+    <div class="modal fade" id="Model" tabindex="-1" role="dialog" aria-labelledby="labelSubscription" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width:1400px;top:4%;">
+            <div class="modal-content">
+                <div class="modal-body" id="ModelBody">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div aria-hidden="true" aria-labelledby="myLargeModalLabel" id="ModelTask1" class="modal fade bd-example-modal-lg" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg" style="top:15%;max-width:1400px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
+                </div>
+                <div class="modal-body" id="pDetails">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/Controls/jsColumns.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/Controls/jsCustomValidation.js"></script>
+    <script src="~/Scripts/Controls/AllDateFormat.js"></script>
+    <script src="~/Content/assets/js/bootstrap.min.js"></script>
+    <script src="~/Content/assets/plugins/chart/Chart.min.js" id="_chartJS_min"></script>
+    <script src="~/Content/assets/plugins/chart/Chart.bundle.min.js"></script>
+    <script src="~/Content/assets/plugins/chart/chartjs-plugin-annotation.js"></script>
+    <script src="~/Content/assets/plugins/chart/chartjs-plugin-labels.js"></script>
+    <script src="~/Content/assets/plugins/apexcharts/apexcharts.min.js"></script>
+    <script src="~/Content/assets/plugins/rangeslider/rangeslider.min.js" id="_rangeJS_min"></script>
+    <script src="~/Content/assets/plugins/lib/moment/moment.min.js"></script>
+    <script src="~/Content/assets/plugins/daterangepicker/daterangepicker.js" id="_DateRangeJS_min"></script>
+    <script src="~/Content/assets/js/scripts.js"></script>
+    <script src="~/Content/assets/plugins/owl.carousel/owl.carousel.min.js"></script>
+    <script src="~/Content/assets/plugins/scrollbar/jquery.nicescroll.min.js"></script>
+    <script src="~/Content/assets/js/main.js" id="_mainJS" data-plugins="load"></script>
+    <script src="~/Scripts/sweetalert/sweetalert.min.js"></script>
+    @*<script src="~/Scripts/jsDataTable/dataTables.rowGroup.min.js"></script>*@
+    @*<script src="~/Scripts/jquery.toast.js"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="~/Scripts/app/jsLayout.js"></script>
+  
+    <script>
+        var IsArabic;
+        var IsSessionExpired;
+        var IsMobileApp;
+        IsSessionExpired = '@Session["isSessionTimeOut"]';
+        @*IsArabic = '@SessionManager.IsArabic';
+
+        $(document).ready(function () {
+            var success = '@TempData["Result"]';
+            if (success != '') {
+                showSuccessToast(success);
+            }
+            var error = '@TempData["Error"]';
+            if (error != '') {
+                showErrorToast(error);
+            }
+        });
+        function SetLanguage() {
+            AjaxCall('/Culture/ChangeCultureApp', null, GetStatus, null);
+        }*@
+        function GetStatus(data) {
+            if (data != null)
+                window.location.href = data;
+        }
+    </script>
+
+</body>
+</html>

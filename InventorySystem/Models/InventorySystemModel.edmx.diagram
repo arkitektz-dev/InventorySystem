@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="bd837a4f01da4324a708bcd3c6191e55" Name="Diagram1">
+        <EntityTypeShape EntityType="InventorySystemModel.Product" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductPicture" Width="1.5" PointX="2.375" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductStock" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="InventorySystemModel.User" Width="1.5" PointX="2.375" PointY="5.125" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductType" Width="1.5" PointX="4" PointY="0.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductV" Width="1.5" PointX="4" PointY="2.25" />
+        <EntityTypeShape EntityType="InventorySystemModel.PO" Width="1.5" PointX="5.625" PointY="0.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.PODetail" Width="1.5" PointX="5.625" PointY="3.625" />
+        <EntityTypeShape EntityType="InventorySystemModel.PODetailV" Width="1.5" PointX="7.25" PointY="3.375" />
+        <EntityTypeShape EntityType="InventorySystemModel.PoV" Width="1.5" PointX="8.875" PointY="0.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Stock" Width="1.5" PointX="8.875" PointY="3.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.StockV" Width="1.5" PointX="10.5" PointY="0.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductQtyV" Width="1.5" PointX="5.625" PointY="6.5" />
+        <EntityTypeShape EntityType="InventorySystemModel.RawMaterail" Width="1.5" PointX="10.5" PointY="3.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Warehouse" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Supplier" Width="1.5" PointX="8.375" PointY="7.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

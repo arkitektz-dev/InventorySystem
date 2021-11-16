@@ -1,0 +1,173 @@
+﻿@model InventorySystem.Models.Stock
+
+<div id="formAddBL">
+
+    @if (Model.StockId == 0)
+    {
+        <h5 class="form-header" id="lbl">
+            Add New Stock
+        </h5>
+    }
+    else
+    {
+        <h5 class="form-header" id="lbl">
+            Update Stock
+        </h5>
+    }
+    @using (Html.BeginForm("AddEditSpec", "Specs", null, FormMethod.Post, new { @id = "myForm", @class = "forms-sample", enctype = "multipart/form-data", role = "form", onsubmit = "return validateForm(this)" }))
+    {
+
+        @Html.HiddenFor(model => model.StockId)
+        @Html.HiddenFor(model => model.ProductId)
+        <div class="row">
+            <div class="col-md-6">
+                @if (Model.StockId == 0)
+                {
+                    <div class="form-group">
+                        <label>Barcode</label>
+                        <input type="text" name="Barcode" id="Barcode" class="form-control" placeholder="Barcode" />
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label>Product Code</label>
+                        <input type="text" id="ProductCode" class="form-control" disabled />
+                    </div>
+                }
+                <div class="form-group">
+                    <label>Warehouse</label>
+                    <div id="WarehouseId"></div>
+                    @Html.ValidationMessageFor(model => model.WarehouseId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Quantity On Hand</label>
+                    @Html.EditorFor(model => model.QuantityOnHand, new { htmlAttributes = new { @class = "form-control", @placeholder = "Quantity On Hand", @type = "Number" } })
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" id="ProductName" class="form-control" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control", @placeholder = "Location" } })
+                </div>
+                <div class="form-group">
+                    <label>Quantity Receiving</label>
+                    @Html.EditorFor(model => model.QuantityReceiving, new { htmlAttributes = new { @class = "form-control", @placeholder = "Quantity Receiving", @type = "Number" } })
+                </div>
+
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            
+            <div class="col-md-12" style="text-align: center">
+                <div class="alert alert-danger" id="lError" style="display:none;">
+                    Product Not Found.
+                </div>
+                <button type="button" class="btn btn-success" id="btnSubmit">
+                    <i class="fa fa-save"></i>
+                    @if (Model.StockId > 0)
+                    {<span>Update</span>
+                    }
+                    else
+                    {<span>Save</span>}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>Close</button>
+
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+
+    $(document).ready(function () {
+        BindDropDownList("WarehouseId", '/Warehouse/Warehousedrp', true, "Select Warehouse", null);
+
+        var _ProductId = '@Model.ProductId'
+        var _WarehouseId = '@Model.WarehouseId'
+
+        if (_WarehouseId != '')
+        {
+            $("#SelectWarehouseId").val(_WarehouseId);
+        }
+
+        $("#Barcode").keyup(function () {
+            ScanProductById($("#Barcode").val());
+        });
+
+        if (_ProductId > 0) {
+            AjaxCallAsync('/Stock/GetStockByProductId', JSON.stringify({ Id: _ProductId }), GetProductData, null);
+        }
+
+        $("#btnSubmit").click(function () {
+            var myformdata = $("#myForm").serialize();
+            if (!$("#myForm").valid()) {
+                return false;
+            }
+            //_FullName = $("#FullName").val().trim();
+            formpost("/Stock/SaveStock", myformdata, GetFormStatus);
+        })
+
+    });
+
+    function ScanProductById(Ids) {
+        AjaxCallAsync('/Stock/GetStockByBarcode', JSON.stringify({ Id: Ids }), GetData, null);
+    }
+
+    function GetProductData(data) {
+        $("#ProductCode").val("");
+        $("#ProductName").val("");
+
+        $("#ProductCode").val(data.ProductCode);
+        $("#ProductName").val(data.ProductName);
+    }
+
+    function GetData(data) {
+        $("#lError").hide();
+        $("#ProductName").val("");
+        $("#Location").val("");
+        $("#SelectWarehouseId").val("");
+        $("#QuantityReceiving").val("");
+        $("#QuantityOnHand").val("");
+        $("#StockId").val("");
+        $("#ProductId").val("");
+
+        if (data != "false") {
+
+            //$("#Location").val(data.Location);
+            //$("#SelectWarehouseId").val(data.WarehouseId);
+            $("#QuantityReceiving").val("0");
+            $("#QuantityOnHand").val("0");
+            $("#StockId").val(data.StockId);
+            $("#ProductId").val(data.ProductId);
+            $("#ProductName").val(data.ProductName);
+            $("#lbl").html("Add new Stock");
+        }
+        else {
+            $("#lError").show();
+            $("#lbl").html("Add new Stock12");
+        }
+
+    }
+
+    function GetFormStatus(data) {
+        $("#ModelSubscription").modal("hide");
+
+        if (data == "true") {
+            BindGridWOption("StockList", "StockList", '/Stock/GetStockList');
+            showSuccessToast("Stock Entry saved Successfully.");
+        }
+        else {
+            showErrorToast("Something Went Wrong");
+        }
+    }
+</script>

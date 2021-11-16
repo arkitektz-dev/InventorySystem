@@ -1,0 +1,112 @@
+﻿@model InventorySystem.Models.PODetail
+
+<div id="formAddBL">
+    @if (Model.PODetailId == 0)
+    {
+        <h5 class="form-header">
+            Add New PO Item
+        </h5>
+    }
+    else
+    {
+        <h5 class="form-header">
+            Update PO Item
+        </h5>
+    }
+    @using (Html.BeginForm("AddEditSpec", "Specs", null, FormMethod.Post, new { @id = "myForm", @class = "forms-sample", enctype = "multipart/form-data", role = "form", onsubmit = "return validateForm(this)" }))
+    {
+
+        @Html.HiddenFor(model => model.PODetailId)
+        @Html.HiddenFor(model => model.POId)
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Product</label>
+                    <div id="ProductId"></div>
+                    @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control", @placeholder = "Quantity", @required = "true", @type = "number" } })
+                    @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @placeholder = "Price", @required = "true", @type = "number" } })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Discount (%)</label>
+                    @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Discount", @required = "true", @type = "number" } })
+                </div>
+                @*<div class="form-group">
+                    @Html.EditorFor(model => model.Discount, new { htmlAttributes = new { @class = "form-control", @placeholder = "Quantity", @disabled = "true", @type = "number" } })
+                </div>*@
+            </div>
+
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12" style="text-align:center">
+                <button type="button" class="btn btn-success" id="btnSubmit">
+                    <i class="fa fa-save"></i>   @if (Model.PODetailId > 0)
+                    {<span>Update</span> }
+                    else
+                    {<span>Save</span>}
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-close"></i>Close</button>
+
+            </div>
+        </div>
+    }
+</div>
+
+
+<script>
+    var _FullName;
+    $(document).ready(function () {
+        BindDropDownList("ProductId", '/Product/Productdrp', true, "Select Product", null);
+
+        var _Type = '@Model.ProductId';
+
+        if (_Type > 0)
+        {
+            $("#SelectProductId").val(_Type);
+        }
+
+        $("#SelectProductId").change(function () {
+            var _Id = $("#SelectProductId").val();
+            AjaxCall('/Product/GetProductById', JSON.stringify({ "Id": _Id }), GetData, null);
+        });
+
+        $("#btnSubmit").click(function () {
+            var myformdata = $("#myForm").serialize();
+            if (!$("#myForm").valid()) {
+                return false;
+            }
+            formpost("/PoDetail/SavePoItem", myformdata, GetFormStatus);
+            location.reload();
+        })
+
+    });
+
+    function GetData(data) {
+        $("#Price").val("");
+        $("#Price").val(data.Price);
+    }
+
+    function GetFormStatus(data) {
+        $("#ModelSubscription").modal("hide");
+
+        if (data == "true") {
+            BindGridWOption("PoItemsList", "PoItemsList", '/PoDetail/GetPOItemsList/' + getUrlVars()["Id"]);
+            showSuccessToast("PO Item saved Successfully.");
+        }
+        else {
+            showErrorToast("Something Went Wrong");
+        }
+
+        location.reload();
+    }
+</script>
