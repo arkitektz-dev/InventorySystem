@@ -52,7 +52,7 @@ namespace InventorySystem.Controllers
                 var _Data = _Entity.Suppliers.Where(x => x.SupplierId == Id).SingleOrDefault();
                 if (_Data != null)
                 {
-                    _Entity.Entry(_Data).State = System.Data.Entity.EntityState.Deleted;
+                    _Entity.Entry(_Data).State = EntityState.Deleted;
                     _Entity.SaveChanges();
                     return Json("true", JsonRequestBehavior.AllowGet);
                 }
@@ -64,6 +64,49 @@ namespace InventorySystem.Controllers
                 return Json("false", JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public virtual JsonResult SaveSupplierApi(Supplier model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return Json("false", JsonRequestBehavior.AllowGet);
+
+                if (model.SupplierId == 0)
+                {
+                    var obj = _Entity.Suppliers.AsNoTracking().Where(x => x.Name == model.Name).FirstOrDefault();
+
+                    if (obj != null)
+                    {
+                        return Json("false", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    var row = _Entity.Suppliers.Where(x => x.SupplierId == model.SupplierId).FirstOrDefault();
+                    if (row != null)
+                    {
+
+                        _Entity.Entry(row).CurrentValues.SetValues(model);
+
+                        _Entity.SaveChanges();
+
+                        return Json("true", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                _Entity.Entry(model).State = (model.SupplierId == 0 ? EntityState.Added : EntityState.Modified);
+                _Entity.SaveChanges();
+
+
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("[]", JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public virtual JsonResult SaveSupplier(Supplier model, FormCollection frm)
         {
@@ -75,9 +118,11 @@ namespace InventorySystem.Controllers
                 if (model.SupplierId == 0)
                 {
                     var obj = _Entity.Suppliers.AsNoTracking().Where(x => x.Name == model.Name).FirstOrDefault();
-                    if (obj != null)
-                        return Json("false", JsonRequestBehavior.AllowGet);
 
+                    if (obj != null)
+                    {
+                        return Json("false", JsonRequestBehavior.AllowGet);
+                    }
                 }
                 _Entity.Entry(model).State = (model.SupplierId == 0 ? EntityState.Added : EntityState.Modified);
                 _Entity.SaveChanges();
@@ -89,6 +134,24 @@ namespace InventorySystem.Controllers
                 return Json("[]", JsonRequestBehavior.AllowGet);
             }
         }
+
+        public virtual JsonResult GetSupplierList()
+        {
+            if (Session["UserID"] != null)
+            {
+                var lst = _Entity.Suppliers.ToList();
+                GridDataSource gobj = new GridDataSource
+                {
+                    data = lst.ToList(),
+                    length = lst.Count
+                };
+                return Json(gobj, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+                return Json("[]");
+        }
+
         [HttpPost]
         public JsonResult Supplierdrp()
         {
@@ -108,21 +171,6 @@ namespace InventorySystem.Controllers
                 return Json("[]", JsonRequestBehavior.AllowGet);
             }
         }
-        public virtual JsonResult GetSupplierList()
-        {
-            if (Session["UserID"] != null)
-            {
-                var lst = _Entity.Suppliers.ToList();
-                GridDataSource gobj = new GridDataSource
-                {
-                    data = lst.ToList(),
-                    length = lst.Count
-                };
-                return Json(gobj, JsonRequestBehavior.AllowGet);
 
-            }
-            else
-                return Json("[]");
-        }
     }
 }

@@ -970,7 +970,7 @@
     <Compile Include="Controllers\PoDetailController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\StockController.cs" />
-    <Compile Include="Controllers\Supplier.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1177,9 +1177,7 @@
     <Content Include="Views\Type\Index.cshtml" />
     <Content Include="Views\Type\_AddEditType.cshtml" />
     <Content Include="Views\Warehouse\Index.cshtml" />
-    <Content Include="Views\Warehouse\_AddEditWarehouse.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
-    <Content Include="Views\Supplier\_AddEditSupplier.cshtml" />
     <Content Include="Views\PO\Index.cshtml" />
     <Content Include="Views\PO\_AddEditPo.cshtml" />
     <Content Include="Views\PoDetail\Index.cshtml" />

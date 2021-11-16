@@ -4,14 +4,20 @@ function GetCol(tbl) {
         case "SupplierList":
             return [
                 { title: "Id", data: "SupplierId", visible: false },
-                { title: "Supplier", data: "Supplier1" },
+                { title: "Name", data: "Name" },
+                { title: "Address", data: "Address" },
+                { title: "Street", data: "Street" },
                 { title: "Suburb", data: "Suburb" },
+                { title: "City", data: "City" },
+                { title: "Country", data: "Country" },
+                { title: "PhoneNo", data: "PhoneNo" },
+                { title: "TermOfPayment", data: "TermOfPayment" },
                 {
                     title: "Action",
                     data: null,
                     render: function (data, type, row) {
-                        btnview = '<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="OnGridEdit(this)" title="Edit;"> <i class="fa fa-edit"></i></button>';
-                        btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnGridDelete(this)" title="Delete Record"> <i class="fa fa-trash"></i></button>';
+                        btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditSupplier('${data.Address}','${data.City}','${data.Country}','${data.Description}','${data.IsDeleted}','${data.Name}','${data.PhoneNo}','${data.Suburb}',${data.SupplierId},'${data.Street}' )" title="Edit;"> <i class="fa fa-edit"></i></button>`;
+                        btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeleteSupplier(' + data.SupplierId + ')" title="Delete Record"> <i class="fa fa-trash"></i></button>';
                         return btnview;
                     },
                     width: "200px",
@@ -88,7 +94,6 @@ function GetCol(tbl) {
                     title: "Action",
                     data: null,
                     render: function (data, type, row) {
-                        console.log(data); 
                         btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditWarehouse('${data.Address}','${data.City}','${data.Country}','${data.Description}','${data.IsDeleted}','${data.Name}','${data.PhoneNo}','${data.Suburb}',${data.WarehouseId},'${data.Street}' )" title="Edit;"> <i class="fa fa-edit"></i></button>`;
                         btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeleteWarehouse(' + data.WarehouseId +')" title="Delete Record"> <i class="fa fa-trash"></i></button>';
                         return btnview;
