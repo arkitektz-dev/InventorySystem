@@ -83,13 +83,7 @@ function GetCol(tbl) {
             return [
                 { title: "Id", data: "WarehouseId", visible: false },
                 { title: "Name", data: "Name" },
-                { title: "Address", data: "Address" },
-                { title: "Street", data: "Street" },
-                { title: "Suburb", data: "Suburb" },
                 { title: "City", data: "City" },
-                { title: "Country", data: "Country" },
-                { title: "PhoneNo", data: "PhoneNo" },
-                { title: "Description", data: "Description" },
                 {
                     title: "Action",
                     data: null,

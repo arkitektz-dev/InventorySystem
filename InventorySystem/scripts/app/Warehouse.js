@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-	BindGridWOption("WarehouseList", "WarehouseList", '/Warehouse/GetWarehouseList');
+	BindGridWarehouse();
 
 	$('#closeButton').click(function () {
 		$('#Val_Name').html("");
@@ -31,7 +31,6 @@
 
 	$('#btnSubmit').click(function () {
 		
-		console.log('test test');
 		const warehouseId = $('#WarehouseId').val();
 		let isFormComplete = true;
 		const warehouseName = $('#WarehouseName').val();
@@ -103,7 +102,7 @@
 					setTimeout(() => {
 						$('#AddWarehouse').css('display', 'none');
 						$('#WarehouseLists').css('display', '');
-						BindGrid("WarehouseList", "WarehouseList", '/Warehouse/GetWarehouseList');
+						BindGridWarehouse();
 					},50)
 
 				
@@ -120,10 +119,8 @@
 	})
 });
 
-function EditWarehouse(Address, City, Country, Description, IsDeleted, Name, PhoneNo, Suburb, WarehouseId, Street) {
+function EditWarehouse(Address, City, Country, Description, Name, PhoneNo, Suburb, WarehouseId, Street) {
 
-	console.log(Street)
-	
 	$('#WarehouseId').val(WarehouseId);
 	$('#WarehouseName').val(Name);
 	$('#WarehouseAddress').val(Address);
@@ -171,8 +168,8 @@ function DeleteWarehouse(warehouseId) {
 						)
 
 						setTimeout(() => {
-							BindGrid("WarehouseList", "WarehouseList", '/Warehouse/GetWarehouseList');
-						}, 2000)
+							BindGridWarehouse();
+						}, 50)
 
 
 					}
@@ -230,10 +227,60 @@ function OnGridDelete(e) {
 }
 function GetDeletedStatus(data) {
 	if (data == "true") {
-		BindGrid("WarehouseList", "WarehouseList", '/Warehouse/GetWarehouseList');
+		BindGridWarehouse();
 		showSuccessToast("Warehouse Deleted Successfully.");
 	}
 	else {
 		showErrorToast("Something Went Wrong");
 	}
+}
+
+function BindGridWarehouse() {
+	$('#WarehouseList').html("");
+	$('#WarehouseList').append('<table id="GridWarehouseList" class="table table-striped dataTable no-footer" width="100%"></table>');
+	$('#GridWarehouseList').DataTable({
+		sAjaxSource: '/Warehouse/GetWarehouseList',
+		columns: [
+			{ title: "Id", data: "WarehouseId", visible: false },
+			{ title: "Name", data: "Name" },
+			{ title: "City", data: "City" },
+			{
+				title: "Action",
+				data: null,
+				render: function (data, type, row) {
+					btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditWarehouse('${data.Address}','${data.City}','${data.Country}','${data.Description}','${data.IsDeleted}','${data.Name}','${data.PhoneNo}','${data.Suburb}',${data.WarehouseId},'${data.Street}' )" title="Edit;"> <i class="fa fa-edit"></i></button>`;
+					btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeleteWarehouse(' + data.WarehouseId + ')" title="Delete Record"> <i class="fa fa-trash"></i></button>';
+					return btnview;
+				},
+				width: "200px",
+				sortable: false,
+				className: "text-center"
+			}
+		],
+		dom: 'Blfrtip',
+		buttons: [
+			{
+				extend: 'excelHtml5',
+				exportOptions: {
+					columns: [0, 1]
+				}
+			},
+			{
+				extend: 'pdfHtml5',
+				exportOptions: {
+					columns: [0, 1]
+				}
+			}
+		],
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"pageLength": 10,
+		initComplete: function () {
+			var btns = $('.dt-button');
+			btns.addClass('btn btn-success btn-sm');
+			btns.css('margin', '2px');
+			btns.removeClass('dt-button');
+
+		}
+	});
+
 }

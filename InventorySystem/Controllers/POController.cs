@@ -114,7 +114,7 @@ namespace InventorySystem.Controllers
         {
             if (Session["UserID"] != null)
             {
-                var lst = _Entity.PoVs.ToList();
+                var lst = _Entity.POes.ToList();
                 GridDataSource gobj = new GridDataSource
                 {
                     data = lst.ToList(),

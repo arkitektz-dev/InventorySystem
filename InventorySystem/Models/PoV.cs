@@ -22,7 +22,6 @@ namespace InventorySystem.Models
         public string Description { get; set; }
         public string DeliveryAddress { get; set; }
         public string RefNumber { get; set; }
-        public string Supplier { get; set; }
         public string PONumber { get; set; }
         public string TermsOfPayment { get; set; }
     }

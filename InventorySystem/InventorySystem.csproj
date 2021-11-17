@@ -964,6 +964,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\POController.cs" />
@@ -1186,6 +1187,7 @@
     <Content Include="Views\Stock\_AddEditStock.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\InventorySystem20211005185001 - Web Deploy.pubxml" />
+    <Content Include="Views\Customer\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

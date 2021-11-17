@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-	BindGridWOption("SupplierList", "SupplierList", '/Supplier/GetSupplierList');
+	BindGridSupplier();
 
 	$('#closeButton').click(function () {
 		$('#Val_Name').html("");
@@ -102,7 +102,7 @@
 					setTimeout(() => {
 						$('#AddSupplier').css('display', 'none');
 						$('#SupplierLists').css('display', '');
-						BindGrid("SupplierList", "SupplierList", '/Supplier/GetSupplierList');
+						BindGridSupplier();
 					}, 50)
 
 
@@ -170,7 +170,7 @@ function DeleteSupplier(supplierId) {
 						)
 
 						setTimeout(() => {
-							BindGrid("SupplierList", "SupplierList", '/Supplier/GetSupplierList');
+							BindGridSupplier();
 						}, 2000)
 
 
@@ -229,10 +229,60 @@ function OnGridDelete(e) {
 }
 function GetDeletedStatus(data) {
 	if (data == "true") {
-		BindGrid("SupplierList", "SupplierList", '/Supplier/GetSupplierList');
+		BindGridSupplier();
 		showSuccessToast("Vendor Deleted Successfully.");
 	}
 	else {
 		showErrorToast("Something Went Wrong");
 	}
+}
+
+function BindGridSupplier() {
+	$('#SupplierList').html("");
+	$('#SupplierList').append('<table id="GridSupplierList" class="table table-striped dataTable no-footer" width="100%"></table>');
+	$('#GridSupplierList').DataTable({
+		sAjaxSource: '/Supplier/GetSupplierList',
+		columns: [
+			{ title: "Id", data: "SupplierId", visible: false },
+			{ title: "Name", data: "Name" },
+			{ title: "City", data: "City" },
+			{
+				title: "Action",
+				data: null,
+				render: function (data, type, row) {
+					btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditSupplier('${data.Address}','${data.City}','${data.Country}','${data.Description}','${data.IsDeleted}','${data.Name}','${data.PhoneNo}','${data.Suburb}',${data.SupplierId},'${data.Street}' )" title="Edit;"> <i class="fa fa-edit"></i></button>`;
+					btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeleteSupplier(' + data.SupplierId + ')" title="Delete Record"> <i class="fa fa-trash"></i></button>';
+					return btnview;
+				},
+				width: "200px",
+				sortable: false,
+				className: "text-center"
+			}
+		],
+		dom: 'Blfrtip',
+		buttons: [
+			{
+				extend: 'excelHtml5',
+				exportOptions: {
+					columns: [0, 1]
+				}
+			},
+			{
+				extend: 'pdfHtml5',
+				exportOptions: {
+					columns: [0, 1]
+				}
+			}
+		],
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+		"pageLength": 10,
+		initComplete: function () {
+			var btns = $('.dt-button');
+			btns.addClass('btn btn-success btn-sm');
+			btns.css('margin', '2px');
+			btns.removeClass('dt-button');
+
+		}
+	});
+
 }
