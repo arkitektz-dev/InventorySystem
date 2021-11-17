@@ -42,7 +42,7 @@
 		const postalCode = $('#PostalCode').val();
 		const country = $('#Country').val();
 		const phone = $('#Phone').val();
-		const description = $('#Description').val();
+		const termOfPayment = $('#TermOfPayment').val();
 
 		if (supplierName === '') {
 			$('#Val_Name').html("Please enter name");
@@ -82,7 +82,7 @@
 			PostalCode: postalCode,
 			Country: country,
 			PhoneNo: phone,
-			Description: description,
+			TermOfPayment: termOfPayment,
 			IsDeleted: false
 		};
 
