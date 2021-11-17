@@ -102,13 +102,15 @@
           </Key>
           <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="350" />
-          <Property Name="Address" Type="varchar" MaxLength="350" />
           <Property Name="Street" Type="varchar" MaxLength="500" />
-          <Property Name="Suburb" Type="varchar" MaxLength="500" />
+          <Property Name="Address" Type="varchar" MaxLength="350" />
           <Property Name="City" Type="varchar" MaxLength="150" />
+          <Property Name="State" Type="varchar" MaxLength="500" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
           <Property Name="Country" Type="varchar" MaxLength="150" />
           <Property Name="PhoneNo" Type="varchar" MaxLength="500" />
           <Property Name="TermOfPayment" Type="varchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -125,10 +127,11 @@
           </Key>
           <Property Name="WarehouseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="350" />
-          <Property Name="Address" Type="varchar" MaxLength="350" />
           <Property Name="Street" Type="nvarchar" MaxLength="100" />
-          <Property Name="Suburb" Type="nvarchar" MaxLength="500" />
+          <Property Name="Address" Type="varchar" MaxLength="350" />
           <Property Name="City" Type="nvarchar" MaxLength="500" />
+          <Property Name="State" Type="nvarchar" MaxLength="500" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
           <Property Name="Country" Type="nvarchar" MaxLength="100" />
           <Property Name="PhoneNo" Type="nvarchar" MaxLength="100" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -522,12 +525,13 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Suburb" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -537,11 +541,13 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
           <Property Name="Street" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Suburb" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="PhoneNo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="TermOfPayment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -744,12 +750,13 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySetMapping Name="Warehouses">
             <EntityTypeMapping TypeName="InventorySystemModel.Warehouse">
               <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Suburb" ColumnName="Suburb" />
                 <ScalarProperty Name="Street" ColumnName="Street" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -760,11 +767,13 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="InventorySystemModel.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="TermOfPayment" ColumnName="TermOfPayment" />
                 <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Suburb" ColumnName="Suburb" />
                 <ScalarProperty Name="Street" ColumnName="Street" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

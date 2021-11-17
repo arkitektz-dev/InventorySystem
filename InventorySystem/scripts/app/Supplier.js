@@ -5,7 +5,7 @@
 		$('#Val_Name').html("");
 		$('#Val_Address').html("");
 		$('#SupplierName').removeClass("show-warning");
-		$('#SupplierAddress').removeClass("show-warning");
+		$('#Address').removeClass("show-warning");
 		$('#AddSupplier').css('display', 'none');
 		$('#SupplierLists').css('display', '');
 
@@ -20,9 +20,10 @@
 
 		$('#SupplierId').val(0);
 		$('#SupplierName').val('');
-		$('#SupplierAddress').val('');
+		$('#Address').val('');
 		$('#Street').val('');
-		$('#Suburb').val('');
+		$('#State').val('');
+		$('#PostalCode').val('');
 		$('#City').val('');
 		$('#Country').val('NZ');
 		$('#Phone').val('');
@@ -31,14 +32,14 @@
 
 	$('#btnSubmit').click(function () {
 
-		console.log('test test');
 		const supplierId = $('#SupplierId').val();
 		let isFormComplete = true;
 		const supplierName = $('#SupplierName').val();
-		const supplierAddress = $('#SupplierAddress').val();
+		const supplierAddress = $('#Address').val();
 		const street = $('#Street').val();
-		const suburb = $('#Suburb').val();
 		const city = $('#City').val();
+		const state = $('#State').val();
+		const postalCode = $('#PostalCode').val();
 		const country = $('#Country').val();
 		const phone = $('#Phone').val();
 		const description = $('#Description').val();
@@ -55,11 +56,11 @@
 		if (supplierAddress === '') {
 			//toastr.error('Address is required');
 			$('#Val_Address').html("Please enter address");
-			$('#SupplierAddress').addClass("show-warning");
+			$('#Address').addClass("show-warning");
 			isFormComplete = false;
 		} else {
 			$('#Val_Address').html("");
-			$('#SupplierAddress').removeClass("show-warning");
+			$('#Address').removeClass("show-warning");
 		}
 
 
@@ -76,8 +77,9 @@
 			Name: supplierName,
 			Address: supplierAddress,
 			Street: street,
-			Suburb: suburb,
 			City: city,
+			State: state,
+			PostalCode: postalCode,
 			Country: country,
 			PhoneNo: phone,
 			Description: description,
@@ -119,19 +121,18 @@
 	})
 });
 
-function EditSupplier(Address, City, Country, Description, IsDeleted, Name, PhoneNo, Suburb, SupplierId, Street) {
-
-	console.log(Street)
-
+function EditSupplier(Address, City, Country, TermOfPayment, IsDeleted, Name, PhoneNo, State, PostalCode, WarehouseId, Street) {
+	console.log(TermOfPayment);
 	$('#SupplierId').val(SupplierId);
 	$('#SupplierName').val(Name);
-	$('#SupplierAddress').val(Address);
+	$('#Address').val(Address);
 	$('#Street').val(Street);
-	$('#Suburb').val(Suburb);
 	$('#City').val(City);
+	$('#State').val(State);
+	$('#PostalCode').val(PostalCode);
 	$('#Country').val(Country);
 	$('#Phone').val(PhoneNo);
-	$('#Description').val(Description);
+	$('#TermOfPayment').val(TermOfPayment);
 
 
 
@@ -250,7 +251,7 @@ function BindGridSupplier() {
 				title: "Action",
 				data: null,
 				render: function (data, type, row) {
-					btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditSupplier('${data.Address}','${data.City}','${data.Country}','${data.Description}','${data.IsDeleted}','${data.Name}','${data.PhoneNo}','${data.Suburb}',${data.SupplierId},'${data.Street}' )" title="Edit;"> <i class="fa fa-edit"></i></button>`;
+					btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditSupplier('${data.Address}','${data.City}','${data.Country}','${data.TermOfPayment}','${data.IsDeleted}','${data.Name}','${data.PhoneNo}','${data.State}','${data.PostalCode}',${data.SupplierId},'${data.Street}' )" title="Edit;"> <i class="fa fa-edit"></i></button>`;
 					btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeleteSupplier(' + data.SupplierId + ')" title="Delete Record"> <i class="fa fa-trash"></i></button>';
 					return btnview;
 				},

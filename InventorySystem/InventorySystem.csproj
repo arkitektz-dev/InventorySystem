@@ -935,6 +935,7 @@
     <Content Include="scripts\app\ProductType.js" />
     <Content Include="scripts\app\Product.js" />
     <Content Include="scripts\Controls\AllDateFormat.js" />
+    <Content Include="scripts\Controls\jsAddress.js" />
     <Content Include="scripts\Controls\jsColumns.js" />
     <Content Include="scripts\Controls\jsControls.min.js" />
     <Content Include="scripts\Controls\jsCustomValidation.js" />

@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" href="~/favicon.ico">
     <link rel="icon" href="~/favicon.ico">
 
-    <title>@ViewBag.Title :: Inventory System</title> 
+    <title>@ViewBag.Title :: Inventory System</title>
     <link href="~/Content/assets/css/StyleSheet1.css" rel="stylesheet" />
     <script src="~/Content/assets/js/jquery.min.js"></script>
     <script src="~/Scripts/jsDataTable/jquery.dataTables.min.js"></script>
@@ -42,6 +42,8 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+
+   
 
 
 
@@ -346,27 +348,15 @@
     @*<script src="~/Scripts/jquery.toast.js"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="~/Scripts/app/jsLayout.js"></script>
-  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn2zmskDYM7UsgiySXH4kUsZzUZBgLzXc&libraries=places&callback=initAutocomplete&v=weekly"
+            async>
+    </script>
+
     <script>
         var IsArabic;
         var IsSessionExpired;
         var IsMobileApp;
         IsSessionExpired = '@Session["isSessionTimeOut"]';
-        @*IsArabic = '@SessionManager.IsArabic';
-
-        $(document).ready(function () {
-            var success = '@TempData["Result"]';
-            if (success != '') {
-                showSuccessToast(success);
-            }
-            var error = '@TempData["Error"]';
-            if (error != '') {
-                showErrorToast(error);
-            }
-        });
-        function SetLanguage() {
-            AjaxCall('/Culture/ChangeCultureApp', null, GetStatus, null);
-        }*@
         function GetStatus(data) {
             if (data != null)
                 window.location.href = data;

@@ -22,36 +22,29 @@
 
     @using (Html.BeginForm("AddEditSpec", "Specs", null, FormMethod.Post, new { @id = "myForm", @class = "forms-sample", enctype = "multipart/form-data", role = "form", onsubmit = "return validateForm(this)" }))
     {
-    <div class="row">
+<div class="row">
 
-        <input type="hidden" id="WarehouseId" />
-        <div class="col-md-12">
-            <div class="form-group">
-                <label>Warehouse Name*</label>
-                <input type="text" class="form-control" placeholder="Warehouse Name" required="required" id="WarehouseName" />
-                <span class="text-danger" id="Val_Name"></span>
-            </div>
+    <input type="hidden" id="WarehouseId" />
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Warehouse Name*</label>
+            <input type="text" class="form-control" placeholder="Warehouse Name" required="required" id="WarehouseName" />
+            <span class="text-danger" id="Val_Name"></span>
         </div>
+    </div>
 
     <div class="col-md-12">
         <div class="form-group">
-            <label>Address*</label>
-            <input type="text" class="form-control" placeholder="Address" required="required" id="WarehouseAddress" />
+            <label>Street Address*</label>
+            <input type="text" class="form-control" placeholder="Address" required="required" id="Address" />
             <span class="text-danger" id="Val_Address"></span>
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            <label>Street</label>
+            <label>Apartment, unit or suite #</label>
             <input type="text" class="form-control" placeholder="Street" required="required" id="Street" />
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="form-group">
-            <label>Suburb</label>
-            <input type="text" class="form-control" placeholder="Suburb" required="required" id="Suburb" />
         </div>
     </div>
 
@@ -62,6 +55,22 @@
         </div>
     </div>
 
+
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>State</label>
+            <input type="text" class="form-control" placeholder="State" required="required" id="State" />
+        </div>
+    </div>
+
+
+    <div class="col-md-4">
+        <div class="form-group">
+            <label>Postal Code</label>
+            <input type="text" class="form-control" placeholder="Postal Code" required="required" id="PostalCode" />
+        </div>
+    </div>
 
 
     <div class="col-md-4">
@@ -372,5 +381,5 @@
 </div>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="~/scripts/app/Po.js"></script>
+<script src="~/scripts/Controls/jsAddress.js"></script>
 <script src="~/scripts/app/Warehouse.js"></script>

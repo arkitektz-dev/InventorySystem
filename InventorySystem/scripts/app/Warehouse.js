@@ -5,7 +5,7 @@
 		$('#Val_Name').html("");
 		$('#Val_Address').html("");
 		$('#WarehouseName').removeClass("show-warning");
-		$('#WarehouseAddress').removeClass("show-warning");
+		$('#Address').removeClass("show-warning");
 		$('#AddWarehouse').css('display', 'none');
 		$('#WarehouseLists').css('display', '');
 
@@ -20,9 +20,10 @@
 
 		$('#WarehouseId').val(0);
 		$('#WarehouseName').val('');
-		$('#WarehouseAddress').val('');
+		$('#Address').val('');
 		$('#Street').val('');
-		$('#Suburb').val('');
+		$('#State').val('');
+		$('#PostalCode').val('');
 		$('#City').val('');
 		$('#Country').val('NZ');
 		$('#Phone').val('');
@@ -30,20 +31,20 @@
 	});
 
 	$('#btnSubmit').click(function () {
-		
+
 		const warehouseId = $('#WarehouseId').val();
 		let isFormComplete = true;
 		const warehouseName = $('#WarehouseName').val();
-		const warehouseAddress = $('#WarehouseAddress').val();
+		const warehouseAddress = $('#Address').val();
 		const street = $('#Street').val();
-		const suburb = $('#Suburb').val();
 		const city = $('#City').val();
+		const state = $('#State').val();
+		const postalCode = $('#PostalCode').val();
 		const country = $('#Country').val();
 		const phone = $('#Phone').val();
 		const description = $('#Description').val();
 
 		if (warehouseName === '') {
-			//toastr.error('Warehouse name is required');
 			$('#Val_Name').html("Please enter name");
 			$('#WarehouseName').addClass("show-warning");
 			isFormComplete = false;
@@ -55,14 +56,15 @@
 		if (warehouseAddress === '') {
 			//toastr.error('Address is required');
 			$('#Val_Address').html("Please enter address");
-			$('#WarehouseAddress').addClass("show-warning");
+			$('#Address').addClass("show-warning");
 			isFormComplete = false;
 		} else {
 			$('#Val_Address').html("");
-			$('#WarehouseAddress').removeClass("show-warning");
+			$('#Address').removeClass("show-warning");
 		}
 
 
+		console.log('all good here')
 
 
 		if (isFormComplete == false) {
@@ -76,22 +78,23 @@
 			Name: warehouseName,
 			Address: warehouseAddress,
 			Street: street,
-			Suburb: suburb,
 			City: city,
+			State: state,
+			PostalCode: postalCode,
 			Country: country,
 			PhoneNo: phone,
 			Description: description,
 			IsDeleted : false
 		};
 
- 
+		console.log(warehouse)
 
 		$.ajax({
 			type: "POST",
 			url: "/Warehouse/SaveWarehouseApi",
 			data: { model: warehouse }, 
 			success: function (response) {
-
+				console.log('call sucessful')
 				
 
 				if (response == "true") {
@@ -119,18 +122,18 @@
 	})
 });
 
-function EditWarehouse(Address, City, Country, Description, Name, PhoneNo, Suburb, WarehouseId, Street) {
+function EditWarehouse(Address, City, Country, Description, IsDeleted, Name, PhoneNo, State, PostalCode, WarehouseId, Street) {
 
 	$('#WarehouseId').val(WarehouseId);
 	$('#WarehouseName').val(Name);
-	$('#WarehouseAddress').val(Address);
+	$('#Address').val(Address);
 	$('#Street').val(Street);
-	$('#Suburb').val(Suburb);
 	$('#City').val(City);
+	$('#State').val(State);
+	$('#PostalCode').val(PostalCode);
 	$('#Country').val(Country);
 	$('#Phone').val(PhoneNo);
 	$('#Description').val(Description);
-
 
 
 	$('#hiddenform').text('Edit Warehouse');
@@ -187,23 +190,6 @@ function DeleteWarehouse(warehouseId) {
 
 }
 
-function OnAddNew() {
-	
-	//var url = "/Warehouse/AddEditWarehouse?Id=" + 0;
-	//$("#SubscriptionModelBody").load(url, function () {
-	//	$("#ModelSubscription").modal("show");
-	//});
-}
-
-function OnGridEdit(e) {
-	var table = $('#GridWarehouseList').DataTable();
-	var data = table.row(e.parentNode).data();
-	var url = "/Warehouse/AddEditWarehouse?Id=" + data.WarehouseId;
-	$("#SubscriptionModelBody").load(url, function () {
-		$("#ModelSubscription").modal("show");
-	});
-}
-
 function OnGridDelete(e) {
 	var data, GetDeleteStatus;
 	var table = $('#GridWarehouseList').DataTable();
@@ -225,6 +211,7 @@ function OnGridDelete(e) {
 			}
 		});
 }
+
 function GetDeletedStatus(data) {
 	if (data == "true") {
 		BindGridWarehouse();
@@ -238,6 +225,7 @@ function GetDeletedStatus(data) {
 function BindGridWarehouse() {
 	$('#WarehouseList').html("");
 	$('#WarehouseList').append('<table id="GridWarehouseList" class="table table-striped dataTable no-footer" width="100%"></table>');
+	$('#WarehouseList').append('<table id="GridWarehouseList" class="table table-striped dataTable no-footer" width="100%"></table>');
 	$('#GridWarehouseList').DataTable({
 		sAjaxSource: '/Warehouse/GetWarehouseList',
 		columns: [
@@ -248,7 +236,7 @@ function BindGridWarehouse() {
 				title: "Action",
 				data: null,
 				render: function (data, type, row) {
-					btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditWarehouse('${data.Address}','${data.City}','${data.Country}','${data.Description}','${data.IsDeleted}','${data.Name}','${data.PhoneNo}','${data.Suburb}',${data.WarehouseId},'${data.Street}' )" title="Edit;"> <i class="fa fa-edit"></i></button>`;
+					btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditWarehouse('${data.Address}','${data.City}','${data.Country}','${data.Description}','${data.IsDeleted}','${data.Name}','${data.PhoneNo}','${data.State}','${data.PostalCode}',${data.WarehouseId},'${data.Street}' )" title="Edit;"> <i class="fa fa-edit"></i></button>`;
 					btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeleteWarehouse(' + data.WarehouseId + ')" title="Delete Record"> <i class="fa fa-trash"></i></button>';
 					return btnview;
 				},
