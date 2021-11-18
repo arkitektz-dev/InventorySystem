@@ -44,6 +44,49 @@ namespace InventorySystem.Controllers
             }
             return PartialView("_AddEditType", model);
         }
+
+        [HttpPost]
+        public virtual JsonResult SaveTypeApi(ProductType model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return Json("false", JsonRequestBehavior.AllowGet);
+
+                if (model.TypeId == 0)
+                {
+                    var obj = _Entity.ProductTypes.AsNoTracking().Where(x => x.Type == model.Type).FirstOrDefault();
+
+                    if (obj != null)
+                    {
+                        return Json("false", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    var row = _Entity.ProductTypes.Where(x => x.TypeId == model.TypeId).FirstOrDefault();
+                    if (row != null)
+                    {
+
+                        _Entity.Entry(row).CurrentValues.SetValues(model);
+
+                        _Entity.SaveChanges();
+
+                        return Json("true", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                _Entity.Entry(model).State = (model.TypeId == 0 ? EntityState.Added : EntityState.Modified);
+                _Entity.SaveChanges();
+
+
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("[]", JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public virtual JsonResult TypeDelete(int Id)
         {
