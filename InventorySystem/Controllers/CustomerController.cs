@@ -43,27 +43,49 @@ namespace InventorySystem.Controllers
             List<SelectListItem> usersList = new List<SelectListItem>();
             List<SelectListItem> customerGroupList = new List<SelectListItem>();
             List<SelectListItem> paymentTermsList = new List<SelectListItem>();
-            foreach(var usr in users)
+            SelectListItem item = new SelectListItem();
+
+            foreach (var usr in users)
             {
-                SelectListItem item = new SelectListItem();
+                item = new SelectListItem();
                 item.Value = usr.UserId.ToString();
                 item.Text = usr.UserName;
                 usersList.Add(item);
             }
+            item = new SelectListItem() { 
+                Text = "-- Select Sales Person --",
+                Value = ""
+            };
+            usersList.Insert(0, item);
+
             foreach (var grp in customerGroup)
             {
-                SelectListItem item = new SelectListItem();
+                item = new SelectListItem();
                 item.Value = grp.CustomerGroup1;
                 item.Text = grp.CustomerGroup1;
                 customerGroupList.Add(item);
             }
+            item = new SelectListItem()
+            {
+                Text = "-- Select Customer Group --",
+                Value = ""
+            };
+            customerGroupList.Insert(0, item);
+
             foreach (var term in paymentTerms)
             {
-                SelectListItem item = new SelectListItem();
+                item = new SelectListItem();
                 item.Value = term.PaymentTerm1;
                 item.Text = term.PaymentTerm1;
                 paymentTermsList.Add(item);
             }
+            item = new SelectListItem()
+            {
+                Text = "-- Select Payment Terms --",
+                Value = ""
+            };
+            paymentTermsList.Insert(0, item);
+
             ViewBag.Users = usersList;
             ViewBag.CustomerGroup = customerGroupList;
             ViewBag.PaymentTerms = paymentTermsList;

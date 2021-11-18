@@ -49,14 +49,14 @@
                         <div class="form-group">
                             <label>Customer Code*</label>
                             <input type="hidden" id="CustomerId" />
-                            <input type="text" class="form-control" placeholder="Customer Code" required="required" id="Code" disabled value="@ViewBag.lastCustomerCode" />
+                            <input type="text" class="form-control" placeholder="Customer Code" required="required" id="Code" disabled value="@ViewBag.lastCustomerCode" autocomplete="off" />
                         </div>
                     </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Customer Name*</label>
-                                <input type="text" class="form-control" placeholder="Customer Name" required="required" id="Name" />
+                                <input type="text" class="form-control" placeholder="Customer Name" required id="Name" autocomplete="off" />
                                 <span class="text-danger" id="Val_Name"></span>
                             </div>
                         </div>
@@ -70,7 +70,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Account Email*</label>
-                                <input type="email" class="form-control" placeholder="Account Email" id="AccountEmail" />
+                                <input type="email" class="form-control" placeholder="Account Email" id="AccountEmail" required autocomplete="off"/>
+                                <span class="text-danger" id="Val_Email"></span>
                             </div>
                         </div>
 
@@ -91,28 +92,28 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Credit Limit</label>
-                                <input type="text" class="form-control" placeholder="Credit Limit" id="CreditLimit" />
+                                <input type="text" class="form-control" placeholder="Credit Limit" id="CreditLimit" autocomplete="off"/>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Business Size</label>
-                                <input type="text" class="form-control" placeholder="Business Size" id="BusinessSize" />
+                                <input type="text" class="form-control" placeholder="Business Size" id="BusinessSize" autocomplete="off"/>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Discount</label>
-                                <input type="number" class="form-control" placeholder="Discount" id="Discount" maxlength="3" />
+                                <input type="number" class="form-control" placeholder="Discount" id="Discount" maxlength="3" autocomplete="off"/>
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Stop Credit</label>
-                                <input type="text" class="form-control" placeholder="Stop Credit" required="required" id="StopCredit" />
+                                <input type="text" class="form-control" placeholder="Stop Credit" required="required" id="StopCredit" autocomplete="off"/>
                             </div>
                         </div>
 

@@ -50,6 +50,7 @@
 		const CustomerId = $('#CustomerId').val();
 		const Code = $('#Code').val();
 		let isFormComplete = true;
+		let isFirstTab = false;
 		const CustomerName = $('#Name').val();
 		const UserId = $('#UserId').val();
 		const AccountEmail = $('#AccountEmail').val();
@@ -71,14 +72,41 @@
 			$('#Val_Name').html("Please enter customer name");
 			$('#Name').addClass("show-warning");
 			isFormComplete = false;
+			isFirstTab = true;
+
+			$('#nav-home-tab').addClass('active show');
+			$('#nav-customer').addClass('active show');
+			$('#nav-profile-tab').removeClass('active show');
+			$('#nav-contact-tab').removeClass('active show');
+			$('#nav-address').removeClass('active show');
+			$('#nav-contact').removeClass('active show');
 		} else {
 			$('#Val_Name').html("");
 			$('#Name').removeClass("show-warning");
 		}
 
-		if (isFormComplete == false) {
-			return;
+		if (AccountEmail === '') {
+			$('#Val_Email').html("Please enter customer email");
+			$('#AccountEmail').addClass("show-warning");
+			isFormComplete = false;
+			isFirstTab = true;
+		} else {
+			$('#Val_Email').html("");
+			$('#AccountEmail').removeClass("show-warning");
 		}
+
+		if (isFirstTab && !isFormComplete) {
+
+			$('#nav-home-tab').addClass('active show');
+			$('#nav-customer').addClass('active show');
+			$('#nav-profile-tab').removeClass('active show');
+			$('#nav-contact-tab').removeClass('active show');
+			$('#nav-address').removeClass('active show');
+			$('#nav-contact').removeClass('active show');
+
+			return;
+
+        }
 
 		const Customer = {
 			CustomerId: CustomerId,
