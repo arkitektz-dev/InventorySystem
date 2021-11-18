@@ -41,5 +41,8 @@ namespace InventorySystem.Models
         public virtual DbSet<RawMaterail> RawMaterails { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomerGroup> CustomerGroups { get; set; }
+        public virtual DbSet<PaymentTerm> PaymentTerms { get; set; }
     }
 }

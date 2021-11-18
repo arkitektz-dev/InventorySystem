@@ -929,6 +929,7 @@
     <Content Include="scripts\app\jsLayout.js" />
     <Content Include="scripts\app\Stock.js" />
     <Content Include="scripts\app\POItems.js" />
+    <Content Include="scripts\app\Customer.js" />
     <Content Include="scripts\app\Supplier.js" />
     <Content Include="scripts\app\Po.js" />
     <Content Include="scripts\app\Warehouse.js" />
@@ -978,6 +979,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CustomerGroup.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GridDataSource.cs" />
     <Compile Include="Models\InventorySystemModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -995,6 +1002,9 @@
       <DependentUpon>InventorySystemModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\PaymentTerm.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PO.cs">
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>

@@ -5,6 +5,49 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="InventorySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="UserId" Type="int" />
+          <Property Name="AccountEmail" Type="nvarchar" MaxLength="150" />
+          <Property Name="CustomerGroup" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentTerms" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreditLimit" Type="money" />
+          <Property Name="BusinessSize" Type="nvarchar" MaxLength="50" />
+          <Property Name="Discount" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="StopCredit" Type="bit" />
+          <Property Name="Street" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="350" />
+          <Property Name="City" Type="nvarchar" MaxLength="150" />
+          <Property Name="State" Type="nvarchar" MaxLength="100" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="100" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'InventorySystem.dbo.CustomerGroup' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CustomerGroup">
+          <Key>
+            <PropertyRef Name="CustomerGroup" />
+          </Key>
+          <Property Name="CustomerGroup" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="350" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'InventorySystem.dbo.PaymentTerm' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="PaymentTerm">
+          <Key>
+            <PropertyRef Name="PaymentTerm" />
+            <PropertyRef Name="Description" />
+          </Key>
+          <Property Name="PaymentTerm" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
         <EntityType Name="PO">
           <Key>
             <PropertyRef Name="POId" />
@@ -131,7 +174,7 @@
           <Property Name="Address" Type="varchar" MaxLength="350" />
           <Property Name="City" Type="nvarchar" MaxLength="500" />
           <Property Name="State" Type="nvarchar" MaxLength="500" />
-          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="10" />
           <Property Name="Country" Type="nvarchar" MaxLength="100" />
           <Property Name="PhoneNo" Type="nvarchar" MaxLength="100" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -229,6 +272,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="ProductCode" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityContainer Name="InventorySystemModelStoreContainer">
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PO" EntityType="Self.PO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PODetails" EntityType="Self.PODetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -240,6 +284,18 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomerGroup" EntityType="Self.CustomerGroup" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CustomerGroup].[CustomerGroup] AS [CustomerGroup], 
+    [CustomerGroup].[Description] AS [Description]
+    FROM [dbo].[CustomerGroup] AS [CustomerGroup]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PaymentTerm" EntityType="Self.PaymentTerm" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [PaymentTerm].[PaymentTerm] AS [PaymentTerm], 
+    [PaymentTerm].[Description] AS [Description]
+    FROM [dbo].[PaymentTerm] AS [PaymentTerm]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="PODetailV" EntityType="Self.PODetailV" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [PODetailV].[ProductCode] AS [ProductCode], 
@@ -371,6 +427,9 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="RawMaterails" EntityType="InventorySystemModel.RawMaterail" />
           <EntitySet Name="Warehouses" EntityType="InventorySystemModel.Warehouse" />
           <EntitySet Name="Suppliers" EntityType="InventorySystemModel.Supplier" />
+          <EntitySet Name="Customers" EntityType="InventorySystemModel.Customer" />
+          <EntitySet Name="CustomerGroups" EntityType="InventorySystemModel.CustomerGroup" />
+          <EntitySet Name="PaymentTerms" EntityType="InventorySystemModel.PaymentTerm" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -531,7 +590,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
           <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -548,6 +607,45 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" />
+          <Property Name="AccountEmail" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PaymentTerms" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreditLimit" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BusinessSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="StopCredit" Type="Boolean" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CustomerGroup">
+          <Key>
+            <PropertyRef Name="CustomerGroup1" />
+          </Key>
+          <Property Name="CustomerGroup1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PaymentTerm">
+          <Key>
+            <PropertyRef Name="PaymentTerm1" />
+            <PropertyRef Name="Description" />
+          </Key>
+          <Property Name="PaymentTerm1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -778,6 +876,47 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="InventorySystemModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="StopCredit" ColumnName="StopCredit" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="BusinessSize" ColumnName="BusinessSize" />
+                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+                <ScalarProperty Name="PaymentTerms" ColumnName="PaymentTerms" />
+                <ScalarProperty Name="CustomerGroup" ColumnName="CustomerGroup" />
+                <ScalarProperty Name="AccountEmail" ColumnName="AccountEmail" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerGroups">
+            <EntityTypeMapping TypeName="InventorySystemModel.CustomerGroup">
+              <MappingFragment StoreEntitySet="CustomerGroup">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CustomerGroup1" ColumnName="CustomerGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTerms">
+            <EntityTypeMapping TypeName="InventorySystemModel.PaymentTerm">
+              <MappingFragment StoreEntitySet="PaymentTerm">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PaymentTerm1" ColumnName="PaymentTerm" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

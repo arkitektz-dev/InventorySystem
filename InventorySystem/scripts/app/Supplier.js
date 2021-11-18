@@ -121,7 +121,7 @@
 	})
 });
 
-function EditSupplier(Address, City, Country, TermOfPayment, IsDeleted, Name, PhoneNo, State, PostalCode, WarehouseId, Street) {
+function EditSupplier(Address, City, Country, TermOfPayment, IsDeleted, Name, PhoneNo, State, PostalCode, SupplierId, Street) {
 	console.log(TermOfPayment);
 	$('#SupplierId').val(SupplierId);
 	$('#SupplierName').val(Name);

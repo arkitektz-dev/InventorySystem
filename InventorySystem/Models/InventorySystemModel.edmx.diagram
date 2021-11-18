@@ -21,6 +21,9 @@
         <EntityTypeShape EntityType="InventorySystemModel.RawMaterail" Width="1.5" PointX="10.5" PointY="3.75" />
         <EntityTypeShape EntityType="InventorySystemModel.Warehouse" Width="1.5" PointX="0.75" PointY="7.75" />
         <EntityTypeShape EntityType="InventorySystemModel.Supplier" Width="1.5" PointX="8.375" PointY="7.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Customer" Width="1.5" PointX="3.375" PointY="9.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.CustomerGroup" Width="1.5" PointX="5.375" PointY="9.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.PaymentTerm" Width="1.5" PointX="10.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
