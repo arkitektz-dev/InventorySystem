@@ -17,6 +17,22 @@
         outline: 0;
         left: 20%;
     }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
 </style>
 
 <div id="AddProduct" class="pt-5 px-4" style="display:none">
@@ -24,7 +40,7 @@
         Add Product
     </h4>
 
-
+    
 
     @using (Html.BeginForm("AddEditSpec", "Specs", null, FormMethod.Post, new { @id = "myForm", @class = "forms-sample", enctype = "multipart/form-data", role = "form" }))
     {
@@ -90,7 +106,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Sales Price ($) <span style="color:red">*</span></label>
-                    <input type="number" onKeyPress="if(this.value.length==5) return false;" class="form-control" placeholder="Sales Price"id="SalesPrice" />
+                    <input type="number" onKeyPress="if(this.value.length==5) return false;" class="form-control" placeholder="Sales Price" id="SalesPrice" />
                     <span class="text-danger" id="Val_SalesPrice"></span>
                 </div>
             </div>
@@ -133,7 +149,8 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Product Code</label>
-                <input type="text" class="form-control" id="RawProductCode" />
+                @*   <input type="text" class="form-control" id="RawProductCode" />*@
+                @Html.DropDownList("ProductCodeList", (IEnumerable<SelectListItem>)ViewBag.ProductCodeList, new { @class = "form-control" })
                 <span class="text-danger" id="Val_RawProductCode"></span>
             </div>
         </div>
@@ -153,14 +170,37 @@
     <div class="row">
         <div class="col-md-3">
             <div class="form-group">
-                <button type="button" class="btn btn-success" id="btnRawMaterial">
-                    <span>Add</span>
-                </button>
+                <input type="button" class="btn btn-success" id="btnAddRaw" value="Add" />
             </div>
         </div>
     </div>
+
+
+    <div class="col-md-12">
+        <table class="table" id="tbl-raw-material">
+            <thead>
+                <tr>
+                    <th>Product Code</th>
+                    <th>Quantity</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="row" style="text-align:center;">
+        <div class="col-md-3" style="margin:0 auto;">
+            <div class="form-group">
+                <input type="button" class="btn btn-success" id="btnAddRaw" value="Save" />
+            </div>
+        </div>
+    </div>
+
 </div>
 </div>
+
 
 
 <div id="ProductLists" class="py-7">
@@ -172,6 +212,8 @@
             </div>
             <div class="col-6 text-right">
                 <button type="button" id="addProduct" class="mb-3 mx-1 btn btn-md btn-theme" onclick="OnAddNew();" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus"></i> Add New</button>
+                <a href="@Url.Action("PrintProduct","Export")" target="_blank" id="addWarehouse" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Print</a>
+                <a href="@Url.Action("ExportProductExcel","Export")" target="_blank" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Excel</a>
             </div>
         </div>
     </div>

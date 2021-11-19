@@ -1,0 +1,92 @@
+﻿@model IList<InventorySystem.Models.Product>
+@{
+    ViewBag.Title = "Supplier";
+    Layout = null;
+    int counter = 1;
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .heading {
+            text-align: center;
+            color: black;
+        }
+
+        tr th {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="heading">
+        <h1>Product List</h1>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Barcode</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Product Code</th>
+                <th scope="col">Unit Of Measure</th>  
+                <th scope="col">Price</th>  
+                <th scope="col">Sale Margin</th>  
+                <th scope="col">Sale Price</th>  
+                <th scope="col">Raw Material</th>  
+                <th scope="col">Description</th>  
+                <th scope="col">Date</th>  
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                {
+                    counter++;
+                }
+
+                <tr>
+                    <td>@counter</td>
+                    <td>@item.Barcode</td>
+                    <td>@item.ProductName</td>
+                    <td>@item.ProductCode</td>
+                    <td>@item.UnitOfMeasure</td>
+                    <td>@item.Price</td>
+                    <td>@item.SalesMargin</td> 
+                    <td>@item.SalesPrice</td> 
+                    <td>@item.RawMaterial</td> 
+                    <td>@item.Description</td> 
+                    <td>@item.CreateDate</td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

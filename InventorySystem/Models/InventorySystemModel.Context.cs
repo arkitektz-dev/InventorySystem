@@ -25,7 +25,6 @@ namespace InventorySystem.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductPicture> ProductPictures { get; set; }
         public virtual DbSet<ProductStock> ProductStocks { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -45,5 +44,6 @@ namespace InventorySystem.Models
         public virtual DbSet<CustomerGroup> CustomerGroups { get; set; }
         public virtual DbSet<PaymentTerm> PaymentTerms { get; set; }
         public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
     }
 }

@@ -15,20 +15,20 @@ namespace InventorySystem.Models
     public partial class Product
     {
         public int ProductId { get; set; }
-        public string ProductCode { get; set; }
-        public string ProductName { get; set; }
-        public string Description { get; set; }
         public string Barcode { get; set; }
-        public Nullable<int> SNo { get; set; }
-        public Nullable<int> ProductTypeId { get; set; }
+        public string ProductName { get; set; }
+        public string ProductCode { get; set; }
         public string UnitOfMeasure { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<decimal> QtyInHand { get; set; }
-        public Nullable<bool> IsActive { get; set; }
         public Nullable<int> WarehouseId { get; set; }
+        public Nullable<int> ProductTypeId { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<int> SNo { get; set; }
+        public Nullable<decimal> QtyInHand { get; set; }
         public Nullable<decimal> SalesMargin { get; set; }
         public Nullable<decimal> SalesPrice { get; set; }
-        public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<bool> RawMaterial { get; set; }
+        public string Description { get; set; }
+        public Nullable<bool> IsActive { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
     }
 }

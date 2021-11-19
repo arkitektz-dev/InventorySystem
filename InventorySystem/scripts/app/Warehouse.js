@@ -245,21 +245,6 @@ function BindGridWarehouse() {
 				className: "text-center"
 			}
 		],
-		dom: 'Blfrtip',
-		buttons: [
-			{
-				extend: 'excelHtml5',
-				exportOptions: {
-					columns: [0, 1]
-				}
-			},
-			{
-				extend: 'pdfHtml5',
-				exportOptions: {
-					columns: [0, 1]
-				}
-			}
-		],
 		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
 		"pageLength": 10,
 		initComplete: function () {

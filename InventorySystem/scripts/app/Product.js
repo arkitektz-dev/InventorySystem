@@ -1,6 +1,13 @@
-﻿$(document).ready(function () {
+﻿ 
+
+var RawMaterialList = [];
+
+$(document).ready(function () {
     //BindGridWOption("ProductList", "ProductList", '/Product/GetProductList');
     BindGridProduct();
+
+
+    var tableRawMaterial = $('#tbl-raw-material').DataTable();
 
     $('#closeButton').click(function () {
         $('#Val_Name').html("");
@@ -8,6 +15,40 @@
 
         $('#AddProduct').hide()
         $('#ProductLists').show()
+    });
+
+    $('#btnAddRaw').click(function () {
+
+
+        const RawProductCodeId = $("#ProductCodeList").val();
+        const RawQuantity = $("#RawQuantity").val();
+        const RawProductText = $("#ProductCodeList option:selected").text();
+        let isFormComplete = true;
+        RawMaterialList.map((item, index) => {
+            if (item.ProductId == RawProductCodeId) {
+                alert("Product Code already exists");
+                isFormComplete = false;
+            }
+        });
+
+        if (isFormComplete == false) {
+            return;
+        }
+
+        let row = {
+            ProductId: RawProductCodeId,
+            Quantity: RawQuantity,
+            text: RawProductText
+        };
+
+        RawMaterialList.push(row);
+
+
+        tableRawMaterial.row.add([
+            RawProductText,
+            RawQuantity,
+        ]).draw(false);
+
     });
 
     $('#addProduct').click(function () {

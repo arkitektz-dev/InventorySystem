@@ -83,6 +83,7 @@ namespace InventorySystem.Controllers
             ViewBag.UomList = uomList;
             ViewBag.WarehouseList = warehouseList;
             ViewBag.ProductTypeLists = productTypeLists;
+            ViewBag.ProductCodeList = new SelectList(_Entity.Products.Where(x => x.RawMaterial == true), "ProductId", "ProductCode");
 
             return View();
         }

@@ -1,0 +1,107 @@
+﻿@model IList<InventorySystem.Models.Customer>
+@{
+    ViewBag.Title = "Supplier";
+    Layout = null;
+    int counter = 1;
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .heading {
+            text-align: center;
+            color: black;
+        }
+
+        tr th {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="heading">
+        <h1>Customer List</h1>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Code</th>
+                <th scope="col">AccountEmail</th>
+                <th scope="col">CustomerGroup</th>
+                <th scope="col">PaymentTerms</th>
+                <th scope="col">CreditLimit</th>
+                <th scope="col">BusinessSize</th>
+                <th scope="col">Discount</th>
+                <th scope="col">StopCredit</th>
+                <th scope="col">Street</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">State</th>
+                <th scope="col">PostalCode</th>
+                <th scope="col">Country</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                {
+                    counter++;
+                }
+
+                <tr>
+                    <td>@counter</td>
+                    <td>@item.Name</td>
+                    <td>@item.Code</td>
+                    <td>@item.AccountEmail</td>
+                    <td>@item.CustomerGroup</td>
+                    <td>@item.PaymentTerms</td>
+                    <td>@item.CreditLimit</td>
+                    <td>@item.BusinessSize</td>
+                    <td>@item.Discount</td>
+                    <td>@item.StopCredit</td>
+                    <td>@item.Street</td>
+                    <td>@item.Address</td>
+                    <td>@item.City</td>
+                    <td>@item.State</td>
+                    <td>@item.PostalCode</td>
+                    <td>@item.Country</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+
+
+

@@ -386,27 +386,6 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InventorySystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Barcode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="SNo" Type="Int32" />
-          <Property Name="ProductTypeId" Type="Int32" />
-          <Property Name="UnitOfMeasure" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="QtyInHand" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="WarehouseId" Type="Int32" />
-          <Property Name="SalesMargin" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SalesPrice" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="RawMaterial" Type="Boolean" />
-        </EntityType>
         <EntityType Name="ProductPicture">
           <Key>
             <PropertyRef Name="ProductPictureId" />
@@ -427,7 +406,6 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="QuantityOnHand" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityContainer Name="InventorySystemEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="ProductPictures" EntityType="Self.ProductPicture" />
           <EntitySet Name="ProductStocks" EntityType="Self.ProductStock" />
           <EntitySet Name="Users" EntityType="InventorySystemModel.User" />
@@ -447,6 +425,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="CustomerGroups" EntityType="InventorySystemModel.CustomerGroup" />
           <EntitySet Name="PaymentTerms" EntityType="InventorySystemModel.PaymentTerm" />
           <EntitySet Name="UnitOfMeasures" EntityType="InventorySystemModel.UnitOfMeasure" />
+          <EntitySet Name="Products" EntityType="InventorySystemModel.Product" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -671,34 +650,33 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="UnitOfMeasure1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Barcode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ProductCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="UnitOfMeasure" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="ProductTypeId" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SNo" Type="Int32" />
+          <Property Name="QtyInHand" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="SalesMargin" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalesPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="RawMaterial" Type="Boolean" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="InventorySystemModelStoreContainer" CdmEntityContainer="InventorySystemEntities">
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="InventorySystemModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="RawMaterial" ColumnName="RawMaterial" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
-                <ScalarProperty Name="SalesMargin" ColumnName="SalesMargin" />
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
-                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="QtyInHand" ColumnName="QtyInHand" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductPictures">
             <EntityTypeMapping TypeName="InventorySystemModel.ProductPicture">
               <MappingFragment StoreEntitySet="ProductPictures">
@@ -953,6 +931,28 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
               <MappingFragment StoreEntitySet="UnitOfMeasure">
                 <ScalarProperty Name="UnitOfMeasure1" ColumnName="UnitOfMeasure" />
                 <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="InventorySystemModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RawMaterial" ColumnName="RawMaterial" />
+                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+                <ScalarProperty Name="SalesMargin" ColumnName="SalesMargin" />
+                <ScalarProperty Name="QtyInHand" ColumnName="QtyInHand" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

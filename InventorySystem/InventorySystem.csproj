@@ -43,11 +43,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClosedXML, Version=0.95.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.95.4\lib\net46\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.0.10.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.0.10\lib\net20\ExcelNumberFormat.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
@@ -68,8 +77,19 @@
     <Reference Include="Microsoft.Net.Http.Headers, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Net.Http.Headers.2.2.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.4.0\lib\net40\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.0.1\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.0.0\lib\net46\System.IO.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
@@ -105,6 +125,7 @@
     <Reference Include="netstandard">
       <Private>True</Private>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -130,6 +151,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\auth\css\main.css" />
+    <Content Include="Content\assets\auth\css\util.css" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\css\font-awesome.css" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\css\font-awesome.min.css" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\HELP-US-OUT.txt" />
+    <Content Include="Content\assets\auth\js\main.js" />
+    <Content Include="Content\assets\auth\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\assets\auth\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\assets\auth\vendor\jquery\jquery-3.2.1.min.js" />
     <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.css" />
     <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\assets\bootstrap-datepicker\dist\css\bootstrap-datepicker.standalone.css" />
@@ -491,6 +522,7 @@
     <Content Include="Content\assets\img\avatar\7.jpg" />
     <Content Include="Content\assets\img\avatar\8.jpg" />
     <Content Include="Content\assets\img\avatar\9.jpg" />
+    <Content Include="Content\assets\img\bg-01.jpg" />
     <Content Include="Content\assets\img\bg\app-bg.jpg" />
     <Content Include="Content\assets\img\bg\bg-1.jpg" />
     <Content Include="Content\assets\img\bg\bg-2.jpg" />
@@ -923,6 +955,12 @@
       <DependentUpon>InventorySystemModel.edmx</DependentUpon>
       <LastGenOutput>InventorySystemModel.cs</LastGenOutput>
     </Content>
+    <Content Include="Rotativa\libeay32.dll" />
+    <Content Include="Rotativa\libgcc_s_dw2-1.dll" />
+    <Content Include="Rotativa\mingwm10.dll" />
+    <Content Include="Rotativa\README.txt" />
+    <Content Include="Rotativa\ssleay32.dll" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\app\DataTable.js" />
@@ -971,6 +1009,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\POController.cs" />
     <Compile Include="Controllers\PoDetailController.cs" />
+    <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
@@ -1180,6 +1219,40 @@
     <Content Include="Models\InventorySystemModel.edmx.diagram">
       <DependentUpon>InventorySystemModel.edmx</DependentUpon>
     </Content>
+    <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\fonts\FontAwesome.otf" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\animated.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\bordered-pulled.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\core.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\fixed-width.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\font-awesome.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\icons.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\larger.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\list.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\mixins.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\path.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\rotated-flipped.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\screen-reader.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\stacked.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\less\variables.less" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\font-awesome.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_animated.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_bordered-pulled.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_core.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_fixed-width.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_icons.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_larger.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_list.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_mixins.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_path.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_rotated-flipped.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_screen-reader.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_stacked.scss" />
+    <Content Include="Content\assets\auth\fonts\font-awesome-4.7.0\scss\_variables.scss" />
     <None Include="packages.config" />
     <Content Include="scripts\dist\jquery.min.map" />
     <Content Include="scripts\dist\jquery.slim.min.map" />
@@ -1202,6 +1275,12 @@
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\InventorySystem20211005185001 - Web Deploy.pubxml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Export\Warehouse.cshtml" />
+    <Content Include="Views\Export\Supplier.cshtml" />
+    <Content Include="Views\Export\PrintSupplier.cshtml" />
+    <Content Include="Views\Export\Product.cshtml" />
+    <Content Include="Views\Export\Customer.cshtml" />
+    <Content Include="Views\Export\PrintCustomer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1211,6 +1290,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\auth\javascript\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
