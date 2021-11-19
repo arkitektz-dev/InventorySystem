@@ -26,5 +26,9 @@ namespace InventorySystem.Models
         public Nullable<decimal> QtyInHand { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<int> WarehouseId { get; set; }
+        public Nullable<decimal> SalesMargin { get; set; }
+        public Nullable<decimal> SalesPrice { get; set; }
+        public Nullable<System.DateTime> CreateDate { get; set; }
+        public Nullable<bool> RawMaterial { get; set; }
     }
 }

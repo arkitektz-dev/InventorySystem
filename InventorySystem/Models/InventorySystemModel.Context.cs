@@ -44,5 +44,6 @@ namespace InventorySystem.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<CustomerGroup> CustomerGroups { get; set; }
         public virtual DbSet<PaymentTerm> PaymentTerms { get; set; }
+        public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
     }
 }

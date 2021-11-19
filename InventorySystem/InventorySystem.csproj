@@ -1047,6 +1047,9 @@
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UnitOfMeasure.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>

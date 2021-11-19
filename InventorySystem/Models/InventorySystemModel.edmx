@@ -80,17 +80,21 @@ warning 6002: The table/view 'InventorySystem.dbo.PaymentTerm' does not have a p
             <PropertyRef Name="ProductId" />
           </Key>
           <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductCode" Type="varchar" MaxLength="150" />
-          <Property Name="ProductName" Type="varchar" MaxLength="150" />
-          <Property Name="Description" Type="varchar(max)" />
           <Property Name="Barcode" Type="varchar" MaxLength="150" />
-          <Property Name="SNo" Type="int" />
+          <Property Name="ProductName" Type="varchar" MaxLength="150" />
+          <Property Name="ProductCode" Type="varchar" MaxLength="150" />
+          <Property Name="UnitOfMeasure" Type="varchar" MaxLength="50" />
           <Property Name="WarehouseId" Type="int" />
           <Property Name="ProductTypeId" Type="int" />
-          <Property Name="UnitOfMeasure" Type="varchar" MaxLength="50" />
           <Property Name="Price" Type="money" />
+          <Property Name="SNo" Type="int" />
           <Property Name="QtyInHand" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="SalesMargin" Type="money" />
+          <Property Name="SalesPrice" Type="money" />
+          <Property Name="RawMaterial" Type="bit" />
+          <Property Name="Description" Type="varchar(max)" />
           <Property Name="IsActive" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="ProductPictures">
           <Key>
@@ -154,6 +158,13 @@ warning 6002: The table/view 'InventorySystem.dbo.PaymentTerm' does not have a p
           <Property Name="PhoneNo" Type="varchar" MaxLength="500" />
           <Property Name="TermOfPayment" Type="varchar" MaxLength="50" />
           <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="UnitOfMeasure">
+          <Key>
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="Symbol" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="UnitOfMeasure" Type="nvarchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -282,6 +293,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="RawMaterails" EntityType="Self.RawMaterails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitOfMeasure" EntityType="Self.UnitOfMeasure" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CustomerGroup" EntityType="Self.CustomerGroup" store:Type="Tables" store:Schema="dbo">
@@ -390,6 +402,10 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="QtyInHand" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="SalesMargin" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalesPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="RawMaterial" Type="Boolean" />
         </EntityType>
         <EntityType Name="ProductPicture">
           <Key>
@@ -430,6 +446,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="Customers" EntityType="InventorySystemModel.Customer" />
           <EntitySet Name="CustomerGroups" EntityType="InventorySystemModel.CustomerGroup" />
           <EntitySet Name="PaymentTerms" EntityType="InventorySystemModel.PaymentTerm" />
+          <EntitySet Name="UnitOfMeasures" EntityType="InventorySystemModel.UnitOfMeasure" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -647,6 +664,13 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="PaymentTerm1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="UnitOfMeasure">
+          <Key>
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UnitOfMeasure1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -656,6 +680,10 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="InventorySystemModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="RawMaterial" ColumnName="RawMaterial" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+                <ScalarProperty Name="SalesMargin" ColumnName="SalesMargin" />
                 <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
@@ -917,6 +945,14 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
               <MappingFragment StoreEntitySet="PaymentTerm">
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="PaymentTerm1" ColumnName="PaymentTerm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitOfMeasures">
+            <EntityTypeMapping TypeName="InventorySystemModel.UnitOfMeasure">
+              <MappingFragment StoreEntitySet="UnitOfMeasure">
+                <ScalarProperty Name="UnitOfMeasure1" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
