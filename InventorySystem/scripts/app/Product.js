@@ -20,33 +20,45 @@ $(document).ready(function () {
     $('#btnAddRaw').click(function () {
 
 
+        let isFormComplete = true;
         const RawProductCodeId = $("#ProductCodeList").val();
         const RawQuantity = $("#RawQuantity").val();
+        if (RawQuantity == '') {
+            $('#Val_RawQuantity').html("Please enter quantity");
+            $('#RawQuantity').addClass("is-invalid");
+            isFormComplete = false;
+        } else {
+            $('#Val_RawQuantity').html("");
+            $('#RawQuantity').removeClass("is-invalid");
+        }
+
         const RawProductText = $("#ProductCodeList option:selected").text();
-        let isFormComplete = true;
         RawMaterialList.map((item, index) => {
             if (item.ProductId == RawProductCodeId) {
-                alert("Product Code already exists");
+                item.Quantity = parseFloat(item.Quantity) + parseFloat(RawQuantity)
+                $('#tbl-raw-material tr:eq(' + (index + 1) + ') td')[1].innerText = item.Quantity;
                 isFormComplete = false;
             }
         });
 
         if (isFormComplete == false) {
-            return;
+            //tableRawMaterial.clear().draw(null, false);
+            return false;
+        } else {
+            let row = {
+                ProductId: RawProductCodeId,
+                Quantity: RawQuantity,
+                text: RawProductText
+            };
+
+            RawMaterialList.push(row);
         }
 
-        let row = {
-            ProductId: RawProductCodeId,
-            Quantity: RawQuantity,
-            text: RawProductText
-        };
-
-        RawMaterialList.push(row);
-
-
+        
         tableRawMaterial.row.add([
             RawProductText,
             RawQuantity,
+            '<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this)" title="Delete Record"> <i class="fa fa-trash"></i></button>'
         ]).draw(false);
 
     });
@@ -89,7 +101,16 @@ $(document).ready(function () {
             $('#AddRawMaterial').show();
     })
 
+    $('#btnAddProductsWithItems').click(function () {
+        console.log(RawMaterialList)
+        AddProduct();
+    })
+
 });
+
+function OnItemDelete(item) {
+    console.log(item);
+}
 
 function AddProduct() {
     var productId = $('#ProductId').val();
@@ -123,6 +144,11 @@ function AddProduct() {
         rawMaterial: rawMaterial,
         description: description
     };
+
+    if (!rawMaterial) {
+        console.log('product with items');
+        return;
+    }
 
     $.ajax({
         type: "POST",
@@ -256,6 +282,7 @@ function validateForm() {
         $('#Val_SalesMargin').html("");
         $('#SalesMargin').removeClass("is-invalid");
     }
+
 
     if (salesPrice === '') {
         $('#Val_SalesPrice').html("Please enter sales price");
@@ -460,20 +487,7 @@ function BindGridProduct() {
             }
         ],
         dom: 'Blfrtip',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [0, 1]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [0, 1]
-                }
-            }
-        ],
+        buttons: [],
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
         "pageLength": 10,
         initComplete: function () {
@@ -485,4 +499,31 @@ function BindGridProduct() {
         }
     });
 
+}
+
+function calculateSalesPrice() {
+    var price = $('#Price').val();
+    var salesMargin = $('#SalesMargin').val();
+
+    if (price !== '' && salesMargin !== '') {
+        var salesPrice = parseFloat(price) + (parseFloat(salesMargin) * ((parseFloat(price) / 100)));
+        $('#SalesPrice').val(salesPrice);
+    }
+}
+
+function calculateSalesMargin() {
+    var price = $('#Price').val();
+    var salesPrice = $('#SalesPrice').val();
+
+    if (price !== '') {
+        if (salesPrice < price) {
+            //$('#Val_SalesPrice').html("Sales price cannot be less than the actual price");
+            //$('#SalesPrice').addClass("is-invalid");
+        } else {
+            //$('#Val_SalesPrice').html("");
+            //$('#SalesPrice').removeClass("is-invalid");
+        }
+        let salesMargin = ((parseFloat(salesPrice) - parseFloat(price)) * 100) / parseFloat(price);
+        $('#SalesMargin').val(salesMargin);
+    }
 }

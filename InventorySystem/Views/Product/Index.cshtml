@@ -25,9 +25,11 @@
     }
 
     td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
         padding: 8px;
+    }
+
+    #tbl-raw-material tbody tr td:nth-child(3) {
+        text-align: center;
     }
 
     tr:nth-child(even) {
@@ -92,21 +94,21 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Cost ($) <span style="color:red">*</span></label>
-                    <input type="number" onKeyPress="if(this.value.length==5) return false;" class="form-control" placeholder="Cost" required="required" id="Price" />
+                    <input type="number" onKeyPress="if(this.value.length==5) return false;" onblur="calculateSalesPrice()" class="form-control" placeholder="Cost" required="required" id="Price" />
                     <span class="text-danger" id="Val_Price"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Sales Margin ($) <span style="color:red">*</span></label>
-                    <input type="number" onKeyPress="if(this.value.length==5) return false;" class="form-control" placeholder="Sales Margin" id="SalesMargin" />
+                    <label>Sales Margin (%) <span style="color:red">*</span></label>
+                    <input type="number" onKeyPress="if(this.value.length==3) return false;" onblur="calculateSalesPrice()" class="form-control" placeholder="Sales Margin" id="SalesMargin" />
                     <span class="text-danger" id="Val_SalesMargin"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Sales Price ($) <span style="color:red">*</span></label>
-                    <input type="number" onKeyPress="if(this.value.length==5) return false;" class="form-control" placeholder="Sales Price" id="SalesPrice" />
+                    <input type="number" onKeyPress="if(this.value.length==5) return false;" onblur="calculateSalesMargin()" class="form-control" placeholder="Sales Price" id="SalesPrice" />
                     <span class="text-danger" id="Val_SalesPrice"></span>
                 </div>
             </div>
@@ -162,8 +164,8 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Quantity <span style="color:red">*</span></label>
-                <input type="text" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="RawQuantity" />
-                <span class="text-danger" id="Val_RawProductCode"></span>
+                <input type="number" class="form-control" id="RawQuantity" />
+                <span class="text-danger" id="Val_RawQuantity"></span>
             </div>
         </div>
     </div>
@@ -180,8 +182,9 @@
         <table class="table" id="tbl-raw-material">
             <thead>
                 <tr>
-                    <th>Product Code</th>
-                    <th>Quantity</th>
+                    <th class="col-6">Product Code</th>
+                    <th class="col-5">Quantity</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -193,7 +196,7 @@
     <div class="row" style="text-align:center;">
         <div class="col-md-3" style="margin:0 auto;">
             <div class="form-group">
-                <input type="button" class="btn btn-success" id="btnAddRaw" value="Save" />
+                <input type="button" class="btn btn-success" id="btnAddProductsWithItems" value="Save" />
             </div>
         </div>
     </div>
