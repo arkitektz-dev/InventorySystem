@@ -118,7 +118,7 @@ namespace InventorySystem.Controllers
             }
         }
         [HttpPost]
-        public virtual JsonResult SaveProduct(Product model, FormCollection frm)
+        public virtual JsonResult SaveProduct(Product model, vmRawMaterial frm)
         {
             try
             {
@@ -151,19 +151,20 @@ namespace InventorySystem.Controllers
             }
         }
 
+
+
+
         [HttpPost]
-        public virtual JsonResult SaveProductApi(Product model)
+        public virtual JsonResult SaveProductApi(Product model, List<vmRawMaterial> frm)
         {
             try
             {
-                if (!ModelState.IsValid)
-                    return Json("false", JsonRequestBehavior.AllowGet);
 
                 if (model.ProductId == 0)
                 {
                     model.CreateDate = DateTime.Now;
                     model.IsActive = true;
-                    var obj = _Entity.Products.AsNoTracking().Where(x => x.ProductName == model.ProductName || 
+                    var obj = _Entity.Products.AsNoTracking().Where(x => x.ProductName == model.ProductName ||
                         x.Barcode == model.Barcode || x.ProductCode == model.ProductCode).FirstOrDefault();
 
                     if (obj != null)
@@ -171,7 +172,7 @@ namespace InventorySystem.Controllers
                         string message = string.Empty;
                         if (obj.ProductName == model.ProductName)
                             message += "AlreadyExists";
-                            
+
                         if (obj.ProductCode == model.ProductCode)
                             message += ",CodeExists";
 
@@ -183,6 +184,7 @@ namespace InventorySystem.Controllers
                 }
                 else
                 {
+                    //Edit
                     var row = _Entity.Products.Where(x => x.ProductId == model.ProductId).FirstOrDefault();
                     if (row != null)
                     {
@@ -191,12 +193,64 @@ namespace InventorySystem.Controllers
 
                         _Entity.SaveChanges();
 
+                        if (frm != null && frm.Count() > 0) {
+
+                            _Entity.RawMaterails.RemoveRange(_Entity.RawMaterails.Where(x => x.ProductId == model.ProductId));
+                            _Entity.SaveChanges();
+
+                            foreach (var item in frm) {
+                                var product = _Entity.Products.Where(x => x.ProductId == item.ProductId).FirstOrDefault();
+                                if (product != null)
+                                {
+
+                                    RawMaterail rawMaterial = new RawMaterail()
+                                    {
+                                        ProductId = model.ProductId,
+                                        Code = product.ProductCode,
+                                        Quantity = item.Quantity
+                                    };
+
+                                    _Entity.RawMaterails.Add(rawMaterial);
+                                    _Entity.SaveChanges();
+
+                                }
+
+                            }
+                        }
+
+
+
                         return Json("true", JsonRequestBehavior.AllowGet);
                     }
                 }
+
+
                 _Entity.Entry(model).State = (model.ProductId == 0 ? EntityState.Added : EntityState.Modified);
                 _Entity.SaveChanges();
 
+
+                if (frm != null && frm.Count() > 0) {
+                    foreach (var item in frm)
+                    {
+
+                        var product = _Entity.Products.Where(x => x.ProductId == item.ProductId).FirstOrDefault();
+                        if (product != null)
+                        {
+
+                            RawMaterail rawMaterial = new RawMaterail()
+                            {
+                                ProductId = model.ProductId,
+                                Code = product.ProductCode,
+                                Quantity = item.Quantity
+                            };
+
+                            _Entity.RawMaterails.Add(rawMaterial);
+                            _Entity.SaveChanges();
+
+                        }
+
+                    }
+                }
 
                 return Json("true", JsonRequestBehavior.AllowGet);
             }
@@ -205,6 +259,7 @@ namespace InventorySystem.Controllers
                 return Json("[]", JsonRequestBehavior.AllowGet);
             }
         }
+
 
         public virtual JsonResult GetProductById(int Id)
         {
@@ -216,9 +271,9 @@ namespace InventorySystem.Controllers
         {
             if (Session["UserID"] != null)
             {
-                var lst = _Entity.Products.Where(x=> x.IsActive == true).ToList();
+                var lst = _Entity.Products.Where(x => x.IsActive == true).ToList();
                 var stock = _Entity.Stocks.ToList();
-                foreach(var item in lst)
+                foreach (var item in lst)
                 {
                     item.QtyInHand = stock.Where(y => y.ProductId == item.ProductId).Select(x => x.QuantityOnHand).Sum();
                 }
@@ -269,5 +324,74 @@ namespace InventorySystem.Controllers
                 return Json("[]", JsonRequestBehavior.AllowGet);
             }
         }
+
+
+        public JsonResult GetRawMaterialByProductId(int ProductId)
+        {
+
+            try
+            {
+                var rawMaterials = _Entity.RawMaterails.Where(x => x.ProductId == ProductId).ToList();
+                if (rawMaterials != null)
+                {
+                    return Json(rawMaterials, JsonRequestBehavior.AllowGet);
+                }
+                else {
+                    return Json(null, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public PartialViewResult GetRawMaterialDropdown()
+        {
+            ViewBag.ProductCodeList = new SelectList(_Entity.Products.Where(x => x.RawMaterial == true), "ProductId", "ProductCode");
+
+            return PartialView();
+        }
+
+        public JsonResult DeleteProductById(int ProductId) {
+
+            try
+            {
+
+                //Check for raw materail
+
+                var rawMaterial = _Entity.RawMaterails.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                if (rawMaterial != null) {
+
+                    _Entity.Entry(rawMaterial).State = System.Data.Entity.EntityState.Deleted;
+                    _Entity.SaveChanges();
+                }
+
+
+                var Product = _Entity.Products.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                if (Product != null) {
+                    _Entity.Products.Remove(Product);
+                    _Entity.SaveChanges();
+                }
+
+
+              return Json("true", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex) { 
+            
+              return Json("[]", JsonRequestBehavior.AllowGet);
+            
+            }
+        }
+    
+    
+    }
+
+    public class vmRawMaterial
+    {
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public string text { get; set; }
     }
 }

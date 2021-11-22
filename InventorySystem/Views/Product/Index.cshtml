@@ -149,11 +149,10 @@
     </h4>
     <div class="row">
         <div class="col-md-3">
-            <div class="form-group">
-                <label>Product Code</label>
-                @*   <input type="text" class="form-control" id="RawProductCode" />*@
+            <div class="form-group" id="AddRawMaterialActionControl">
+                @*<label>Product Code</label> 
                 @Html.DropDownList("ProductCodeList", (IEnumerable<SelectListItem>)ViewBag.ProductCodeList, new { @class = "form-control" })
-                <span class="text-danger" id="Val_RawProductCode"></span>
+                <span class="text-danger" id="Val_RawProductCode"></span>*@
             </div>
         </div>
 
@@ -164,7 +163,7 @@
         <div class="col-md-3">
             <div class="form-group">
                 <label>Quantity <span style="color:red">*</span></label>
-                <input type="number" class="form-control" id="RawQuantity" />
+                <input type="number" class="form-control" id="RawQuantity"  />
                 <span class="text-danger" id="Val_RawQuantity"></span>
             </div>
         </div>
@@ -215,7 +214,7 @@
             </div>
             <div class="col-6 text-right">
                 <button type="button" id="addProduct" class="mb-3 mx-1 btn btn-md btn-theme" onclick="OnAddNew();" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus"></i> Add New</button>
-                <a href="@Url.Action("PrintProduct","Export")" target="_blank" id="addWarehouse" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Print</a>
+                <a href="@Url.Action("PrintProduct","Export")" target="_blank" id="addWarehouse" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Pdf</a>
                 <a href="@Url.Action("ExportProductExcel","Export")" target="_blank" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Excel</a>
             </div>
         </div>
@@ -228,5 +227,5 @@
     </div>
 </div>
 
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/scripts/app/Product.js"></script>

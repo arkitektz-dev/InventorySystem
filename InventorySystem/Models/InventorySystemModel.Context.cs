@@ -37,7 +37,6 @@ namespace InventorySystem.Models
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<StockV> StockVs { get; set; }
         public virtual DbSet<ProductQtyV> ProductQtyVs { get; set; }
-        public virtual DbSet<RawMaterail> RawMaterails { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
@@ -45,5 +44,6 @@ namespace InventorySystem.Models
         public virtual DbSet<PaymentTerm> PaymentTerms { get; set; }
         public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<RawMaterail> RawMaterails { get; set; }
     }
 }

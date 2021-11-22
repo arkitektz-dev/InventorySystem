@@ -1,10 +1,14 @@
 ﻿ 
 
+ 
+
 var RawMaterialList = [];
+var isEdit = false;
 
 $(document).ready(function () {
     //BindGridWOption("ProductList", "ProductList", '/Product/GetProductList');
     BindGridProduct();
+   
 
 
     var tableRawMaterial = $('#tbl-raw-material').DataTable();
@@ -12,7 +16,7 @@ $(document).ready(function () {
     $('#closeButton').click(function () {
         $('#Val_Name').html("");
         $('#Type').removeClass("show-warning");
-
+        $("#btnRawMaterial").prop('disabled', false);
         $('#AddProduct').hide()
         $('#ProductLists').show()
     });
@@ -46,8 +50,8 @@ $(document).ready(function () {
             return false;
         } else {
             let row = {
-                ProductId: RawProductCodeId,
-                Quantity: RawQuantity,
+                ProductId: Number(RawProductCodeId),
+                Quantity: Number(RawQuantity),
                 text: RawProductText
             };
 
@@ -58,14 +62,17 @@ $(document).ready(function () {
         tableRawMaterial.row.add([
             RawProductText,
             RawQuantity,
-            '<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this)" title="Delete Record"> <i class="fa fa-trash"></i></button>'
+            `<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this,${RawProductCodeId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`
         ]).draw(false);
 
     });
 
     $('#addProduct').click(function () {
         removeValidateForm();
+        $('#btnSubmit').prop("disabled", false);
+
         $('#ProductId').val(0);
+        $('#Barcode').prop("disabled", false);
         $('#RawMaterial').prop("checked", false);
         $('#btnRawMaterial').show()
         $('#AddRawMaterial').show();
@@ -76,6 +83,11 @@ $(document).ready(function () {
         $('#AddProduct').show()
         $('#ProductLists').hide()
         $('#hiddenform').text('Add Product');
+
+        var tableRawMaterial = $('#tbl-raw-material').DataTable();
+        tableRawMaterial
+            .clear()
+            .draw();
     });
 
     $('#RawMaterial').click(function () {
@@ -92,12 +104,19 @@ $(document).ready(function () {
 
     $('#btnSubmit').click(function () {
         AddProduct();
+        //$('#Val_Name').html("");
+        //$('#Type').removeClass("show-warning");
+        //BindGridProduct();
+
+        //$('#AddProduct').hide()
+        //$('#ProductLists').show()
 
 
     })
 
     $('#btnRawMaterial').click(function () {
         if (validateForm())
+            displayRawMaterial();
             $('#AddRawMaterial').show();
     })
 
@@ -108,8 +127,59 @@ $(document).ready(function () {
 
 });
 
-function OnItemDelete(item) {
-    console.log(item);
+function OnItemDelete(item, productId) {
+
+
+    console.log("Before")
+    console.log(RawMaterialList)
+
+    
+
+    RawMaterialList = RawMaterialList.filter((item, index) => {
+        if (item.ProductId != productId) {
+            return item;
+        }
+
+    });
+
+    console.log("After")
+    console.log(RawMaterialList)
+
+
+    if (RawMaterialList.length == 0 ) {
+        console.log("This is") 
+        var tableRawMaterial = $('#tbl-raw-material').DataTable();
+        tableRawMaterial
+            .clear()
+            .draw();
+        return;
+    }
+
+    var tableRawMaterial = $('#tbl-raw-material').DataTable();
+
+    var tableRawMaterial = $('#tbl-raw-material').DataTable();
+    tableRawMaterial
+        .clear()
+        .draw();
+
+    RawMaterialList.map((item, index) => {
+
+        tableRawMaterial.row.add([
+            item.text,
+            item.Quantity,
+            `<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this,${item.ProductId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`
+        ]).draw(false);
+
+    });
+
+
+
+
+  
+
+  
+
+    
 }
 
 function AddProduct() {
@@ -142,13 +212,128 @@ function AddProduct() {
         salesMargin: salesMargin,
         salesPrice: salesPrice,
         rawMaterial: rawMaterial,
-        description: description
+        description: description,
+        isActive : true
     };
+
+
+
+    if (isEdit == true) {
+        $.ajax({
+            type: "POST",
+            url: "/Product/SaveProductApi",
+            dataType: "json",
+            data: { model: product, frm: RawMaterialList },
+            success: function (response) {
+
+                if (response == "true") {
+                    toastr.success('Changes saved');
+                    document.getElementById("ProductList").innerHTML = "";
+
+                    setTimeout(() => {
+                        $('#AddProduct').css('display', 'none');
+                        $('#ProductLists').css('display', '');
+                        RawMaterialList = [];
+                        BindGridProduct();
+                    }, 50)
+                }
+                else {
+                    var responses = response.split(",");
+                    responses.forEach(function (value, index) {
+                        if (value == "BarcodeExists") {
+                            $('#Val_Barcode').html("Another item with same barcode exists, please create another.");
+                            $('#Barcode').addClass("is-invalid");
+                            $('#Barcode').focus();
+                        }
+                        if (value == "CodeExists") {
+                            $('#Val_ProductCode').html("Another item with same product code exists, please create another.");
+                            $('#ProductCode').addClass("is-invalid");
+                            $('#ProductCode').focus();
+                        }
+                        if (value == "AlreadyExists") {
+                            $('#Val_ProductName').html("There is already a product with the same name, please create another.");
+                            $('#ProductName').addClass("is-invalid");
+                            $('#ProductName').focus();
+                        }
+                    })
+                }
+                if (response.split(",") == "AlreadyExists") {
+                    $('#Val_ProductName').html("There is already a product with the same name, please create another.");
+                    $('#ProductName').addClass("is-invalid");
+                    $('#ProductName').focus();
+                }
+
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        });
+
+        return;
+    }
 
     if (!rawMaterial) {
         console.log('product with items');
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Product/SaveProductApi",
+            dataType: "json",
+            data: { model: product, frm: RawMaterialList},
+            success: function (response) {
+                if (response == "true") {
+                    toastr.success('Product saved');
+                    document.getElementById("ProductList").innerHTML = "";
+
+                    setTimeout(() => {
+                        $('#AddProduct').css('display', 'none');
+                        $('#ProductLists').css('display', '');
+                        RawMaterialList = [];
+                        BindGridProduct();
+                    }, 50)
+                }
+                else {
+                    var responses = response.split(",");
+                    responses.forEach(function (value, index) {
+                        if (value == "BarcodeExists") {
+                            $('#Val_Barcode').html("Another item with same barcode exists, please create another.");
+                            $('#Barcode').addClass("is-invalid");
+                            $('#Barcode').focus();
+                        }
+                        if (value == "CodeExists") {
+                            $('#Val_ProductCode').html("Another item with same product code exists, please create another.");
+                            $('#ProductCode').addClass("is-invalid");
+                            $('#ProductCode').focus();
+                        }
+                        if (value == "AlreadyExists") {
+                            $('#Val_ProductName').html("There is already a product with the same name, please create another.");
+                            $('#ProductName').addClass("is-invalid");
+                            $('#ProductName').focus();
+                        }
+                    })
+                }
+                if (response.split(",") == "AlreadyExists") {
+                    $('#Val_ProductName').html("There is already a product with the same name, please create another.");
+                    $('#ProductName').addClass("is-invalid");
+                    $('#ProductName').focus();
+                }
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        });
         return;
     }
+
+
+    
 
     $.ajax({
         type: "POST",
@@ -394,49 +579,14 @@ function GetDeletedStatus(data) {
     }
 }
 
-function BindGridWOption(divid, tbl, url) {
-    $('#' + divid).html("");
-    $('#' + divid).append('<table id="Grid' + divid + '" class="table table-striped dataTable no-footer" width="100%"></table>');
-    $('#Grid' + divid).DataTable({
-        sAjaxSource: (RootPath == '/' ? '' : RootPath) + url,
-        columns: GetCol(tbl),
-        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        dom: 'Blfrtip',
-        buttons: [
-            {
-                extend: 'csvHtml5',
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5]
-                }
-            },
-            {
-                extend: 'excelHtml5',
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                exportOptions: {
-                    columns: [1, 2, 3, 4, 5]
-                }
-            }
-        ],
-        initComplete: function () {
-            var btns = $('.dt-button');
-            btns.addClass('btn btn-success btn-sm');
-            btns.css('margin', '2px');
-            btns.removeClass('dt-button');
-
-        }
-
-    });
-
-}
-
 function EditProduct(pid, bcode, pname, pcode, uom, wid, ptid, p, sm, sp, rm, d) {
+    RawMaterialList = [];
     removeValidateForm();
+    displayRawMaterial();
+    $("#Barcode").prop('disabled', true);
 
+    console.log("This is ", typeof(rm))
+    isEdit = true;
     $('#ProductId').val(pid);
     $('#Barcode').val(bcode);
     $('#ProductName').val(pname);
@@ -447,11 +597,57 @@ function EditProduct(pid, bcode, pname, pcode, uom, wid, ptid, p, sm, sp, rm, d)
     $('#Price').val(p);
     $('#SalesMargin').val(sm);
     $('#SalesPrice').val(sp);
-    if (rm) {
+    if (rm == "true") {
         $('#RawMaterial').prop("checked", true);
         $('#btnRawMaterial').hide()
         $('#AddRawMaterial').hide();
         $('#btnSubmit').show()
+        $('#btnSubmit').prop("disabled", false);
+    } else {
+
+        $('#RawMaterial').prop("checked", false);
+        $('#btnSubmit').prop("disabled", true);
+        $('#btnRawMaterial').prop("disabled", true);
+        var tableRawMaterial = $('#tbl-raw-material').DataTable(); 
+        tableRawMaterial
+            .clear()
+            .draw();
+        $.ajax({
+            type: "POST",
+            url: "/Product/GetRawMaterialByProductId",
+            data: { ProductId: pid },
+            success: function (response) {
+                response.map((item, index) => {
+                    console.log(item);
+
+                    let row = {
+                        ProductId: Number(item.ProductId),
+                        Quantity: Number(item.Quantity),
+                        text: item.Note
+                    };
+
+                    RawMaterialList.push(row);
+
+                    tableRawMaterial.row.add([
+                        item.Code,
+                        item.Quantity,
+                        `<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this,${item.ProductId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`
+                    ]).draw(false);
+                });
+
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        });
+
+
+        $('#AddRawMaterial').show();
+
+
     }
     $('#Description').val();
 
@@ -478,7 +674,7 @@ function BindGridProduct() {
                 data: null,
                 render: function (data, type, row) {
                     btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditProduct('${data.ProductId}','${data.Barcode}','${data.ProductName}','${data.ProductCode}','${data.UnitOfMeasure}','${data.WarehouseId}','${data.ProductTypeId}','${data.Price}','${data.SalesMargin}','${data.SalesPrice}','${data.RawMaterial}','${data.Description}')" title="Edit;"> <i class="fa fa-edit"></i></button>`;
-                    btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeleteProduct(' + data.WarehouseId + ')" title="Delete Record"> <i class="fa fa-trash"></i></button>';
+                    btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeleteProduct(' + data.ProductId + ')" title="Delete Record"> <i class="fa fa-trash"></i></button>';
                     return btnview;
                 },
                 width: "200px",
@@ -507,7 +703,7 @@ function calculateSalesPrice() {
 
     if (price !== '' && salesMargin !== '') {
         var salesPrice = parseFloat(price) + (parseFloat(salesMargin) * ((parseFloat(price) / 100)));
-        $('#SalesPrice').val(salesPrice);
+        $('#SalesPrice').val(salesPrice.toFixed(2));
     }
 }
 
@@ -524,6 +720,71 @@ function calculateSalesMargin() {
             //$('#SalesPrice').removeClass("is-invalid");
         }
         let salesMargin = ((parseFloat(salesPrice) - parseFloat(price)) * 100) / parseFloat(price);
-        $('#SalesMargin').val(salesMargin);
+        $('#SalesMargin').val(salesMargin.toFixed(2));
     }
+}
+
+
+function displayRawMaterial() {
+
+    $.ajax({
+        type: "POST",
+        url: "/Product/GetRawMaterialDropdown",
+        success: function (response) {
+
+            $("#AddRawMaterialActionControl").html(response);
+        },
+        failure: function (response) {
+            console.error(response.responseText);
+        },
+        error: function (response) {
+            console.error(response.responseText);
+        }
+    });
+}
+
+function DeleteProduct(ProductId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                type: "POST",
+                url: "/Product/DeleteProductById",
+                data: { ProductId: ProductId },
+                success: function (response) {
+
+
+                    console.log(response);
+                    if (response == "true") {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your record has been deleted.',
+                            'success'
+                        )
+
+                        setTimeout(() => {
+                            BindGridProduct();
+                        }, 50)
+
+
+                    }
+                },
+                failure: function (response) {
+                    console.error(response.responseText);
+                },
+                error: function (response) {
+                    console.error(response.responseText);
+                }
+            });
+
+        }
+    })
 }

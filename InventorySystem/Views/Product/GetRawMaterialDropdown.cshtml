@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewBag.Title = "GetRawMaterialDropdown";
+    Layout = null;
+}
+
+<label>Product Code</label>
+@Html.DropDownList("ProductCodeList", (IEnumerable<SelectListItem>)ViewBag.ProductCodeList, new { @class = "form-control" })
+<span class="text-danger" id="Val_RawProductCode"></span>

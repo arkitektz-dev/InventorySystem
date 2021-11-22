@@ -14,20 +14,7 @@
 	});
 
 	$('#addSupplier').click(function () {
-		$('#AddSupplier').css('display', '');
-		$('#SupplierLists').css('display', 'none');
-		$('#hiddenform').text('Add new Vendor');
-
-		$('#SupplierId').val(0);
-		$('#SupplierName').val('');
-		$('#Address').val('');
-		$('#Street').val('');
-		$('#State').val('');
-		$('#PostalCode').val('');
-		$('#City').val('');
-		$('#Country').val('NZ');
-		$('#Phone').val('');
-		$('#Description').val('');
+		clearForm();
 	});
 
 	$('#btnSubmit').click(function () {
@@ -121,18 +108,45 @@
 	})
 });
 
+function clearForm() {
+	$('#AddSupplier').css('display', '');
+	$('#SupplierLists').css('display', 'none');
+	$('#hiddenform').text('Add new Vendor');
+
+	$('#SupplierId').val(0);
+	$('#SupplierName').val('');
+	$('#Address').val('');
+	$('#Street').val('');
+	$('#State').val('');
+	$('#PostalCode').val('');
+	$('#City').val('');
+	$('#Country').val('NZ');
+	$('#Phone').val('');
+	$('#Description').val('');
+}
+
 function EditSupplier(Address, City, Country, TermOfPayment, IsDeleted, Name, PhoneNo, State, PostalCode, SupplierId, Street) {
-	console.log(TermOfPayment);
-	$('#SupplierId').val(SupplierId);
-	$('#SupplierName').val(Name);
-	$('#Address').val(Address);
-	$('#Street').val(Street);
-	$('#City').val(City);
-	$('#State').val(State);
-	$('#PostalCode').val(PostalCode);
-	$('#Country').val(Country);
-	$('#Phone').val(PhoneNo);
-	$('#TermOfPayment').val(TermOfPayment);
+	clearForm();
+	if (SupplierId !== "null")
+		$('#SupplierId').val(SupplierId);
+	if (Name !== "null")
+		$('#SupplierName').val(Name);
+	if (Address !== "null")
+		$('#Address').val(Address);
+	if (Street !== "null")
+		$('#Street').val(Street);
+	if (City !== "null")
+		$('#City').val(City);
+	if (State !== "null")
+		$('#State').val(State);
+	if (PostalCode !== "null")
+		$('#PostalCode').val(PostalCode);
+	if (Country !== "null")
+		$('#Country').val(Country);
+	if (PhoneNo !== "null")
+		$('#Phone').val(PhoneNo);
+	if (TermOfPayment !== "null")
+		$('#TermOfPayment').val(TermOfPayment);
 
 
 

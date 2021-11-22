@@ -123,17 +123,47 @@
 });
 
 function EditWarehouse(Address, City, Country, Description, IsDeleted, Name, PhoneNo, State, PostalCode, WarehouseId, Street) {
-
-	$('#WarehouseId').val(WarehouseId);
-	$('#WarehouseName').val(Name);
-	$('#Address').val(Address);
-	$('#Street').val(Street);
-	$('#City').val(City);
-	$('#State').val(State);
-	$('#PostalCode').val(PostalCode);
-	$('#Country').val(Country);
-	$('#Phone').val(PhoneNo);
-	$('#Description').val(Description);
+	debugger;
+	if (WarehouseId !== "null")
+		$('#WarehouseId').val(WarehouseId);
+	else
+		$('#WarehouseId').val("");
+	if (Name !== "null")
+		$('#WarehouseName').val(Name);
+	else
+		$('#WarehouseName').val("");
+	if (Address !== "null")
+		$('#Address').val(Address);
+	else
+		$('#Address').val("");
+	if (Street !== "null")
+		$('#Street').val(Street);
+	else
+		$('#Street').val("");
+	if (City !== "null")
+		$('#City').val(City);
+	else
+		$('#City').val("");
+	if (State !== "null")
+		$('#State').val(State);
+	else
+		$('#State').val("");
+	if (PostalCode !== "null")
+		$('#PostalCode').val(PostalCode);
+	else
+		$('#PostalCode').val("");
+	if (Country !== "null")
+		$('#Country').val(Country);
+	else
+		$('#Country').val("");
+	if (PhoneNo !== "null")
+		$('#Phone').val(PhoneNo);
+	else
+		$('#Phone').val("");
+	if (Description !== "null")
+		$('#Description').val(Description);
+	else
+		$('#Description').val("");
 
 
 	$('#hiddenform').text('Edit Warehouse');

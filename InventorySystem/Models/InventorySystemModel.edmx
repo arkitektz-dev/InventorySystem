@@ -418,7 +418,6 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="Stocks" EntityType="InventorySystemModel.Stock" />
           <EntitySet Name="StockVs" EntityType="InventorySystemModel.StockV" />
           <EntitySet Name="ProductQtyVs" EntityType="InventorySystemModel.ProductQtyV" />
-          <EntitySet Name="RawMaterails" EntityType="InventorySystemModel.RawMaterail" />
           <EntitySet Name="Warehouses" EntityType="InventorySystemModel.Warehouse" />
           <EntitySet Name="Suppliers" EntityType="InventorySystemModel.Supplier" />
           <EntitySet Name="Customers" EntityType="InventorySystemModel.Customer" />
@@ -426,6 +425,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="PaymentTerms" EntityType="InventorySystemModel.PaymentTerm" />
           <EntitySet Name="UnitOfMeasures" EntityType="InventorySystemModel.UnitOfMeasure" />
           <EntitySet Name="Products" EntityType="InventorySystemModel.Product" />
+          <EntitySet Name="RawMaterails" EntityType="InventorySystemModel.RawMaterail" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -562,16 +562,6 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Qty_Shipment" Type="Int32" Nullable="false" />
           <Property Name="Qty_On_Hand" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
-        <EntityType Name="RawMaterail">
-          <Key>
-            <PropertyRef Name="MId" />
-          </Key>
-          <Property Name="MId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Code" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Warehouse">
           <Key>
             <PropertyRef Name="WarehouseId" />
@@ -670,6 +660,16 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="RawMaterail">
+          <Key>
+            <PropertyRef Name="MId" />
+          </Key>
+          <Property Name="MId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Code" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -840,17 +840,6 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RawMaterails">
-            <EntityTypeMapping TypeName="InventorySystemModel.RawMaterail">
-              <MappingFragment StoreEntitySet="RawMaterails">
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="MId" ColumnName="MId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Warehouses">
             <EntityTypeMapping TypeName="InventorySystemModel.Warehouse">
               <MappingFragment StoreEntitySet="Warehouse">
@@ -953,6 +942,17 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RawMaterails">
+            <EntityTypeMapping TypeName="InventorySystemModel.RawMaterail">
+              <MappingFragment StoreEntitySet="RawMaterails">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="MId" ColumnName="MId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
