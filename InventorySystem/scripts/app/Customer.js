@@ -24,7 +24,7 @@
 
 		clearForm();
 
-		//$('#nav-contact-tab').addClass('disabled');
+		$('#nav-contact-tab').addClass('disabled');
 		$('#nav-home-tab').addClass('active show');
 		$('#nav-customer').addClass('active show');
 		$('#nav-profile-tab').removeClass('active show');
@@ -173,7 +173,7 @@ function clearForm() {
 
 function EditCustomer(Code, UserId, AccountEmail, CustomerGroup, PaymentTerms, CreditLimit, BusinessSize, Discount, StopCredit, Address, City, Country, TermOfPayment, Name, PhoneNo, State, PostalCode, CustomerId, Street) {
 	clearForm();
-	//$('#nav-contact-tab').removeClass('disabled');
+	$('#nav-contact-tab').removeClass('disabled');
 	$('#nav-home-tab').addClass('active show');
 	$('#nav-customer').addClass('active show');
 	$('#nav-profile-tab').removeClass('active show');
