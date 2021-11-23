@@ -30,6 +30,62 @@ namespace InventorySystem.Controllers
         }
         public ActionResult Index()
         {
+            SelectListItem item = new SelectListItem();
+            var unitOfMeasure = _Entity.UnitOfMeasures.ToList();
+            var warehouses = _Entity.Warehouses.ToList();
+            var productTypes = _Entity.ProductTypes.ToList();
+
+            List<SelectListItem> uomList = new List<SelectListItem>();
+            List<SelectListItem> warehouseList = new List<SelectListItem>();
+            List<SelectListItem> productTypeLists = new List<SelectListItem>();
+
+            foreach (var unit in unitOfMeasure)
+            {
+                item = new SelectListItem();
+                item.Value = unit.Symbol;
+                item.Text = unit.UnitOfMeasure1;
+                uomList.Add(item);
+            }
+            item = new SelectListItem()
+            {
+                Text = "-- Select Unit of measure --",
+                Value = ""
+            };
+            uomList.Insert(0, item);
+
+            foreach (var wh in warehouses)
+            {
+                item = new SelectListItem();
+                item.Value = wh.WarehouseId.ToString();
+                item.Text = wh.Name;
+                warehouseList.Add(item);
+            }
+            item = new SelectListItem()
+            {
+                Text = "-- Select warehouse --",
+                Value = ""
+            };
+            warehouseList.Insert(0, item);
+
+            foreach (var pt in productTypes)
+            {
+                item = new SelectListItem();
+                item.Value = pt.TypeId.ToString();
+                item.Text = pt.Type;
+                productTypeLists.Add(item);
+            }
+            item = new SelectListItem()
+            {
+                Text = "-- Select product type --",
+                Value = ""
+            };
+            productTypeLists.Insert(0, item);
+
+            ViewBag.UomList = uomList;
+            ViewBag.WarehouseList = warehouseList;
+            ViewBag.ProductTypeLists = productTypeLists;
+            ViewBag.ProductCodeList = new SelectList(_Entity.Products.Where(x => x.RawMaterial == true), "ProductId", "ProductCode");
+
             return View();
         }
         public virtual ActionResult AddEditStock(int Id)
@@ -62,32 +118,76 @@ namespace InventorySystem.Controllers
                 return Json("false", JsonRequestBehavior.AllowGet);
             }
         }
+
+
         [HttpPost]
-        public virtual JsonResult SaveStock(Stock model, FormCollection frm)
+        public virtual JsonResult SaveStock(vmStock model)
         {
             try
             {
-
-                if (!ModelState.IsValid)
-                    return Json("false", JsonRequestBehavior.AllowGet);
-
-                if (model.QuantityOnHand == null)
+                //Add
+                if (model.StockId == 0)
                 {
-                    model.QuantityOnHand = 0;
-                }
+                    var rowStock = _Entity.Products.Where(x => x.Barcode == model.Barcode).FirstOrDefault();
+                    
 
-                if (model.QuantityReceiving == null)
+                    Stock row = new Stock();
+                    row.Location = model.Location;
+                    row.WarehouseId = rowStock.WarehouseId;
+                    row.ProductId = rowStock.ProductId;
+                    row.QuantityReceiving = model.QuantityOnReceiving;
+                    row.QuantityOnHand = model.QuantityOnHand;
+
+                    _Entity.Stocks.Add(row);
+                    _Entity.SaveChanges();
+                     
+
+
+
+
+                    return Json("true", JsonRequestBehavior.AllowGet);
+
+                }
+                //Edit
+                else
                 {
-                    model.QuantityReceiving = 0;
+
+                    if (model.QuantityOnHand == 0)
+                    {
+                        model.QuantityOnHand = 0;
+                    }
+
+                    if (model.QuantityOnReceiving == 0)
+                    {
+                        model.QuantityOnReceiving = 0;
+                    }
+
+
+                    var rowStock = _Entity.Stocks.Where(x => x.StockId == model.StockId).FirstOrDefault();
+                    if (rowStock != null) {
+
+
+                        var getProudctDetail = _Entity.Products.Where(x => x.Barcode == model.Barcode).FirstOrDefault();
+
+                        rowStock.Location = model.Location;
+                        rowStock.WarehouseId = getProudctDetail.WarehouseId;
+                        rowStock.ProductId = getProudctDetail.ProductId;
+                        rowStock.QuantityOnHand = model.QuantityOnHand;
+                        rowStock.QuantityReceiving = model.QuantityOnReceiving;
+
+                        _Entity.SaveChanges();
+
+
+                        return Json("true", JsonRequestBehavior.AllowGet);
+                    }
+
+
+                    //_Entity.Entry(model).State = (model.StockId == 0 ? EntityState.Added : EntityState.Modified);
+                    //_Entity.SaveChanges();
+                    return Json("true", JsonRequestBehavior.AllowGet);
                 }
-
-
-                _Entity.Entry(model).State = (model.StockId == 0 ? EntityState.Added : EntityState.Modified);
-                _Entity.SaveChanges();
-                return Json("true", JsonRequestBehavior.AllowGet);
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json("[]", JsonRequestBehavior.AllowGet);
             }
@@ -97,7 +197,24 @@ namespace InventorySystem.Controllers
         {
             if (Session["UserID"] != null)
             {
-                var lst = _Entity.StockVs.ToList();
+                //var lst = _Entity.Stocks.ToList();
+                var lst = (from stock in _Entity.Stocks 
+                          join product in _Entity.Products on stock.ProductId equals product.ProductId 
+                          join warehouse in _Entity.Warehouses on stock.WarehouseId equals warehouse.WarehouseId
+                          select new {
+                              warehouse.Name,
+                              product.Barcode,
+                              stock.StockId,
+                              product.WarehouseId,
+                              product.ProductCode,
+                              product.ProductName,
+                              stock.Location,
+                              stock.QuantityReceiving,
+                              stock.QuantityOnHand
+                          }).ToList();
+
+
+
                 GridDataSource gobj = new GridDataSource
                 {
                     data = lst.ToList(),
@@ -126,28 +243,73 @@ namespace InventorySystem.Controllers
             else
                 return Json("[]");
         }
-        public virtual JsonResult GetStockByBarcode(string Id)
-        {
 
-            if (Session["UserID"] != null)
+        [HttpPost]
+        public ActionResult GetStockByBarcode(string Barcode)
+        {
+            var obj = (from warehouse in _Entity.Warehouses
+                       join product in _Entity.Products
+                       on warehouse.WarehouseId equals product.WarehouseId into ps
+                       from p in ps.DefaultIfEmpty()
+                       where p.Barcode == Barcode
+                       select new
+                       {
+                           p.ProductName,
+                           warehouse.Name
+                       }).FirstOrDefault();
+
+            if (obj != null)
             {
-                var obj = _Entity.Products.AsNoTracking().Where(x => x.Barcode == Id).FirstOrDefault();
-                if (obj != null)
-                {
-                    //Stock rec = new Stock
-                    //{
-                    //    ProductId = obj.ProductId
-                    //};
-                    var lst = _Entity.StockVs.Where(x => x.ProductId == obj.ProductId).FirstOrDefault();
-                    return Json(lst, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json("false", JsonRequestBehavior.AllowGet);
-                }
+                return Json( new { obj },JsonRequestBehavior.AllowGet);
             }
             else
-                return Json("[]");
+            {
+                return Json("false", JsonRequestBehavior.AllowGet);
+            } 
         }
+
+        [HttpPost]
+        public virtual JsonResult DeleteStockById(int StockId)
+        {
+            try
+            {
+
+                var getStock = _Entity.Stocks.Where(x => x.StockId == StockId).FirstOrDefault();
+                if (getStock != null)
+                {
+                    _Entity.Stocks.Remove(getStock);
+                    _Entity.SaveChanges();
+                    return Json("true", JsonRequestBehavior.AllowGet);
+                }
+                else { 
+                    return Json("false", JsonRequestBehavior.AllowGet);
+                }
+
+
+
+            }
+            catch (Exception ex) {
+                return Json("[]", JsonRequestBehavior.AllowGet);
+            }
+            
+
+          
+        }
+
+        
+
     }
+
+    public class vmStock
+    { 
+        public int StockId { get; set; }
+        public string Barcode { get; set; }
+        public string ProductName { get; set; }
+        public string Location { get; set; }
+        public int WarehouseId { get; set; }
+        public int QuantityOnHand { get; set; }
+        public int QuantityOnReceiving { get; set; }
+    }
+     
+
 }

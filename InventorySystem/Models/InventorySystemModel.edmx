@@ -293,7 +293,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="QuantityReceiving" Type="decimal" Precision="18" Scale="2" />
           <Property Name="QuantityOnHand" Type="decimal" Precision="18" Scale="2" />
           <Property Name="ProductName" Type="varchar" MaxLength="150" />
-          <Property Name="Warehouse" Type="varchar" MaxLength="350" />
+          <Property Name="Name" Type="varchar" MaxLength="350" />
           <Property Name="Barcode" Type="varchar" MaxLength="150" />
           <Property Name="ProductCode" Type="varchar" MaxLength="150" />
         </EntityType>
@@ -392,7 +392,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
     [StockV].[QuantityReceiving] AS [QuantityReceiving], 
     [StockV].[QuantityOnHand] AS [QuantityOnHand], 
     [StockV].[ProductName] AS [ProductName], 
-    [StockV].[Warehouse] AS [Warehouse], 
+    [StockV].[Name] AS [Name], 
     [StockV].[Barcode] AS [Barcode], 
     [StockV].[ProductCode] AS [ProductCode]
     FROM [dbo].[StockV] AS [StockV]</DefiningQuery>
@@ -402,198 +402,43 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InventorySystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="ProductPicture">
-          <Key>
-            <PropertyRef Name="ProductPictureId" />
-          </Key>
-          <Property Name="ProductPictureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="IsDeleted" Type="Boolean" />
-        </EntityType>
-        <EntityType Name="ProductStock">
-          <Key>
-            <PropertyRef Name="StockId" />
-          </Key>
-          <Property Name="StockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WarhouseId" Type="Int32" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Location" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="QuantityReceiving" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="QuantityOnHand" Type="Decimal" Precision="18" Scale="2" />
-        </EntityType>
         <EntityContainer Name="InventorySystemEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ProductPictures" EntityType="Self.ProductPicture" />
-          <EntitySet Name="ProductStocks" EntityType="Self.ProductStock" />
-          <EntitySet Name="Users" EntityType="InventorySystemModel.User" />
-          <EntitySet Name="ProductTypes" EntityType="InventorySystemModel.ProductType" />
-          <EntitySet Name="ProductVs" EntityType="InventorySystemModel.ProductV" />
+          <EntitySet Name="Contacts" EntityType="InventorySystemModel.Contact" />
+          <EntitySet Name="Customers" EntityType="InventorySystemModel.Customer" />
           <EntitySet Name="POes" EntityType="InventorySystemModel.PO" />
           <EntitySet Name="PODetails" EntityType="InventorySystemModel.PODetail" />
-          <EntitySet Name="PODetailVs" EntityType="InventorySystemModel.PODetailV" />
+          <EntitySet Name="Products" EntityType="InventorySystemModel.Product" />
+          <EntitySet Name="ProductPictures" EntityType="InventorySystemModel.ProductPicture" />
+          <EntitySet Name="ProductStocks" EntityType="InventorySystemModel.ProductStock" />
+          <EntitySet Name="ProductTypes" EntityType="InventorySystemModel.ProductType" />
+          <EntitySet Name="RawMaterails" EntityType="InventorySystemModel.RawMaterail" />
           <EntitySet Name="Stocks" EntityType="InventorySystemModel.Stock" />
-          <EntitySet Name="StockVs" EntityType="InventorySystemModel.StockV" />
-          <EntitySet Name="ProductQtyVs" EntityType="InventorySystemModel.ProductQtyV" />
-          <EntitySet Name="Warehouses" EntityType="InventorySystemModel.Warehouse" />
           <EntitySet Name="Suppliers" EntityType="InventorySystemModel.Supplier" />
-          <EntitySet Name="Customers" EntityType="InventorySystemModel.Customer" />
+          <EntitySet Name="UnitOfMeasures" EntityType="InventorySystemModel.UnitOfMeasure" />
+          <EntitySet Name="Users" EntityType="InventorySystemModel.User" />
+          <EntitySet Name="Warehouses" EntityType="InventorySystemModel.Warehouse" />
           <EntitySet Name="CustomerGroups" EntityType="InventorySystemModel.CustomerGroup" />
           <EntitySet Name="PaymentTerms" EntityType="InventorySystemModel.PaymentTerm" />
-          <EntitySet Name="UnitOfMeasures" EntityType="InventorySystemModel.UnitOfMeasure" />
-          <EntitySet Name="Products" EntityType="InventorySystemModel.Product" />
-          <EntitySet Name="RawMaterails" EntityType="InventorySystemModel.RawMaterail" />
+          <EntitySet Name="PODetailVs" EntityType="InventorySystemModel.PODetailV" />
           <EntitySet Name="PoVs" EntityType="InventorySystemModel.PoV" />
-          <EntitySet Name="Contacts" EntityType="InventorySystemModel.Contact" />
+          <EntitySet Name="ProductQtyVs" EntityType="InventorySystemModel.ProductQtyV" />
+          <EntitySet Name="ProductVs" EntityType="InventorySystemModel.ProductV" />
+          <EntitySet Name="StockVs" EntityType="InventorySystemModel.StockV" />
         </EntityContainer>
-        <EntityType Name="User">
+        <EntityType Name="Contact">
           <Key>
-            <PropertyRef Name="UserId" />
+            <PropertyRef Name="ContactId" />
           </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="ProductType">
-          <Key>
-            <PropertyRef Name="TypeId" />
-          </Key>
-          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="ProductV">
-          <Key>
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="ProductCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Barcode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="SNo" Type="Int32" />
-          <Property Name="WarehouseId" Type="Int32" />
-          <Property Name="ProductTypeId" Type="Int32" />
-          <Property Name="UnitOfMeasure" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="QtyInHand" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="Warehouse" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="QOH" Type="Decimal" Precision="38" Scale="2" />
-        </EntityType>
-        <EntityType Name="PO">
-          <Key>
-            <PropertyRef Name="POId" />
-          </Key>
-          <Property Name="POId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
-          <Property Name="SupplierId" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DeliveryAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TermsOfPayment" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="PODetail">
-          <Key>
-            <PropertyRef Name="PODetailId" />
-          </Key>
-          <Property Name="PODetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="POId" Type="Int32" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
-        </EntityType>
-        <EntityType Name="PODetailV">
-          <Key>
-            <PropertyRef Name="PODetailId" />
-            <PropertyRef Name="ProductId" />
-          </Key>
-          <Property Name="ProductCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Barcode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="PODetailId" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="POId" Type="Int32" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Stock">
-          <Key>
-            <PropertyRef Name="StockId" />
-          </Key>
-          <Property Name="StockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Location" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="WarehouseId" Type="Int32" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="QuantityReceiving" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="QuantityOnHand" Type="Decimal" Precision="18" Scale="2" />
-        </EntityType>
-        <EntityType Name="StockV">
-          <Key>
-            <PropertyRef Name="StockId" />
-          </Key>
-          <Property Name="StockId" Type="Int32" Nullable="false" />
-          <Property Name="Location" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="WarehouseId" Type="Int32" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="QuantityReceiving" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="QuantityOnHand" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Warehouse" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="Barcode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ProductCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="ProductQtyV">
-          <Key>
-            <PropertyRef Name="ProductId" />
-            <PropertyRef Name="Qty_Sales" />
-            <PropertyRef Name="Qty_Shipment" />
-          </Key>
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Qty_Purchased" Type="Decimal" Precision="38" Scale="2" />
-          <Property Name="Qty_Receiving" Type="Decimal" Precision="38" Scale="2" />
-          <Property Name="Qty_Sales" Type="Int32" Nullable="false" />
-          <Property Name="Qty_Shipment" Type="Int32" Nullable="false" />
-          <Property Name="Qty_On_Hand" Type="Decimal" Precision="38" Scale="2" />
-        </EntityType>
-        <EntityType Name="Warehouse">
-          <Key>
-            <PropertyRef Name="WarehouseId" />
-          </Key>
-          <Property Name="WarehouseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Supplier">
-          <Key>
-            <PropertyRef Name="SupplierId" />
-          </Key>
-          <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
-          <Property Name="Street" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Country" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="PhoneNo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="TermOfPayment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -619,27 +464,32 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Active" Type="Boolean" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <EntityType Name="CustomerGroup">
+        <EntityType Name="PO">
           <Key>
-            <PropertyRef Name="CustomerGroup1" />
+            <PropertyRef Name="POId" />
           </Key>
-          <Property Name="CustomerGroup1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="POId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TermsOfPayment" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="PaymentTerm">
+        <EntityType Name="PODetail">
           <Key>
-            <PropertyRef Name="PaymentTerm1" />
-            <PropertyRef Name="Description" />
+            <PropertyRef Name="PODetailId" />
           </Key>
-          <Property Name="PaymentTerm1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="UnitOfMeasure">
-          <Key>
-            <PropertyRef Name="Symbol" />
-          </Key>
-          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="UnitOfMeasure1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PODetailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="POId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -662,6 +512,32 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreateDate" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="ProductPicture">
+          <Key>
+            <PropertyRef Name="ProductPictureId" />
+          </Key>
+          <Property Name="ProductPictureId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="ProductStock">
+          <Key>
+            <PropertyRef Name="StockId" />
+          </Key>
+          <Property Name="StockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarhouseId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="Location" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="QuantityReceiving" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityOnHand" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="RawMaterail">
           <Key>
             <PropertyRef Name="MId" />
@@ -671,6 +547,96 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Code" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
           <Property Name="Note" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Stock">
+          <Key>
+            <PropertyRef Name="StockId" />
+          </Key>
+          <Property Name="StockId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Location" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="QuantityReceiving" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityOnHand" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="TermOfPayment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="UnitOfMeasure">
+          <Key>
+            <PropertyRef Name="Symbol" />
+          </Key>
+          <Property Name="Symbol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UnitOfMeasure1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Warehouse">
+          <Key>
+            <PropertyRef Name="WarehouseId" />
+          </Key>
+          <Property Name="WarehouseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="CustomerGroup">
+          <Key>
+            <PropertyRef Name="CustomerGroup1" />
+          </Key>
+          <Property Name="CustomerGroup1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PaymentTerm">
+          <Key>
+            <PropertyRef Name="PaymentTerm1" />
+            <PropertyRef Name="Description" />
+          </Key>
+          <Property Name="PaymentTerm1" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PODetailV">
+          <Key>
+            <PropertyRef Name="PODetailId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Barcode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="PODetailId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Discount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Total" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="POId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="PoV">
           <Key>
@@ -688,204 +654,74 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TermsOfPayment" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
-        <EntityType Name="Contact">
+        <EntityType Name="ProductQtyV">
           <Key>
-            <PropertyRef Name="ContactId" />
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="Qty_Sales" />
+            <PropertyRef Name="Qty_Shipment" />
           </Key>
-          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CreateDate" Type="DateTime" Precision="3" />
-          <Property Name="Active" Type="Boolean" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Qty_Purchased" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="Qty_Receiving" Type="Decimal" Precision="38" Scale="2" />
+          <Property Name="Qty_Sales" Type="Int32" Nullable="false" />
+          <Property Name="Qty_Shipment" Type="Int32" Nullable="false" />
+          <Property Name="Qty_On_Hand" Type="Decimal" Precision="38" Scale="2" />
         </EntityType>
-      </Schema>
+        <EntityType Name="ProductV">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="ProductCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Barcode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="SNo" Type="Int32" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="ProductTypeId" Type="Int32" />
+          <Property Name="UnitOfMeasure" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="QtyInHand" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Warehouse" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="QOH" Type="Decimal" Precision="38" Scale="2" />
+        </EntityType>
+        <EntityType Name="StockV">
+          <Key>
+            <PropertyRef Name="StockId" />
+          </Key>
+          <Property Name="StockId" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="WarehouseId" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="QuantityReceiving" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityOnHand" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ProductName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Barcode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="ProductCode" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="InventorySystemModelStoreContainer" CdmEntityContainer="InventorySystemEntities">
-          <EntitySetMapping Name="ProductPictures">
-            <EntityTypeMapping TypeName="InventorySystemModel.ProductPicture">
-              <MappingFragment StoreEntitySet="ProductPictures">
-                <ScalarProperty Name="ProductPictureId" ColumnName="ProductPictureId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductStocks">
-            <EntityTypeMapping TypeName="InventorySystemModel.ProductStock">
-              <MappingFragment StoreEntitySet="ProductStock">
-                <ScalarProperty Name="StockId" ColumnName="StockId" />
-                <ScalarProperty Name="WarhouseId" ColumnName="WarhouseId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="QuantityReceiving" ColumnName="QuantityReceiving" />
-                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="InventorySystemModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="InventorySystemModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductTypes">
-            <EntityTypeMapping TypeName="InventorySystemModel.ProductType">
-              <MappingFragment StoreEntitySet="ProductType">
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductVs">
-            <EntityTypeMapping TypeName="InventorySystemModel.ProductV">
-              <MappingFragment StoreEntitySet="ProductV">
-                <ScalarProperty Name="QOH" ColumnName="QOH" />
-                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="QtyInHand" ColumnName="QtyInHand" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
-                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-                <ScalarProperty Name="SNo" ColumnName="SNo" />
-                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="POes">
-            <EntityTypeMapping TypeName="InventorySystemModel.PO">
-              <MappingFragment StoreEntitySet="PO">
-                <ScalarProperty Name="TermsOfPayment" ColumnName="TermsOfPayment" />
-                <ScalarProperty Name="PONumber" ColumnName="PONumber" />
-                <ScalarProperty Name="RefNumber" ColumnName="RefNumber" />
-                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="POId" ColumnName="POId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PODetails">
-            <EntityTypeMapping TypeName="InventorySystemModel.PODetail">
-              <MappingFragment StoreEntitySet="PODetails">
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="POId" ColumnName="POId" />
-                <ScalarProperty Name="PODetailId" ColumnName="PODetailId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PODetailVs">
-            <EntityTypeMapping TypeName="InventorySystemModel.PODetailV">
-              <MappingFragment StoreEntitySet="PODetailV">
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="POId" ColumnName="POId" />
-                <ScalarProperty Name="Total" ColumnName="Total" />
-                <ScalarProperty Name="Discount" ColumnName="Discount" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="PODetailId" ColumnName="PODetailId" />
-                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Stocks">
-            <EntityTypeMapping TypeName="InventorySystemModel.Stock">
-              <MappingFragment StoreEntitySet="Stock">
-                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
-                <ScalarProperty Name="QuantityReceiving" ColumnName="QuantityReceiving" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="StockId" ColumnName="StockId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="StockVs">
-            <EntityTypeMapping TypeName="InventorySystemModel.StockV">
-              <MappingFragment StoreEntitySet="StockV">
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
-                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
-                <ScalarProperty Name="QuantityReceiving" ColumnName="QuantityReceiving" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="StockId" ColumnName="StockId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductQtyVs">
-            <EntityTypeMapping TypeName="InventorySystemModel.ProductQtyV">
-              <MappingFragment StoreEntitySet="ProductQtyV">
-                <ScalarProperty Name="Qty_On_Hand" ColumnName="Qty On Hand" />
-                <ScalarProperty Name="Qty_Shipment" ColumnName="Qty Shipment" />
-                <ScalarProperty Name="Qty_Sales" ColumnName="Qty Sales" />
-                <ScalarProperty Name="Qty_Receiving" ColumnName="Qty Receiving" />
-                <ScalarProperty Name="Qty_Purchased" ColumnName="Qty Purchased" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Warehouses">
-            <EntityTypeMapping TypeName="InventorySystemModel.Warehouse">
-              <MappingFragment StoreEntitySet="Warehouse">
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Suppliers">
-            <EntityTypeMapping TypeName="InventorySystemModel.Supplier">
-              <MappingFragment StoreEntitySet="Supplier">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="TermOfPayment" ColumnName="TermOfPayment" />
-                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="Street" ColumnName="Street" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -914,27 +750,32 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CustomerGroups">
-            <EntityTypeMapping TypeName="InventorySystemModel.CustomerGroup">
-              <MappingFragment StoreEntitySet="CustomerGroup">
+          <EntitySetMapping Name="POes">
+            <EntityTypeMapping TypeName="InventorySystemModel.PO">
+              <MappingFragment StoreEntitySet="PO">
+                <ScalarProperty Name="TermsOfPayment" ColumnName="TermsOfPayment" />
+                <ScalarProperty Name="RefNumber" ColumnName="RefNumber" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CustomerGroup1" ColumnName="CustomerGroup" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PONumber" ColumnName="PONumber" />
+                <ScalarProperty Name="POId" ColumnName="POId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PaymentTerms">
-            <EntityTypeMapping TypeName="InventorySystemModel.PaymentTerm">
-              <MappingFragment StoreEntitySet="PaymentTerm">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="PaymentTerm1" ColumnName="PaymentTerm" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UnitOfMeasures">
-            <EntityTypeMapping TypeName="InventorySystemModel.UnitOfMeasure">
-              <MappingFragment StoreEntitySet="UnitOfMeasure">
-                <ScalarProperty Name="UnitOfMeasure1" ColumnName="UnitOfMeasure" />
-                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+          <EntitySetMapping Name="PODetails">
+            <EntityTypeMapping TypeName="InventorySystemModel.PODetail">
+              <MappingFragment StoreEntitySet="PODetails">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="POId" ColumnName="POId" />
+                <ScalarProperty Name="PODetailId" ColumnName="PODetailId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -960,6 +801,35 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductPictures">
+            <EntityTypeMapping TypeName="InventorySystemModel.ProductPicture">
+              <MappingFragment StoreEntitySet="ProductPictures">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductPictureId" ColumnName="ProductPictureId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductStocks">
+            <EntityTypeMapping TypeName="InventorySystemModel.ProductStock">
+              <MappingFragment StoreEntitySet="ProductStock">
+                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
+                <ScalarProperty Name="QuantityReceiving" ColumnName="QuantityReceiving" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="WarhouseId" ColumnName="WarhouseId" />
+                <ScalarProperty Name="StockId" ColumnName="StockId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductTypes">
+            <EntityTypeMapping TypeName="InventorySystemModel.ProductType">
+              <MappingFragment StoreEntitySet="ProductType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RawMaterails">
             <EntityTypeMapping TypeName="InventorySystemModel.RawMaterail">
               <MappingFragment StoreEntitySet="RawMaterails">
@@ -968,6 +838,102 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="MId" ColumnName="MId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stocks">
+            <EntityTypeMapping TypeName="InventorySystemModel.Stock">
+              <MappingFragment StoreEntitySet="Stock">
+                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
+                <ScalarProperty Name="QuantityReceiving" ColumnName="QuantityReceiving" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="StockId" ColumnName="StockId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="InventorySystemModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="TermOfPayment" ColumnName="TermOfPayment" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitOfMeasures">
+            <EntityTypeMapping TypeName="InventorySystemModel.UnitOfMeasure">
+              <MappingFragment StoreEntitySet="UnitOfMeasure">
+                <ScalarProperty Name="UnitOfMeasure1" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="Symbol" ColumnName="Symbol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="InventorySystemModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="InventorySystemModel.Warehouse">
+              <MappingFragment StoreEntitySet="Warehouse">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerGroups">
+            <EntityTypeMapping TypeName="InventorySystemModel.CustomerGroup">
+              <MappingFragment StoreEntitySet="CustomerGroup">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CustomerGroup1" ColumnName="CustomerGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentTerms">
+            <EntityTypeMapping TypeName="InventorySystemModel.PaymentTerm">
+              <MappingFragment StoreEntitySet="PaymentTerm">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PaymentTerm1" ColumnName="PaymentTerm" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PODetailVs">
+            <EntityTypeMapping TypeName="InventorySystemModel.PODetailV">
+              <MappingFragment StoreEntitySet="PODetailV">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="POId" ColumnName="POId" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PODetailId" ColumnName="PODetailId" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -988,19 +954,53 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Contacts">
-            <EntityTypeMapping TypeName="InventorySystemModel.Contact">
-              <MappingFragment StoreEntitySet="Contact">
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
+          <EntitySetMapping Name="ProductQtyVs">
+            <EntityTypeMapping TypeName="InventorySystemModel.ProductQtyV">
+              <MappingFragment StoreEntitySet="ProductQtyV">
+                <ScalarProperty Name="Qty_On_Hand" ColumnName="Qty On Hand" />
+                <ScalarProperty Name="Qty_Shipment" ColumnName="Qty Shipment" />
+                <ScalarProperty Name="Qty_Sales" ColumnName="Qty Sales" />
+                <ScalarProperty Name="Qty_Receiving" ColumnName="Qty Receiving" />
+                <ScalarProperty Name="Qty_Purchased" ColumnName="Qty Purchased" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductVs">
+            <EntityTypeMapping TypeName="InventorySystemModel.ProductV">
+              <MappingFragment StoreEntitySet="ProductV">
+                <ScalarProperty Name="QOH" ColumnName="QOH" />
+                <ScalarProperty Name="Warehouse" ColumnName="Warehouse" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="QtyInHand" ColumnName="QtyInHand" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="UnitOfMeasure" ColumnName="UnitOfMeasure" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="SNo" ColumnName="SNo" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockVs">
+            <EntityTypeMapping TypeName="InventorySystemModel.StockV">
+              <MappingFragment StoreEntitySet="StockV">
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
+                <ScalarProperty Name="QuantityReceiving" ColumnName="QuantityReceiving" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="StockId" ColumnName="StockId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

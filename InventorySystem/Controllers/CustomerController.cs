@@ -34,7 +34,7 @@ namespace InventorySystem.Controllers
             var users = _Entity.Users.ToList();
             var customerGroup = _Entity.CustomerGroups.ToList();
             var paymentTerms = _Entity.PaymentTerms.ToList();
-            var lastCustomer = _Entity.Customers.OrderByDescending(x => x.CreateDate).FirstOrDefault();
+            var lastCustomer = _Entity.Customers.OrderByDescending(x => x.CustomerId).FirstOrDefault();
             var lastCustomerCode = "CA" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString();
             if (lastCustomer == null)
                 lastCustomerCode += "01";
@@ -230,6 +230,18 @@ namespace InventorySystem.Controllers
             }
             else
                 return Json("[]");
+        }
+
+        public virtual JsonResult GetNextCustomerId()
+        {
+            var lastCustomer = _Entity.Customers.OrderByDescending(x => x.CustomerId).FirstOrDefault();
+            var lastCustomerCode = "CA" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString();
+            if (lastCustomer == null)
+                lastCustomerCode += "01";
+            else
+                lastCustomerCode += (Convert.ToInt32(lastCustomer.Code.Substring(lastCustomer.Code.Length - 2)) + 1).ToString("00");
+
+            return Json(lastCustomerCode, JsonRequestBehavior.AllowGet);
         }
 
         public virtual JsonResult GetContactList(int customerId)

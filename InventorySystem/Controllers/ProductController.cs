@@ -191,11 +191,11 @@ namespace InventorySystem.Controllers
                     var row = _Entity.Products.Where(x => x.ProductId == model.ProductId).FirstOrDefault();
                     if (row != null)
                     {
-
+                        _Entity.RawMaterails.RemoveRange(_Entity.RawMaterails.Where(x => x.ProductId == model.ProductId));
+                        _Entity.SaveChanges();
                         if (frm != null && frm.Count() > 0) {
 
-                            _Entity.RawMaterails.RemoveRange(_Entity.RawMaterails.Where(x => x.ProductId == model.ProductId));
-                            _Entity.SaveChanges();
+                            
 
                             foreach (var item in frm) {
                                  
@@ -227,9 +227,15 @@ namespace InventorySystem.Controllers
                         model.Price = TotalRawMaterailPrice;
                         //Sale Margin
                         model.SalesPrice = TotalRawMaterailSalesPrice;
+
+                        if (model.Price > 0)
+                        {
+                            model.SalesMargin = ((TotalRawMaterailSalesPrice - TotalRawMaterailPrice) * 100) / model.Price;
+                            model.SalesMargin = Math.Round(Convert.ToDecimal(model.SalesMargin), 2);
+                        }
+                        else
+                            model.SalesMargin = 0;
                         //((parseFloat(salesPrice) - parseFloat(price)) * 100) / parseFloat(price)
-                        model.SalesMargin = ((TotalRawMaterailSalesPrice - TotalRawMaterailPrice) * 100) / model.Price;
-                        model.SalesMargin = Math.Round(Convert.ToDecimal(model.SalesMargin), 2);
                         //Sale Price
 
                         _Entity.Entry(row).CurrentValues.SetValues(model);
@@ -379,22 +385,99 @@ namespace InventorySystem.Controllers
 
             try
             {
+                
+                var productDetail = _Entity.Products.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                if (productDetail != null) {
 
-                //Check for raw materail
+                    if (productDetail.RawMaterial == true)
+                    {
+                        bool isAllowedToDelete = true;
 
-                var rawMaterial = _Entity.RawMaterails.Where(x => x.ProductId == ProductId).FirstOrDefault();
-                if (rawMaterial != null) {
+                        //Check for raw material table
+                        var searchInRawMaterial = _Entity.RawMaterails.Where(x => x.Code == productDetail.ProductCode).FirstOrDefault();
+                        if (searchInRawMaterial != null)
+                        {
+                            isAllowedToDelete = false;
+                        }
+                        else
+                        {
+                            isAllowedToDelete = true;
+                        }
 
-                    _Entity.Entry(rawMaterial).State = System.Data.Entity.EntityState.Deleted;
-                    _Entity.SaveChanges();
+                        if(isAllowedToDelete)
+                        {
+                            var isRawMaterialInStock = _Entity.Stocks.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                            if (isRawMaterialInStock != null)
+                            {
+                                isAllowedToDelete = false;
+                            }
+                            else
+                            {
+                                isAllowedToDelete = true;
+                            }
+                        }
+                        //check for stock table
+                        
+
+                        if (isAllowedToDelete == true) {
+                            _Entity.Products.Remove(productDetail);
+                            _Entity.SaveChanges();
+                            return Json("true", JsonRequestBehavior.AllowGet);
+                        }
+
+
+                        return Json("false", JsonRequestBehavior.AllowGet);
+
+                    }
+                    else 
+                    {
+
+                        bool isAllowedToDelete = true;
+
+                        var checkInStockTable = _Entity.Stocks.Where(x => x.ProductId == ProductId).FirstOrDefault();
+                        if (checkInStockTable != null)
+                        {
+                            isAllowedToDelete = false;
+                        }
+                        else {
+                            isAllowedToDelete = true;
+                        }
+
+                        if(isAllowedToDelete)
+                        {
+                            var checkInRawMaterial = _Entity.RawMaterails.Where(x => x.ProductId == ProductId).ToList();
+                            if (checkInRawMaterial.Count() > 0)
+                            {
+
+                                foreach (var item in checkInRawMaterial)
+                                {
+                                    _Entity.RawMaterails.Remove(item);
+                                    _Entity.SaveChanges();
+                                }
+
+                                isAllowedToDelete = true;
+
+                                _Entity.Products.Remove(productDetail);
+                                _Entity.SaveChanges();
+                            }
+                        }
+                        
+
+
+
+                        if (isAllowedToDelete == false) {
+                            return Json("false", JsonRequestBehavior.AllowGet);
+                        }
+
+
+                        return Json("true", JsonRequestBehavior.AllowGet);
+
+                    }
+
+                    
                 }
 
-
-                var Product = _Entity.Products.Where(x => x.ProductId == ProductId).FirstOrDefault();
-                if (Product != null) {
-                    _Entity.Products.Remove(Product);
-                    _Entity.SaveChanges();
-                }
+               
 
 
               return Json("true", JsonRequestBehavior.AllowGet);

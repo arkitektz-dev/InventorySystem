@@ -804,6 +804,8 @@ function DeleteProduct(ProductId) {
                         }, 50)
 
 
+                    } else {
+                        toastr.error('Product is associated with another record');
                     }
                 },
                 failure: function (response) {

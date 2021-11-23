@@ -22,6 +22,20 @@
 		$('#CustomerLists').css('display', 'none');
 		$('#hiddenform').text('Add new customer');
 
+		$.ajax({
+			type: "GET",
+			url: "/Customer/GetNextCustomerId",
+			success: function (response) {
+				$('#Code').val(response);
+			},
+			failure: function (response) {
+				console.error(response.responseText);
+			},
+			error: function (response) {
+				console.error(response.responseText);
+			}
+		})
+
 		clearForm();
 
 		$('#nav-contact-tab').addClass('disabled');
@@ -147,6 +161,10 @@
 						$('#AddCustomer').css('display', 'none');
 						$('#CustomerLists').css('display', '');
 						BindGridCustomer();
+						//if (CustomerId == '0') {
+						//	console.log(Code.replace(Code.slice(-2), parseInt(Code.slice(-2)) + 1))
+						//	$('#Code').val(Code.replace(Code.slice(-2), parseInt(Code.slice(-2)) + 1))
+						//}
 					}, 50)
 
 
@@ -268,7 +286,8 @@ function clearForm() {
 	$('#PaymentTerms').val('');
 	$('#CreditLimit').val('');
 	$('#BusinessSize').val('');
-	$('#StopCredit').val('');
+	$('#Discount').val('');
+	$('#StopCredit').prop('checked', false);
 	$('#Address').val('');
 	$('#Street').val('');
 	$('#State').val('');

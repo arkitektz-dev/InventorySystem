@@ -25,26 +25,26 @@ namespace InventorySystem.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ProductPicture> ProductPictures { get; set; }
-        public virtual DbSet<ProductStock> ProductStocks { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<ProductType> ProductTypes { get; set; }
-        public virtual DbSet<ProductV> ProductVs { get; set; }
+        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<PO> POes { get; set; }
         public virtual DbSet<PODetail> PODetails { get; set; }
-        public virtual DbSet<PODetailV> PODetailVs { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductPicture> ProductPictures { get; set; }
+        public virtual DbSet<ProductStock> ProductStocks { get; set; }
+        public virtual DbSet<ProductType> ProductTypes { get; set; }
+        public virtual DbSet<RawMaterail> RawMaterails { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
-        public virtual DbSet<StockV> StockVs { get; set; }
-        public virtual DbSet<ProductQtyV> ProductQtyVs { get; set; }
-        public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<CustomerGroup> CustomerGroups { get; set; }
         public virtual DbSet<PaymentTerm> PaymentTerms { get; set; }
-        public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
-        public virtual DbSet<RawMaterail> RawMaterails { get; set; }
+        public virtual DbSet<PODetailV> PODetailVs { get; set; }
         public virtual DbSet<PoV> PoVs { get; set; }
-        public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<ProductQtyV> ProductQtyVs { get; set; }
+        public virtual DbSet<ProductV> ProductVs { get; set; }
+        public virtual DbSet<StockV> StockVs { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace InventorySystem.Models
         public Nullable<decimal> QuantityReceiving { get; set; }
         public Nullable<decimal> QuantityOnHand { get; set; }
         public string ProductName { get; set; }
-        public string Warehouse { get; set; }
+        public string Name { get; set; }
         public string Barcode { get; set; }
         public string ProductCode { get; set; }
     }

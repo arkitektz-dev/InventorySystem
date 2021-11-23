@@ -15,6 +15,7 @@ namespace InventorySystem.Models
     public partial class PO
     {
         public int POId { get; set; }
+        public string PONumber { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public Nullable<int> SupplierId { get; set; }
@@ -22,7 +23,6 @@ namespace InventorySystem.Models
         public string Description { get; set; }
         public string DeliveryAddress { get; set; }
         public string RefNumber { get; set; }
-        public string PONumber { get; set; }
         public string TermsOfPayment { get; set; }
     }
 }

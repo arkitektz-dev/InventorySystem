@@ -18,15 +18,96 @@
         left: 20%;
     }
 </style>
-<div class="py-7">
-    <h4 class="text-left" style="margin-left: 20px;">Products</h4>
+
+<div id="AddStock" class="pt-5 px-4" style="display:none">
+    <h4 class="form-header" id="hiddenform">
+        Add Stock
+    </h4>
+
+
+    <form class="forms-sample">
+        <div class="row">
+
+            <input type="hidden" id="StockId" />
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Barcode <span style="color:red">*</span></label>
+                    <input type="number" onblur="GetProductDetail()" class="form-control" placeholder="Barcode" required="required" id="Barcode" />
+                    <span class="text-danger" id="Val_Barcode"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Product Name <span style="color:red">*</span></label>
+                    <input type="text" class="form-control" placeholder="Product Name" required="required" id="ProductName" maxlength="30" disabled />
+                    <span class="text-danger" id="Val_ProductName"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Location <span style="color:red">*</span></label>
+                    <input type="text" class="form-control" placeholder="Location" required="required" id="Location" maxlength="30" />
+                    <span class="text-danger" id="Val_Location"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Warehouse <span style="color:red">*</span></label>
+                    <input type="text" class="form-control" id="WarehouseId" placeholder="Warehouse" disabled />
+                    <span class="text-danger" id="Val_Warehouse"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Quantity on Hand <span style="color:red">*</span></label>
+                    <input type="number" class="form-control" placeholder="QuantityOnHand" required="required" id="QuantityOnHand" />
+                    <span class="text-danger" id="Val_QuantityOnHand"></span>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Quantity on Receiving <span style="color:red">*</span></label>
+                    <input type="number" class="form-control" placeholder="Quantity On Receiving" required="required" id="QuantityOnReceiving" />
+                    <span class="text-danger" id="Val_QuantityOnReceiving"></span>
+                </div>
+            </div>
+
+            <div class="col-md-12" style="text-align:center">
+
+                <button type="button" class="btn btn-success" id="btnSubmit">
+                    <span>Save</span>
+                </button>
+                <button type="button" class="btn btn-danger" id="closeButton"><i class="fa fa-close"></i>Close</button>
+
+            </div>
+
+
+
+
+
+        </div>
+    </form>
+
+</div>
+
+
+
+<div class="py-7" id="StockLists">
+    <h4 class="text-left" style="margin-left: 20px;">Stocks</h4>
     <div class="px-4 px-md-6">
         <div class="row">
             <div class="col-6">
 
             </div>
             <div class="col-6 text-right">
-                <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" data-toggle="modal" data-target="" onclick="OnAddNew();" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus"></i> Add New</button>
+                <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="addStock"><i class="fa fa-plus"></i> Add New</button>
             </div>
         </div>
     </div>
@@ -37,26 +118,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="ModelSubscription" tabindex="-1" role="dialog" aria-labelledby="labelSubscription" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="max-width:1400px;top:4%;">
-        <div class="modal-content">
-            <div class="modal-body" id="SubscriptionModelBody">
-            </div>
-        </div>
-    </div>
-</div>
 
-<div aria-hidden="true" aria-labelledby="myLargeModalLabel" id="ModelTask1" class="modal fade bd-example-modal-lg" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-lg" style="top:15%;max-width:1400px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
-            </div>
-            <div class="modal-body" id="pDetails">
-            </div>
-        </div>
-    </div>
-</div>
 
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/scripts/app/Stock.js"></script>
