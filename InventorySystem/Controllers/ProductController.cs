@@ -184,14 +184,12 @@ namespace InventorySystem.Controllers
                 }
                 else
                 {
+
+                    decimal? TotalRawMaterail = 0;
                     //Edit
                     var row = _Entity.Products.Where(x => x.ProductId == model.ProductId).FirstOrDefault();
                     if (row != null)
                     {
-
-                        _Entity.Entry(row).CurrentValues.SetValues(model);
-
-                        _Entity.SaveChanges();
 
                         if (frm != null && frm.Count() > 0) {
 
@@ -199,6 +197,8 @@ namespace InventorySystem.Controllers
                             _Entity.SaveChanges();
 
                             foreach (var item in frm) {
+                                 
+
                                 var product = _Entity.Products.Where(x => x.ProductId == item.ProductId).FirstOrDefault();
                                 if (product != null)
                                 {
@@ -213,11 +213,24 @@ namespace InventorySystem.Controllers
                                     _Entity.RawMaterails.Add(rawMaterial);
                                     _Entity.SaveChanges();
 
+                                    TotalRawMaterail += product.Price * item.Quantity;
+
                                 }
 
                             }
                         }
 
+
+                        //Cost Price
+                        model.Price = TotalRawMaterail;
+                        //Sale Margin
+                        //((parseFloat(salesPrice) - parseFloat(price)) * 100) / parseFloat(price)
+                        model.SalesMargin = ((TotalRawMaterail - model.Price) * 100) / model.Price;
+                        //Sale Price
+                        model.SalesPrice = model.Price + model.SalesMargin * ((model.Price / 100));
+
+                        _Entity.Entry(row).CurrentValues.SetValues(model);
+                        _Entity.SaveChanges();
 
 
                         return Json("true", JsonRequestBehavior.AllowGet);
@@ -331,14 +344,19 @@ namespace InventorySystem.Controllers
 
             try
             {
-                var rawMaterials = _Entity.RawMaterails.Where(x => x.ProductId == ProductId).ToList();
-                if (rawMaterials != null)
-                {
-                    return Json(rawMaterials, JsonRequestBehavior.AllowGet);
+                List<vmProductRawMaterial> list = new List<vmProductRawMaterial>();
+                var rawMaterails = _Entity.RawMaterails.Where(x => x.ProductId == ProductId).ToList();
+                foreach (var item in rawMaterails) {
+                    vmProductRawMaterial objRaw = new vmProductRawMaterial();
+                    var row = _Entity.Products.Where(x => x.ProductCode == item.Code).FirstOrDefault();
+                    objRaw.ProductId = row.ProductId;
+                    objRaw.Quantity = (int)item.Quantity;
+                    objRaw.text = row.ProductCode;
+
+                    list.Add(objRaw);
                 }
-                else {
-                    return Json(null, JsonRequestBehavior.AllowGet);
-                }
+
+                return Json(list, JsonRequestBehavior.AllowGet);
 
             }
             catch (Exception ex)
@@ -394,4 +412,12 @@ namespace InventorySystem.Controllers
         public int Quantity { get; set; }
         public string text { get; set; }
     }
+
+    public class vmProductRawMaterial
+    {
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+        public string text { get; set; }
+    }
+
 }

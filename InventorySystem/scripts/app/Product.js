@@ -27,6 +27,7 @@ $(document).ready(function () {
         let isFormComplete = true;
         const RawProductCodeId = $("#ProductCodeList").val();
         const RawQuantity = $("#RawQuantity").val();
+        console.log(RawProductCodeId);
         if (RawQuantity == '') {
             $('#Val_RawQuantity').html("Please enter quantity");
             $('#RawQuantity').addClass("is-invalid");
@@ -38,12 +39,28 @@ $(document).ready(function () {
 
         const RawProductText = $("#ProductCodeList option:selected").text();
         RawMaterialList.map((item, index) => {
-            if (item.ProductId == RawProductCodeId) {
+            if (item.ProductId == Number(RawProductCodeId)) {
                 item.Quantity = parseFloat(item.Quantity) + parseFloat(RawQuantity)
-                $('#tbl-raw-material tr:eq(' + (index + 1) + ') td')[1].innerText = item.Quantity;
+                //$('#tbl-raw-material tr:eq(' + (index + 1) + ') td')[1].innerText = item.Quantity;
                 isFormComplete = false;
             }
         });
+
+        var tableRawMaterial = $('#tbl-raw-material').DataTable();
+        tableRawMaterial
+            .clear()
+            .draw();
+
+        RawMaterialList.map((item, index) => {
+
+            tableRawMaterial.row.add([
+                item.text,
+                item.Quantity,
+                `<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this,${item.ProductId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`
+            ]).draw(false);
+
+        });
+
 
         if (isFormComplete == false) {
             //tableRawMaterial.clear().draw(null, false);
@@ -58,12 +75,20 @@ $(document).ready(function () {
             RawMaterialList.push(row);
         }
 
-        
-        tableRawMaterial.row.add([
-            RawProductText,
-            RawQuantity,
-            `<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this,${RawProductCodeId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`
-        ]).draw(false);
+         tableRawMaterial = $('#tbl-raw-material').DataTable();
+        tableRawMaterial
+            .clear()
+            .draw();
+
+        RawMaterialList.map((item, index) => {
+
+            tableRawMaterial.row.add([
+                item.text,
+                item.Quantity,
+                `<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this,${item.ProductId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`
+            ]).draw(false);
+
+        });
 
     });
 
@@ -73,6 +98,7 @@ $(document).ready(function () {
 
         $('#ProductId').val(0);
         $('#Barcode').prop("disabled", false);
+        $('#btnRawMaterial').prop("disabled", false);
         $('#RawMaterial').prop("checked", false);
         $('#btnRawMaterial').show()
         $('#AddRawMaterial').show();
@@ -612,24 +638,27 @@ function EditProduct(pid, bcode, pname, pcode, uom, wid, ptid, p, sm, sp, rm, d)
         tableRawMaterial
             .clear()
             .draw();
+
         $.ajax({
             type: "POST",
             url: "/Product/GetRawMaterialByProductId",
             data: { ProductId: pid },
             success: function (response) {
+                RawMaterialList = [];
                 response.map((item, index) => {
                     console.log(item);
+
 
                     let row = {
                         ProductId: Number(item.ProductId),
                         Quantity: Number(item.Quantity),
-                        text: item.Note
+                        text: item.text
                     };
 
                     RawMaterialList.push(row);
 
                     tableRawMaterial.row.add([
-                        item.Code,
+                        item.text,
                         item.Quantity,
                         `<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnItemDelete(this,${item.ProductId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`
                     ]).draw(false);

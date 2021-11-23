@@ -33,7 +33,6 @@ namespace InventorySystem.Models
         public virtual DbSet<PO> POes { get; set; }
         public virtual DbSet<PODetail> PODetails { get; set; }
         public virtual DbSet<PODetailV> PODetailVs { get; set; }
-        public virtual DbSet<PoV> PoVs { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<StockV> StockVs { get; set; }
         public virtual DbSet<ProductQtyV> ProductQtyVs { get; set; }
@@ -45,5 +44,6 @@ namespace InventorySystem.Models
         public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<RawMaterail> RawMaterails { get; set; }
+        public virtual DbSet<PoV> PoVs { get; set; }
     }
 }

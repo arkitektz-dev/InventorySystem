@@ -1,6 +1,10 @@
 ﻿$(document).ready(function () {
 	BindGridCustomer();
+	// Basic example
+	var example1 = new BSTable("table1");
+	example1.init();
 
+	 
 	$('#closeButton').click(function () {
 		$('#Val_Name').html("");
 		$('#Val_Address').html("");
@@ -20,7 +24,7 @@
 
 		clearForm();
 
-		$('#nav-contact-tab').addClass('disabled');
+		//$('#nav-contact-tab').addClass('disabled');
 		$('#nav-home-tab').addClass('active show');
 		$('#nav-customer').addClass('active show');
 		$('#nav-profile-tab').removeClass('active show');
@@ -169,7 +173,7 @@ function clearForm() {
 
 function EditCustomer(Code, UserId, AccountEmail, CustomerGroup, PaymentTerms, CreditLimit, BusinessSize, Discount, StopCredit, Address, City, Country, TermOfPayment, Name, PhoneNo, State, PostalCode, CustomerId, Street) {
 	clearForm();
-	$('#nav-contact-tab').removeClass('disabled');
+	//$('#nav-contact-tab').removeClass('disabled');
 	$('#nav-home-tab').addClass('active show');
 	$('#nav-customer').addClass('active show');
 	$('#nav-profile-tab').removeClass('active show');
