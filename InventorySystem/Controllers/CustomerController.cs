@@ -125,6 +125,27 @@ namespace InventorySystem.Controllers
         }
 
         [HttpPost]
+        public virtual JsonResult ContactDelete(int Id)
+        {
+            try
+            {
+                var _Data = _Entity.Contacts.Where(x => x.ContactId == Id).SingleOrDefault();
+                if (_Data != null)
+                {
+                    _Entity.Entry(_Data).State = EntityState.Deleted;
+                    _Entity.SaveChanges();
+                    return Json("true", JsonRequestBehavior.AllowGet);
+                }
+                return Json("false", JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception)
+            {
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
         public virtual JsonResult SaveCustomerApi(Customer model)
         {
             try
@@ -209,6 +230,65 @@ namespace InventorySystem.Controllers
             }
             else
                 return Json("[]");
+        }
+
+        public virtual JsonResult GetContactList(int customerId)
+        {
+            if (Session["UserID"] != null)
+            {
+                var lst = _Entity.Contacts.Where(x=>x.CustomerId == customerId).ToList();
+                GridDataSource gobj = new GridDataSource
+                {
+                    data = lst.ToList(),
+                    length = lst.Count
+                };
+                return Json(gobj, JsonRequestBehavior.AllowGet);
+
+            }
+            else
+                return Json("[]");
+        }
+
+        [HttpPost]
+        public virtual JsonResult SaveContactApi(Contact model)
+        {
+            try
+            {
+                if (model.ContactId == 0)
+                {
+                    model.CreateDate = DateTime.Now;
+                    model.Active = true;
+                    var obj = _Entity.Contacts.AsNoTracking().Where(x => x.Email == model.Email).FirstOrDefault();
+
+                    if (obj != null)
+                    {
+                        return Json("false", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    var row = _Entity.Contacts.Where(x => x.ContactId == model.ContactId).FirstOrDefault();
+                    if (row != null)
+                    {
+
+                        _Entity.Entry(row).CurrentValues.SetValues(model);
+
+                        _Entity.SaveChanges();
+
+                        return Json("true", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                _Entity.Entry(model).State = (model.ContactId == 0 ? EntityState.Added : EntityState.Modified);
+                _Entity.SaveChanges();
+
+
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json("[]", JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         [HttpPost]

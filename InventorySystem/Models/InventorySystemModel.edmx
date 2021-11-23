@@ -5,6 +5,21 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="InventorySystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="JobTitle" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CustomerId" />
@@ -223,7 +238,7 @@ warning 6002: The table/view 'InventorySystem.dbo.PoV' does not have a primary k
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="DeliveryAddress" Type="varchar(max)" />
           <Property Name="RefNumber" Type="varchar" MaxLength="50" />
-          <Property Name="Name" Type="varchar" MaxLength="350" />
+          <Property Name="Supplier" Type="varchar" MaxLength="250" />
           <Property Name="PONumber" Type="varchar" MaxLength="50" />
           <Property Name="TermsOfPayment" Type="varchar" MaxLength="150" />
         </EntityType>
@@ -283,6 +298,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="ProductCode" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityContainer Name="InventorySystemModelStoreContainer">
+          <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PO" EntityType="Self.PO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PODetails" EntityType="Self.PODetails" Schema="dbo" store:Type="Tables" />
@@ -332,7 +348,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
     [PoV].[Description] AS [Description], 
     [PoV].[DeliveryAddress] AS [DeliveryAddress], 
     [PoV].[RefNumber] AS [RefNumber], 
-    [PoV].[Name] AS [Name], 
+    [PoV].[Supplier] AS [Supplier], 
     [PoV].[PONumber] AS [PONumber], 
     [PoV].[TermsOfPayment] AS [TermsOfPayment]
     FROM [dbo].[PoV] AS [PoV]</DefiningQuery>
@@ -426,6 +442,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="Products" EntityType="InventorySystemModel.Product" />
           <EntitySet Name="RawMaterails" EntityType="InventorySystemModel.RawMaterail" />
           <EntitySet Name="PoVs" EntityType="InventorySystemModel.PoV" />
+          <EntitySet Name="Contacts" EntityType="InventorySystemModel.Contact" />
         </EntityContainer>
         <EntityType Name="User">
           <Key>
@@ -667,9 +684,24 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DeliveryAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="Supplier" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TermsOfPayment" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Contact">
+          <Key>
+            <PropertyRef Name="ContactId" />
+          </Key>
+          <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -944,7 +976,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
               <MappingFragment StoreEntitySet="PoV">
                 <ScalarProperty Name="TermsOfPayment" ColumnName="TermsOfPayment" />
                 <ScalarProperty Name="PONumber" ColumnName="PONumber" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
                 <ScalarProperty Name="RefNumber" ColumnName="RefNumber" />
                 <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -953,6 +985,22 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="POId" ColumnName="POId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contacts">
+            <EntityTypeMapping TypeName="InventorySystemModel.Contact">
+              <MappingFragment StoreEntitySet="Contact">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ContactId" ColumnName="ContactId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
