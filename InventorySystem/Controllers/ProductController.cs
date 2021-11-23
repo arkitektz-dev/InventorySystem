@@ -185,7 +185,8 @@ namespace InventorySystem.Controllers
                 else
                 {
 
-                    decimal? TotalRawMaterail = 0;
+                    decimal TotalRawMaterailPrice = 0;
+                    decimal TotalRawMaterailSalesPrice = 0;
                     //Edit
                     var row = _Entity.Products.Where(x => x.ProductId == model.ProductId).FirstOrDefault();
                     if (row != null)
@@ -213,7 +214,8 @@ namespace InventorySystem.Controllers
                                     _Entity.RawMaterails.Add(rawMaterial);
                                     _Entity.SaveChanges();
 
-                                    TotalRawMaterail += product.Price * item.Quantity;
+                                    TotalRawMaterailPrice += product.Price.Value * item.Quantity;
+                                    TotalRawMaterailSalesPrice += product.SalesPrice.Value * item.Quantity;
 
                                 }
 
@@ -222,12 +224,13 @@ namespace InventorySystem.Controllers
 
 
                         //Cost Price
-                        model.Price = TotalRawMaterail;
+                        model.Price = TotalRawMaterailPrice;
                         //Sale Margin
+                        model.SalesPrice = TotalRawMaterailSalesPrice;
                         //((parseFloat(salesPrice) - parseFloat(price)) * 100) / parseFloat(price)
-                        model.SalesMargin = ((TotalRawMaterail - model.Price) * 100) / model.Price;
+                        model.SalesMargin = ((TotalRawMaterailSalesPrice - TotalRawMaterailPrice) * 100) / model.Price;
+                        model.SalesMargin = Math.Round(Convert.ToDecimal(model.SalesMargin), 2);
                         //Sale Price
-                        model.SalesPrice = model.Price + model.SalesMargin * ((model.Price / 100));
 
                         _Entity.Entry(row).CurrentValues.SetValues(model);
                         _Entity.SaveChanges();
