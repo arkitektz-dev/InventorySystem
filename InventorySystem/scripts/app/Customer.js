@@ -48,7 +48,7 @@
 		const CreditLimit = $('#CreditLimit').val();
 		const BusinessSize = $('#BusinessSize').val();
 		const Discount = $('#Discount').val();
-		const StopCredit = $('#StopCredit').val();
+		const StopCredit = $('#StopCredit').is(":checked");
 
 		const CustomerAddress = $('#Address').val();
 		const street = $('#Street').val();
@@ -75,7 +75,19 @@
 		}
 
 		if (AccountEmail === '') {
+			
 			$('#Val_Email').html("Please enter customer email");
+			$('#AccountEmail').addClass("show-warning");
+			isFormComplete = false;
+			isFirstTab = true;
+		} else {
+			$('#Val_Email').html("");
+			$('#AccountEmail').removeClass("show-warning");
+		}
+
+
+		if (isEmail(AccountEmail) == false) {
+			$('#Val_Email').html("Please valid customer email");
 			$('#AccountEmail').addClass("show-warning");
 			isFormComplete = false;
 			isFirstTab = true;
@@ -152,6 +164,12 @@
 	})
 });
 
+
+function isEmail(email) {
+	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	return regex.test(email);
+}
+
 function clearForm() {
 	$('#CustomerId').val(0);
 	$('#Name').val('');
@@ -172,6 +190,7 @@ function clearForm() {
 }
 
 function EditCustomer(Code, UserId, AccountEmail, CustomerGroup, PaymentTerms, CreditLimit, BusinessSize, Discount, StopCredit, Address, City, Country, TermOfPayment, Name, PhoneNo, State, PostalCode, CustomerId, Street) {
+	console.log(typeof(StopCredit));
 	clearForm();
 	$('#nav-contact-tab').removeClass('disabled');
 	$('#nav-home-tab').addClass('active show');
@@ -180,6 +199,15 @@ function EditCustomer(Code, UserId, AccountEmail, CustomerGroup, PaymentTerms, C
 	$('#nav-contact-tab').removeClass('active show');
 	$('#nav-address').removeClass('active show');
 	$('#nav-contact').removeClass('active show');
+
+	if (StopCredit == "true") {
+		$('#StopCredit').prop('checked', true);
+		//$('#StopCredit').val(StopCredit);
+	} else {
+		$('#StopCredit').prop('checked', false);
+	}
+
+
 
 	if (CustomerId !== "null")
 		$('#CustomerId').val(CustomerId);
@@ -199,8 +227,6 @@ function EditCustomer(Code, UserId, AccountEmail, CustomerGroup, PaymentTerms, C
 		$('#BusinessSize').val(BusinessSize);
 	if (Discount !== "null")
 		$('#Discount').val(Discount);
-	if (StopCredit !== "null")
-		$('#StopCredit').val(StopCredit);
 	if (Name !== "null")
 		$('#Name').val(Name);
 	if (Address !== "null")
