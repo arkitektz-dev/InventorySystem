@@ -40,6 +40,8 @@ function fillInAddress() {
     for (const component of place.address_components) {
         const componentType = component.types[0];
 
+        console.log(componentType);
+
         switch (componentType) {
             case "street_number": {
                 address1 = `${component.long_name} ${address1}`;
@@ -64,7 +66,9 @@ function fillInAddress() {
                 document.querySelector("#City").value = component.long_name;
                 break;
             case "administrative_area_level_1": {
-                document.querySelector("#State").value = component.short_name;
+                if (document.querySelector("#State") != null) {
+                    document.querySelector("#State").value = component.short_name;
+                }
                 break;
             }
             case "country":
@@ -75,9 +79,13 @@ function fillInAddress() {
     }
 
     address1Field.value = address1;
-    postalField.value = postcode;
+    if (postalField != null) {
+        postalField.value = postcode;
+    }
     // After filling the form with address components from the Autocomplete
     // prediction, set cursor focus on the second address line to encourage
     // entry of subpremise information such as apartment, unit, or floor number.
-    address2Field.focus();
+    if (address2Field != null) {
+        address2Field.focus();
+    }
 }

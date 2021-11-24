@@ -7,7 +7,6 @@
       <Diagram DiagramId="bd837a4f01da4324a708bcd3c6191e55" Name="Diagram1">
         <EntityTypeShape EntityType="InventorySystemModel.Contact" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="InventorySystemModel.Customer" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.PO" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="InventorySystemModel.PODetail" Width="1.5" PointX="4.75" PointY="4.75" />
         <EntityTypeShape EntityType="InventorySystemModel.Product" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="InventorySystemModel.ProductPicture" Width="1.5" PointX="0.75" PointY="6.75" />
@@ -26,6 +25,7 @@
         <EntityTypeShape EntityType="InventorySystemModel.ProductQtyV" Width="1.5" PointX="0.75" PointY="11.75" />
         <EntityTypeShape EntityType="InventorySystemModel.ProductV" Width="1.5" PointX="12.75" PointY="0.75" />
         <EntityTypeShape EntityType="InventorySystemModel.StockV" Width="1.5" PointX="2.75" PointY="12.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.PO" Width="1.5" PointX="5.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

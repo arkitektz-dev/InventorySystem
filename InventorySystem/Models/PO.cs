@@ -16,13 +16,17 @@ namespace InventorySystem.Models
     {
         public int POId { get; set; }
         public string PONumber { get; set; }
-        public Nullable<System.DateTime> Date { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public Nullable<int> SupplierId { get; set; }
         public string Status { get; set; }
-        public string Description { get; set; }
         public string DeliveryAddress { get; set; }
+        public Nullable<decimal> Discount { get; set; }
+        public Nullable<int> TermsOfPayment { get; set; }
         public string RefNumber { get; set; }
-        public string TermsOfPayment { get; set; }
+        public string Address { get; set; }
+        public string Suburb { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public Nullable<System.DateTime> Date { get; set; }
     }
 }

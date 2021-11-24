@@ -1017,6 +1017,7 @@
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Dtos\StockDtos.cs" />
+    <Compile Include="enums\PurchaseOrderStatus.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

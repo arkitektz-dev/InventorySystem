@@ -1,4 +1,5 @@
-﻿using InventorySystem.Models;
+﻿using InventorySystem.enums;
+using InventorySystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -32,6 +33,31 @@ namespace InventorySystem.Controllers
 
         public ActionResult Index()
         {
+            SelectListItem item = new SelectListItem();
+            var supliers = _Entity.Suppliers.ToList();
+            var purchaseStatus = Enum.GetValues(typeof(PurchaseOrderStatus)).Cast<PurchaseOrderStatus>();
+           
+
+            List<SelectListItem> supplierList = new List<SelectListItem>(); 
+            
+            foreach (var supplier in supliers)
+            {
+                item = new SelectListItem();
+                item.Value = supplier.SupplierId.ToString();
+                item.Text = supplier.Name;
+                supplierList.Add(item);
+            }
+            item = new SelectListItem()
+            {
+                Text = "-- Select supplier --",
+                Value = ""
+            };
+            supplierList.Insert(0, item);
+
+           
+            ViewBag.SupplierList = supplierList;
+
+
             return View();
         }
         public virtual ActionResult AddEditPo(int Id)
@@ -112,9 +138,23 @@ namespace InventorySystem.Controllers
 
         public virtual JsonResult GetPOList()
         {
-            if (Session["UserID"] != null)
-            {
-                var lst = _Entity.POes.ToList();
+            
+            //var lst = _Entity.POes.ToList();
+
+            var lst = (from po in _Entity.POes
+                       join supplier in _Entity.Suppliers on po.SupplierId equals supplier.SupplierId into pso
+                       from p in pso.DefaultIfEmpty()
+                       select new
+                       {
+                         po.POId,
+                         po.PONumber,
+                         Supplier = p.Name,
+                         po.Status,
+                         po.Date,
+                         po.DeliveryDate
+                       }).ToList();
+
+
                 GridDataSource gobj = new GridDataSource
                 {
                     data = lst.ToList(),
@@ -122,9 +162,52 @@ namespace InventorySystem.Controllers
                 };
                 return Json(gobj, JsonRequestBehavior.AllowGet);
 
-            }
-            else
-                return Json("[]");
+             
         }
+
+      
+        public virtual JsonResult NewPurchaseOrderNumberApi()
+        {
+
+            var lastPurchaseOrder = _Entity.POes.OrderByDescending(x => x.POId).FirstOrDefault();
+            var lastPurchaseOrderCode = "PO" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString();
+            if (lastPurchaseOrder == null)
+                lastPurchaseOrderCode += "01";
+            else
+                lastPurchaseOrderCode += (Convert.ToInt32(lastPurchaseOrder.PONumber.Substring(lastPurchaseOrder.PONumber.Length - 2)) + 1).ToString("00");
+
+            return Json(lastPurchaseOrderCode, JsonRequestBehavior.AllowGet);
+        }
+
+        public virtual JsonResult SavePurchaseOrder(vmPurchaseOrder model)
+        {
+            try
+            {
+              
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+        }
+    
+    }
+
+    public class vmPurchaseOrder
+    {
+        public int POId { get; set; }
+        public string PONumber { get; set; }
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
+        public Nullable<int> SupplierId { get; set; }
+        public string Status { get; set; }
+        public string DeliveryAddress { get; set; }
+        public Nullable<decimal> Discount { get; set; }
+        public Nullable<int> TermsOfPayment { get; set; }
+        public string RefNumber { get; set; }
+        public string Address { get; set; }
+        public string Suburb { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
     }
 }
