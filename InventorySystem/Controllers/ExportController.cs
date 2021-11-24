@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using InventorySystem.Dtos;
 using InventorySystem.Models;
 using Rotativa;
 using System;
@@ -29,7 +30,8 @@ namespace InventorySystem.Controllers
         {
             return new Rotativa.ActionAsPdf("Warehouse")
             {
-                FileName = $"Warehouse{DateTime.Now.Date}.pdf"
+                FileName = $"Warehouse{DateTime.Now.Date}.pdf",
+                CustomSwitches = "--print-media-type --header-center \"Warehouse List\""
             };
         }
 
@@ -94,7 +96,8 @@ namespace InventorySystem.Controllers
         {
             return new Rotativa.ActionAsPdf("Supplier")
             {
-                FileName = $"Supplier{DateTime.Now.Date}.pdf"
+                FileName = $"Supplier{DateTime.Now.Date}.pdf",
+                CustomSwitches = "--print-media-type --header-center \"Supplier List\""
             };
         }
 
@@ -158,7 +161,8 @@ namespace InventorySystem.Controllers
         {
             return new Rotativa.ActionAsPdf("Product")
             {
-                FileName = $"Product{DateTime.Now.Date}.pdf"
+                FileName = $"Product{DateTime.Now.Date}.pdf",
+                CustomSwitches = "--print-media-type --header-center \"Product List\""
             };
         }
 
@@ -224,7 +228,8 @@ namespace InventorySystem.Controllers
         {
             return new Rotativa.ActionAsPdf("Customer")
             {
-                FileName = $"Customer{DateTime.Now.Date}.pdf"
+                FileName = $"Customer{DateTime.Now.Date}.pdf",
+                CustomSwitches = "--print-media-type --header-center \"Customer List\""
             };
         }
 
@@ -284,6 +289,92 @@ namespace InventorySystem.Controllers
             return dt;
         }
 
+        //Stock Print and Excel
+
+        public ActionResult Stocks()
+        {
+            var list = (from stock in _Entity.Stocks
+                       join product in _Entity.Products on stock.ProductId equals product.ProductId
+                       join warehouse in _Entity.Warehouses on stock.WarehouseId equals warehouse.WarehouseId
+                       select new StockDtos()
+                       {
+                           Location = stock.Location,
+                           WarehouseName = warehouse.Name,
+                           ProductName = product.ProductName,
+                           QuantityReceiving = stock.QuantityReceiving,
+                           QuantityOnHand = stock.QuantityOnHand
+                       }).ToList();
+
+            return View(list);
+        }
+
+        public ActionResult PrintStock()
+        {
+            return new Rotativa.ActionAsPdf("Stocks")
+            {
+                FileName = $"Stocks{DateTime.Now.Date}.pdf",
+                CustomSwitches = "--print-media-type --header-center \"Stock List\""
+            };
+        }
+
+
+        public DataTable getStockData()
+        {
+            //Creating DataTable  
+            DataTable dt = new DataTable();
+            //Setiing Table Name  
+            dt.TableName = "Product";
+            //Add Columns  
+            dt.Columns.Add("#", typeof(int));
+            dt.Columns.Add("Location", typeof(string));
+            dt.Columns.Add("WarehouseName", typeof(string));
+            dt.Columns.Add("ProductName", typeof(string));
+            dt.Columns.Add("QuantityReceiving", typeof(string));
+            dt.Columns.Add("QuantityOnHand", typeof(string));
+            //Add Rows in DataTable  
+
+            var list = (from stock in _Entity.Stocks
+                        join product in _Entity.Products on stock.ProductId equals product.ProductId
+                        join warehouse in _Entity.Warehouses on stock.WarehouseId equals warehouse.WarehouseId
+                        select new StockDtos()
+                        {
+                            Location = stock.Location,
+                            WarehouseName = warehouse.Name,
+                            ProductName = product.ProductName,
+                            QuantityReceiving = stock.QuantityReceiving,
+                            QuantityOnHand = stock.QuantityOnHand
+                        }).ToList();
+
+            int counter = 0;
+            foreach (var item in list)
+            {
+                counter++;
+                dt.Rows.Add(counter,item.Location, item.WarehouseName, item.ProductName, item.QuantityReceiving, item.QuantityOnHand);
+            }
+            dt.AcceptChanges();
+            return dt;
+        }
+
+        public ActionResult ExportStockExcel()
+        {
+            DataTable dt = getStockData();
+            //Name of File  
+            string fileName = $"Stock{DateTime.Now.Date}.xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                //Add DataTable in worksheet  
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    //Return xlsx Excel File  
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
+
+
     }
+
 
 }

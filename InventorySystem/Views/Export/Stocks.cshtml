@@ -1,4 +1,4 @@
-﻿@model IList<InventorySystem.Models.Product>
+﻿@model IList<InventorySystem.Dtos.StockDtos>
 @{
     ViewBag.Title = "Supplier";
     Layout = null;
@@ -45,23 +45,18 @@
 
 
     @*<div class="heading">
-        <h1>Product List</h1>
+        <h1>Stock List</h1>
     </div>*@
 
     <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Barcode</th>
+                <th scope="col">Location</th>
+                <th scope="col">Warehouse Name</th>
                 <th scope="col">Product Name</th>
-                <th scope="col">Product Code</th>
-                <th scope="col">Unit Of Measure</th>  
-                <th scope="col">Price</th>  
-                <th scope="col">Sale Margin</th>  
-                <th scope="col">Sale Price</th>  
-                <th scope="col">Raw Material</th>  
-                <th scope="col">Description</th>  
-                <th scope="col">Date</th>  
+                <th scope="col">Quantity Receving</th>
+                <th scope="col">Quantity Hand</th>
             </tr>
         </thead>
         <tbody>
@@ -74,19 +69,19 @@
 
                 <tr>
                     <td>@counter</td>
-                    <td>@item.Barcode</td>
+                    <td>@item.Location</td>
+                    <td>@item.WarehouseName</td>
                     <td>@item.ProductName</td>
-                    <td>@item.ProductCode</td>
-                    <td>@item.UnitOfMeasure</td>
-                    <td>@item.Price</td>
-                    <td>@item.SalesMargin</td> 
-                    <td>@item.SalesPrice</td> 
-                    <td>@item.RawMaterial</td> 
-                    <td>@item.Description</td> 
-                    <td>@item.CreateDate</td> 
+                    <td>@item.QuantityReceiving</td>
+                    <td>@item.QuantityOnHand</td>
                 </tr>
             }
         </tbody>
     </table>
 </body>
 </html>
+
+
+
+
+

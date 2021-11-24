@@ -1016,6 +1016,7 @@
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
+    <Compile Include="Dtos\StockDtos.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1286,6 +1287,7 @@
     <Content Include="Views\Export\Customer.cshtml" />
     <Content Include="Views\Export\PrintCustomer.cshtml" />
     <Content Include="Views\Product\GetRawMaterialDropdown.cshtml" />
+    <Content Include="Views\Export\Stocks.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
