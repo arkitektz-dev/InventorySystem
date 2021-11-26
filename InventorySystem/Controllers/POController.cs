@@ -36,9 +36,11 @@ namespace InventorySystem.Controllers
             SelectListItem item = new SelectListItem();
             var supliers = _Entity.Suppliers.ToList();
             var purchaseStatus = Enum.GetValues(typeof(PurchaseOrderStatus)).Cast<PurchaseOrderStatus>();
-           
+            var termOfPaymnet = _Entity.PaymentTerms.ToList();
 
-            List<SelectListItem> supplierList = new List<SelectListItem>(); 
+
+            List<SelectListItem> supplierList = new List<SelectListItem>();
+            List<SelectListItem> termOfPaymnetList = new List<SelectListItem>(); 
             
             foreach (var supplier in supliers)
             {
@@ -54,9 +56,24 @@ namespace InventorySystem.Controllers
             };
             supplierList.Insert(0, item);
 
-           
-            ViewBag.SupplierList = supplierList;
 
+
+            foreach (var paymentOfTerm in termOfPaymnet) {
+                item = new SelectListItem();
+                item.Value = paymentOfTerm.PaymentTerm1.ToString();
+                item.Text = paymentOfTerm.Description.ToString();
+                termOfPaymnetList.Add(item);
+            }
+            item = new SelectListItem()
+            {
+                Text = "-- Select payment of terms--",
+                Value = ""
+            };
+            termOfPaymnetList.Insert(0, item);
+
+
+            ViewBag.SupplierList = supplierList;
+            ViewBag.PaymentTermList = termOfPaymnetList;
 
             return View();
         }
@@ -151,7 +168,18 @@ namespace InventorySystem.Controllers
                          Supplier = p.Name,
                          po.Status,
                          po.Date,
-                         po.DeliveryDate
+                         po.DeliveryDate,
+                           po.SupplierId,
+                           po.DeliveryAddress,
+                           po.Discount,
+                           po.TermsOfPayment,
+                           po.RefNumber,
+                           po.Address,
+                           po.Suburb,
+                           po.City,
+                           po.Country,
+                           po.Description,
+
                        }).ToList();
 
 
@@ -165,7 +193,7 @@ namespace InventorySystem.Controllers
              
         }
 
-      
+
         public virtual JsonResult NewPurchaseOrderNumberApi()
         {
 
@@ -183,6 +211,37 @@ namespace InventorySystem.Controllers
         {
             try
             {
+                if (model.POId == 0)
+                {
+                    //new
+
+                    PO rowPO = new PO();
+                    rowPO.PONumber = model.PONumber;
+                    rowPO.DeliveryDate = model.DeliveryDate;
+                    rowPO.SupplierId = model.SupplierId;
+                    rowPO.Status = model.Status;
+                    rowPO.DeliveryAddress = model.DeliveryAddress;
+                    rowPO.Discount = model.Discount;
+                    rowPO.TermsOfPayment = model.TermsOfPayment;
+                    rowPO.RefNumber = model.RefNumber;
+                    rowPO.Address = model.Address;
+                    rowPO.Suburb = model.Suburb;
+                    rowPO.City = model.City;
+                    rowPO.Country = model.Country;
+                    rowPO.Date = DateTime.Now.Date;
+
+                    _Entity.POes.Add(rowPO);
+                    _Entity.SaveChanges();
+
+
+                    return Json("true", JsonRequestBehavior.AllowGet);
+                }
+                else { 
+                    //edit
+                
+
+                }
+
               
                 return Json("true", JsonRequestBehavior.AllowGet);
             }
@@ -203,7 +262,7 @@ namespace InventorySystem.Controllers
         public string Status { get; set; }
         public string DeliveryAddress { get; set; }
         public Nullable<decimal> Discount { get; set; }
-        public Nullable<int> TermsOfPayment { get; set; }
+        public string TermsOfPayment { get; set; }
         public string RefNumber { get; set; }
         public string Address { get; set; }
         public string Suburb { get; set; }

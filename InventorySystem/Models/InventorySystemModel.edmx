@@ -74,13 +74,14 @@ warning 6002: The table/view 'InventorySystem.dbo.PaymentTerm' does not have a p
           <Property Name="Status" Type="varchar" MaxLength="50" />
           <Property Name="DeliveryAddress" Type="varchar(max)" />
           <Property Name="Discount" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="TermsOfPayment" Type="int" />
+          <Property Name="TermsOfPayment" Type="nvarchar(max)" />
           <Property Name="RefNumber" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="varchar(max)" />
           <Property Name="Suburb" Type="varchar(max)" />
           <Property Name="City" Type="varchar(max)" />
           <Property Name="Country" Type="varchar(max)" />
           <Property Name="Date" Type="datetime" />
+          <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="PODetails">
           <Key>
@@ -239,12 +240,12 @@ warning 6002: The table/view 'InventorySystem.dbo.PoV' does not have a primary k
           <Property Name="DeliveryDate" Type="datetime" />
           <Property Name="SupplierId" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
-          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="DeliveryAddress" Type="varchar(max)" />
           <Property Name="RefNumber" Type="varchar" MaxLength="50" />
-          <Property Name="Supplier" Type="varchar" MaxLength="250" />
+          <Property Name="Expr1" Type="varchar" MaxLength="350" />
           <Property Name="PONumber" Type="varchar" MaxLength="50" />
-          <Property Name="TermsOfPayment" Type="varchar" MaxLength="150" />
+          <Property Name="TermsOfPayment" Type="nvarchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'InventorySystem.dbo.ProductQtyV' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -352,7 +353,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
     [PoV].[Description] AS [Description], 
     [PoV].[DeliveryAddress] AS [DeliveryAddress], 
     [PoV].[RefNumber] AS [RefNumber], 
-    [PoV].[Supplier] AS [Supplier], 
+    [PoV].[Expr1] AS [Expr1], 
     [PoV].[PONumber] AS [PONumber], 
     [PoV].[TermsOfPayment] AS [TermsOfPayment]
     FROM [dbo].[PoV] AS [PoV]</DefiningQuery>
@@ -423,11 +424,11 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="CustomerGroups" EntityType="InventorySystemModel.CustomerGroup" />
           <EntitySet Name="PaymentTerms" EntityType="InventorySystemModel.PaymentTerm" />
           <EntitySet Name="PODetailVs" EntityType="InventorySystemModel.PODetailV" />
-          <EntitySet Name="PoVs" EntityType="InventorySystemModel.PoV" />
           <EntitySet Name="ProductQtyVs" EntityType="InventorySystemModel.ProductQtyV" />
           <EntitySet Name="ProductVs" EntityType="InventorySystemModel.ProductV" />
           <EntitySet Name="StockVs" EntityType="InventorySystemModel.StockV" />
           <EntitySet Name="POes" EntityType="InventorySystemModel.PO" />
+          <EntitySet Name="PoVs" EntityType="InventorySystemModel.PoV" />
         </EntityContainer>
         <EntityType Name="Contact">
           <Key>
@@ -627,22 +628,6 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="POId" Type="Int32" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
         </EntityType>
-        <EntityType Name="PoV">
-          <Key>
-            <PropertyRef Name="POId" />
-          </Key>
-          <Property Name="POId" Type="Int32" Nullable="false" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
-          <Property Name="SupplierId" Type="Int32" />
-          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DeliveryAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="RefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Supplier" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="TermsOfPayment" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="ProductQtyV">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -703,13 +688,30 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DeliveryAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="TermsOfPayment" Type="Int32" />
+          <Property Name="TermsOfPayment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="RefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Suburb" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="PoV">
+          <Key>
+            <PropertyRef Name="POId" />
+          </Key>
+          <Property Name="POId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="SupplierId" Type="Int32" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RefNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Expr1" Type="String" MaxLength="350" FixedLength="false" Unicode="false" />
+          <Property Name="PONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TermsOfPayment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -929,23 +931,6 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PoVs">
-            <EntityTypeMapping TypeName="InventorySystemModel.PoV">
-              <MappingFragment StoreEntitySet="PoV">
-                <ScalarProperty Name="TermsOfPayment" ColumnName="TermsOfPayment" />
-                <ScalarProperty Name="PONumber" ColumnName="PONumber" />
-                <ScalarProperty Name="Supplier" ColumnName="Supplier" />
-                <ScalarProperty Name="RefNumber" ColumnName="RefNumber" />
-                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="POId" ColumnName="POId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductQtyVs">
             <EntityTypeMapping TypeName="InventorySystemModel.ProductQtyV">
               <MappingFragment StoreEntitySet="ProductQtyV">
@@ -999,6 +984,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySetMapping Name="POes">
             <EntityTypeMapping TypeName="InventorySystemModel.PO">
               <MappingFragment StoreEntitySet="PO">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="City" ColumnName="City" />
@@ -1012,6 +998,23 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="PONumber" ColumnName="PONumber" />
+                <ScalarProperty Name="POId" ColumnName="POId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PoVs">
+            <EntityTypeMapping TypeName="InventorySystemModel.PoV">
+              <MappingFragment StoreEntitySet="PoV">
+                <ScalarProperty Name="TermsOfPayment" ColumnName="TermsOfPayment" />
+                <ScalarProperty Name="PONumber" ColumnName="PONumber" />
+                <ScalarProperty Name="Expr1" ColumnName="Expr1" />
+                <ScalarProperty Name="RefNumber" ColumnName="RefNumber" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="POId" ColumnName="POId" />
               </MappingFragment>
             </EntityTypeMapping>

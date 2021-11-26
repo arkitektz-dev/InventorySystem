@@ -88,7 +88,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Term of Payment </label>
-                    <input type="text" class="form-control" placeholder="Term of paymnet" id="TermOfPaymnet" />
+                    @Html.DropDownList("TermOfPaymnet", (IEnumerable<SelectListItem>)ViewBag.PaymentTermList, new { @class = "form-control" })
                     <span class="text-danger" id="Val_TermOfPaymnet"></span>
                 </div>
             </div>

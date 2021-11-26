@@ -15,14 +15,14 @@
     $('#closeButton').click(function () {
         $('#PurchaseOrderList').show()
         $('#AddPurchaseOrder').hide()
-
-        $('#AddPurchaseOrder').find('input:text').val(''); 
+        Clear(); 
     });
 
 
     $('#btnSubmit').click(function () {
 
         let isFormComplete = true; 
+        const PurchaseOrderId = $('#PurchaseOrderId').val();
         const PurchaseNumber = $('#PoNumber').val();
         const SupplierId = $('#SupplierId').val();
         const Reference = $('#Reference').val();
@@ -36,15 +36,7 @@
         const City = $('#City').val();
         const Country = $('#Country').val();
 
-        var row = {
-            PONumber: PurchaseNumber,
-            Date: DeliveryDate,
-            SupplierId: SupplierId,
-            Status: Status,
-            DeliveryAddress: DeliveryAddress,
-            Discount: Discount,
-            TermOfPaymnet: TermOfPaymnet
-        }
+     
 
         if (Country === '') {
             $('#Val_Country').html("Please enter Country");
@@ -156,14 +148,42 @@
             return;
         }
 
-     
+
+        var row = {
+            POId: PurchaseOrderId,
+            PONumber: PurchaseNumber,
+            DeliveryDate: DeliveryDate,
+            SupplierId: SupplierId,
+            Status: Status,
+            DeliveryAddress: DeliveryAddress,
+            Discount: Discount,
+            TermsOfPayment: TermOfPaymnet,
+            RefNumber: Reference,
+            Address: Address,
+            Suburb: Suburb,
+            City: City,
+            Country: Country
+        }
+
+
+        console.log(row);
 
         $.ajax({
             type: "POST",
             url: "/PO/SavePurchaseOrder",
-            data: { model: Customer },
+            data: { model: row },
             success: function (response) {
 
+                if (response == "true") {
+                    setTimeout(() => {
+
+                        $('#PurchaseOrderList').show()
+                        $('#AddPurchaseOrder').hide()
+                        Clear();
+                        BindGrid("PoList", "PoList", '/Po/GetPoList');
+
+                    },50)
+                }
             },
             failure: function (response) {
                 console.error(response.responseText);
@@ -252,6 +272,12 @@ function GetDeletedStatus(data) {
     }
 }
 
+function EditPurchaseOrder(purchaseOrder) {
+    console.log(purchaseOrder);
+}
+
+
+
 function BindGridWOption(divid, tbl, url) {
     $('#' + divid).html("");
     $('#' + divid).append('<table id="Grid' + divid + '" class="table table-striped dataTable no-footer" width="100%"></table>');
@@ -294,5 +320,24 @@ function BindGridWOption(divid, tbl, url) {
         //"scrollX": true,
         //"autoWidth": false,
     });
+
+}
+
+
+function Clear() {
+
+     $('#PurchaseOrderId').val('');
+     $('#PoNumber').val('');
+     $('#SupplierId').val('');
+     $('#Reference').val('');
+     $('#Status').val('');
+     $('#DeliveryDate').val('');
+    $('#TermOfPaymnet').val('');
+    $('#Discount').val('');
+    $('#Address').val('');
+    $('#DeliveryAddress').val('');
+    $('#Suburb').val('');
+    $('#City').val('');
+    $('#Country').val('');
 
 }

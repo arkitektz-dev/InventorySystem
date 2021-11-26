@@ -70,7 +70,8 @@ function GetCol(tbl) {
                     title: "Action",
                     data: null,
                     render: function (data, type, row) {
-                        btnview = '<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="OnGridEdit(this)" title="Edit;"> <i class="fa fa-edit"></i></button>';
+                        console.log(data, type, row) 
+                        btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditPurchaseOrder()" title="Edit;"> <i class="fa fa-edit"></i></button>`;
                         btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnGridDelete(this)" title="Delete Record"> <i class="fa fa-trash"></i></button>';
                         return btnview;
                     },

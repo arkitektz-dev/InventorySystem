@@ -41,10 +41,10 @@ namespace InventorySystem.Models
         public virtual DbSet<CustomerGroup> CustomerGroups { get; set; }
         public virtual DbSet<PaymentTerm> PaymentTerms { get; set; }
         public virtual DbSet<PODetailV> PODetailVs { get; set; }
-        public virtual DbSet<PoV> PoVs { get; set; }
         public virtual DbSet<ProductQtyV> ProductQtyVs { get; set; }
         public virtual DbSet<ProductV> ProductVs { get; set; }
         public virtual DbSet<StockV> StockVs { get; set; }
         public virtual DbSet<PO> POes { get; set; }
+        public virtual DbSet<PoV> PoVs { get; set; }
     }
 }
