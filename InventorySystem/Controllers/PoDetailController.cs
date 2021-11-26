@@ -94,22 +94,71 @@ namespace InventorySystem.Controllers
             }
         }
 
-        public virtual JsonResult GetPOItemsList(int Id)
+        public virtual JsonResult GetPOItemsList(int PONumber)
         {
-            Session["_PoId"] = Id.ToString();
-            if (Session["UserID"] != null)
-            {
-                var lst = _Entity.PODetailVs.Where(x => x.POId == Id).ToList();
+
+            var row = _Entity.POes.Where(x => x.POId == PONumber).FirstOrDefault();
+            if (row != null) {
+
+
+                var lst = _Entity.PODetailVs.Where(x => x.POId == row.POId).ToList();
                 GridDataSource gobj = new GridDataSource
                 {
                     data = lst.ToList(),
                     length = lst.Count
                 };
-                return Json(gobj, JsonRequestBehavior.AllowGet);
 
+                return Json(gobj, JsonRequestBehavior.AllowGet);
             }
-            else
-                return Json("[]");
+
+            return Json("[]", JsonRequestBehavior.AllowGet);
+
+
         }
+
+
+        public virtual JsonResult UpdatePoDetail(int ProudctDetailId, int ProductId, int Quantity, int Price)
+        {
+
+            var purchaseDetailId = _Entity.PODetails.Where(x => x.PODetailId == ProudctDetailId).FirstOrDefault();
+            if (purchaseDetailId != null) {
+                purchaseDetailId.ProductId = ProductId;
+                purchaseDetailId.Quantity = Quantity;
+                purchaseDetailId.Price = Price;
+                purchaseDetailId.Total = Price * Quantity;
+
+
+                _Entity.SaveChanges();
+
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+
+
+            return Json("[]", JsonRequestBehavior.AllowGet);
+        }
+
+        public virtual JsonResult DeletePoDetail(int DetailId) {
+
+            var purchaseDetailId = _Entity.PODetails.Where(x => x.PODetailId == DetailId).FirstOrDefault();
+            if (purchaseDetailId != null) {
+                _Entity.PODetails.Remove(purchaseDetailId);
+                _Entity.SaveChanges();
+                
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+             
+           return Json("[]", JsonRequestBehavior.AllowGet);
+        }
+
+        public PartialViewResult GetProductListDropdown()
+        {
+            ViewBag.ProductList = new SelectList(_Entity.Products, "ProductId", "ProductName");
+
+            return PartialView();
+        }
+
+
+
+
     }
 }

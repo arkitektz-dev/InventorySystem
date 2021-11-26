@@ -88,7 +88,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Term of Payment </label>
-                    <input type="text" class="form-control" placeholder="Term of paymnet" id="TermOfPaymnet" />
+                    @Html.DropDownList("TermOfPaymnet", (IEnumerable<SelectListItem>)ViewBag.PaymentTermList, new { @class = "form-control" })
                     <span class="text-danger" id="Val_TermOfPaymnet"></span>
                 </div>
             </div>
@@ -137,7 +137,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" class="form-control" placeholder="City" required="required" id="City" disabled />
+                    <input type="text" class="form-control" placeholder="City" required="required" id="City" />
                     <span class="text-danger" id="Val_City"></span>
                 </div>
             </div>
@@ -147,7 +147,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Country</label>
-                    <select name="Country" id="Country" class="form-control" disabled> 
+                    <select name="Country" id="Country" class="form-control"> 
                         <option value="AF">Afghanistan</option>
                         <option value="AX">Åland Islands</option>
                         <option value="AL">Albania</option>
@@ -442,5 +442,73 @@
 </div>
 
 
+<div id="AddPurchaseOrderDetail" style="display:none">
+
+    <div class="p-7">
+        <h4 class="text-left" style="margin-left: 0px;">PO Items</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>PO #</label>
+                    <input type="text" id="txtPoNumber" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>PO Date</label>
+                    <input type="text" id="txtPODate" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <input type="text" id="txtDelAddress" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <input type="text" id="txtStatus" class="form-control" disabled />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Terms Of Payment (TOP)</label>
+                    <input type="text" id="txtTOP" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Delivery Date</label>
+                    <input type="text" id="txtDelDate" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Vendor</label>
+                    <input type="text" id="txtVendor" class="form-control" disabled />
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="py-7">
+
+        <div class="px-4 px-md-6">
+            <div class="row">
+                <div class="col-6">
+
+                </div>
+                <div class="col-6 text-right">
+                    <button type="button" class="mb-3 mx-1 btn btn-md btn-default" onclick="OnBack();" data-backdrop="static" data-keyboard="false"> Back</button>
+                    <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="addPurchaseDetail"><i class="fa fa-plus"></i> Add New</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="px-4 px-md-6">
+            <div class="table-responsive">
+                <div id="PoItemsList">
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/scripts/app/Po.js"></script>
 <script src="~/scripts/Controls/jsAddress.js"></script>

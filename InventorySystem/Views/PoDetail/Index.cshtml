@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "PO Items";
     WebGrid webGrid = new WebGrid(source: Model, canPage: true, canSort: false);
+    Layout = null;
 }
 
 <style>
@@ -29,6 +30,12 @@
     }
     .nodisplay1 {
         display: none;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+        background-color: transparent;
     }
 </style>
 <div class="p-7">
@@ -86,145 +93,28 @@
 
     <div class="px-4 px-md-6">
         <div class="table-responsive">
-            @*<div id="PoItemsList"></div>*@
-            @webGrid.GetHtml(
-      htmlAttributes: new { @id = "WebGrid", @class = "table table-striped dataTable no-footer" },
-      columns: webGrid.Columns(
-               webGrid.Column(header: "Id", format: @<span class="label">@item.PODetailId</span>, style: "nodisplay"),
-               webGrid.Column(header: "pId", format: @<span class="label">@item.ProductId</span>, style: "nodisplay1"),
-
-webGrid.Column(header: "Name", format: @<span>
-            <span class="label">@item.ProductName</span>
+            <div>
+                <table id="PoItemsList">
+                    <thead>
+                        <tr>
+                            <th style="display: none;">Id</th>
+                            <th style="display: none;">Id</th>
+                            <th>Id</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
             
-            <select id="ddlProducts" class="form-control text" style="display:none">
-                <option>@item.ProductName</option>
-            </select>
-        </span>, style: "ProductName"),
-                         webGrid.Column(header: "Barcode", format: @<span>
-                            <span class="label">@item.Barcode</span>
-                            <input class="form-control text" type="text" value="@item.Barcode" style="display:none" />
-                        </span>, style: "Barcode"),
-
-                             webGrid.Column(header: "Quantity", format: @<span>
-                                <span class="label">@item.Quantity</span>
-                                <input class="form-control text" type="number" value="@item.Quantity" style="display:none" />
-                            </span>, style: "Quantity"),
-                          webGrid.Column(header: "Price", format: @<span>
-                            <span class="label">@item.Price</span>
-                            <input class="form-control text" type="number" value="@item.Price" style="display:none" />
-                        </span>, style: "Price"),
-
-                       webGrid.Column(header: "Discount", format: @<span>
-                        <span class="label">@item.Discount</span>
-                        <input class="form-control text" type="number" value="@item.Discount" style="display:none" />
-                    </span>, style: "Discount"),
-
-                     webGrid.Column(header: "Total", format: @<span>
-                        <span class="label">@item.Total</span>
-                    </span>, style: "Total"),
-
-                         webGrid.Column(format:@<span class="link">
-                            @*<a class="btn btn-warning btn-large btn-sm Edit" href="javascript:;" style="color: white;">Edit</a>*@
-                            <button class="btn btn-warning btn-large btn-sm Edit" style="color: white;" title="Edit;"> <i class="fa fa-edit"></i></button>
-                            @*<a class="Update" href="javascript:;" style="display:none">Update</a>*@
-                            <button class="btn btn-warning btn-large btn-sm Update" style="color: white;display:none" title="Cancel;"> <i class="fa fa-check"></i></button>
-                            <button class="btn btn-danger btn-large btn-sm Cancel" style="color: white;display:none" title="Cancel;"> <i class="fa fa-window-close"></i></button>
-                            @*<a class="Cancel" href="javascript:;" style="display:none">Cancel</a>*@
-                        </span>)))
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="ModelSubscription" tabindex="-1" role="dialog" aria-labelledby="labelSubscription" aria-hidden="true">
-    <div class="modal-dialog" role="document" style="max-width:1400px;top:4%;">
-        <div class="modal-content">
-            <div class="modal-body" id="SubscriptionModelBody">
-            </div>
         </div>
     </div>
 </div>
 
-<div aria-hidden="true" aria-labelledby="myLargeModalLabel" id="ModelTask1" class="modal fade bd-example-modal-lg" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-lg" style="top:15%;max-width:1400px">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span aria-hidden="true"> &times;</span></button>
-            </div>
-            <div class="modal-body" id="pDetails">
-            </div>
-        </div>
-    </div>
-</div>
 
-<script type="text/javascript">
-    //Edit event handler.
 
-    $("body").on("click", "#WebGrid TBODY .Edit", function () {
-        var row = $(this).closest("tr");
-        $("td", row).each(function () {
-            if ($(this).find(".text").length > 0) {
-                $(this).find(".text").show();
-                $(this).find(".label").hide();
-            }
-        });
-        row.find(".Update").show();
-        row.find(".Cancel").show();
-        $(this).hide();
-    });
-
-    //Update event handler.
-    $("body").on("click", "#WebGrid TBODY .Update", function () {
-        var row = $(this).closest("tr");
-        $("td", row).each(function () {
-            if ($(this).find(".text").length > 0) {
-                var span = $(this).find(".label");
-                var input = $(this).find(".text");
-                span.html(input.val());
-                span.show();
-                input.hide();
-            }
-        });
-        row.find(".Edit").show();
-        row.find(".Cancel").hide();
-        $(this).hide();
-
-        var model = {};
-        model.PODetailId = row.find(".nodisplay").find(".label").html();
-        model.ProductId = row.find(".nodisplay1").find(".label").html();
-        model.Quantity = row.find(".Quantity").find(".label").html();
-        model.Price = row.find(".Price").find(".label").html();
-        model.Discount = row.find(".Discount").find(".label").html();
-       
-        $.ajax({
-            type: "POST",
-            url: "/PoDetail/SavePoItem",
-            data: '{model:' + JSON.stringify(model) + '}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json"
-        });
-
-        location.reload();
-    });
-
-    //Cancel event handler.
-    $("body").on("click", "#WebGrid TBODY .Cancel", function () {
-        var row = $(this).closest("tr");
-        $("td", row).each(function () {
-            if ($(this).find(".text").length > 0) {
-                var span = $(this).find(".label");
-                var input = $(this).find(".text");
-                input.val(span.html());
-                span.show();
-                input.hide();
-            }
-        });
-        row.find(".Edit").show();
-        row.find(".Update").hide();
-        $(this).hide();
-
-        location.reload();
-    });
-</script>
-
+ 
 
 <script src="~/scripts/app/POItems.js"></script>

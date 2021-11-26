@@ -1289,6 +1289,7 @@
     <Content Include="Views\Export\PrintCustomer.cshtml" />
     <Content Include="Views\Product\GetRawMaterialDropdown.cshtml" />
     <Content Include="Views\Export\Stocks.cshtml" />
+    <Content Include="Views\PoDetail\GetProductListDropdown.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
