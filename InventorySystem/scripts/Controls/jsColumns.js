@@ -59,7 +59,8 @@ function GetCol(tbl) {
                     title: "",
                     data: null,
                     render: function (data, type, row) {
-                        btnview = '<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="OnGridView(this)" title="PO Items;"> Items </i></button>';
+                        //btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="OnGridView(this)" title="PO Items;"> Items </i></button>`;
+                        btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="PurchaseOrderDetail(${data.POId})" title="PO Items;"> Items </i></button>`;
                         return btnview;
                     },
                     width: "200px",
@@ -71,8 +72,8 @@ function GetCol(tbl) {
                     data: null,
                     render: function (data, type, row) {
                         console.log(data, type, row) 
-                        btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditPurchaseOrder()" title="Edit;"> <i class="fa fa-edit"></i></button>`;
-                        btnview = btnview + '&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="OnGridDelete(this)" title="Delete Record"> <i class="fa fa-trash"></i></button>';
+                        btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditPurchaseOrder( ${data.POId}, '${data.PONumber}', '${data.Supplier}', '${data.Status}', '${data.Date}', '${data.DeliveryDate}', ${data.SupplierId}, '${data.DeliveryAddress}', ${data.Discount}, '${data.TermsOfPayment}', '${data.RefNumber}', '${data.Address}', '${data.Suburb}', '${data.City}', '${data.Country}', '${data.Description}')" title="Edit;"> <i class="fa fa-edit"></i></button>`;
+                        btnview = btnview + `&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeletePurchaseOrder(${data.POId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`;
                         return btnview;
                     },
                     width: "200px",

@@ -137,7 +137,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>City</label>
-                    <input type="text" class="form-control" placeholder="City" required="required" id="City" disabled />
+                    <input type="text" class="form-control" placeholder="City" required="required" id="City" />
                     <span class="text-danger" id="Val_City"></span>
                 </div>
             </div>
@@ -147,7 +147,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Country</label>
-                    <select name="Country" id="Country" class="form-control" disabled> 
+                    <select name="Country" id="Country" class="form-control"> 
                         <option value="AF">Afghanistan</option>
                         <option value="AX">Åland Islands</option>
                         <option value="AL">Albania</option>
@@ -442,5 +442,19 @@
 </div>
 
 
+<div id="AddPurchaseOrderDetail" style="display:none">
+
+
+    <div class="col-md-12" style="text-align:center">
+
+        <button type="button" class="btn btn-success" id="btnSubmit">
+            <span>Save</span>
+        </button>
+        <button type="button" class="btn btn-danger" id="closeButton"><i class="fa fa-close"></i>Close</button>
+
+    </div>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/scripts/app/Po.js"></script>
 <script src="~/scripts/Controls/jsAddress.js"></script>

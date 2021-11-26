@@ -236,9 +236,31 @@ namespace InventorySystem.Controllers
 
                     return Json("true", JsonRequestBehavior.AllowGet);
                 }
-                else { 
+                else {
                     //edit
-                
+
+                    var modelPo = _Entity.POes.Where(x => x.POId == model.POId).FirstOrDefault();
+                    if (modelPo != null) {
+                        modelPo.DeliveryDate = model.DeliveryDate;
+                        modelPo.SupplierId = model.SupplierId;
+                        modelPo.Status = model.Status;
+                        modelPo.DeliveryAddress = model.DeliveryAddress;
+                        modelPo.Discount = model.Discount;
+                        modelPo.TermsOfPayment = model.TermsOfPayment;
+                        modelPo.RefNumber = model.RefNumber;
+                        modelPo.Address = model.Address;
+                        modelPo.Suburb = model.Suburb;
+                        modelPo.City = model.City;
+                        modelPo.Country = model.Country;
+                        modelPo.Date = DateTime.Now.Date;
+
+                        _Entity.SaveChanges();
+
+                        return Json("true", JsonRequestBehavior.AllowGet);
+
+
+                    }
+
 
                 }
 
@@ -250,7 +272,23 @@ namespace InventorySystem.Controllers
                 return Json("false", JsonRequestBehavior.AllowGet);
             }
         }
-    
+
+
+        public virtual JsonResult DeletePurchaseOrder(int PurchaseOrder) {
+
+            var rowPurchaseOrder = _Entity.POes.Where(x => x.POId == PurchaseOrder).FirstOrDefault();
+            if (rowPurchaseOrder != null)
+            {
+                _Entity.POes.Remove(rowPurchaseOrder);
+                _Entity.SaveChanges();
+
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+            else {
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+
+        }
     }
 
     public class vmPurchaseOrder

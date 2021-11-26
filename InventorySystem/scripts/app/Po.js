@@ -177,6 +177,7 @@
                 if (response == "true") {
                     setTimeout(() => {
 
+                        toastr.success('Your record is saved');
                         $('#PurchaseOrderList').show()
                         $('#AddPurchaseOrder').hide()
                         Clear();
@@ -198,6 +199,55 @@
 
 
 });
+
+
+function DeletePurchaseOrder(PurchaseOrderId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+
+            $.ajax({
+                type: "POST",
+                url: "/PO/DeletePurchaseOrder",
+                data: { PurchaseOrder: PurchaseOrderId },
+                success: function (response) {
+
+
+                    console.log(response);
+                    if (response == "true") {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your record has been deleted.',
+                            'success'
+                        )
+
+                        setTimeout(() => {
+                            BindGrid("PoList", "PoList", '/Po/GetPoList');
+                        }, 50)
+
+
+                    } else {
+                        toastr.error('Product is associated with another record');
+                    }
+                },
+                failure: function (response) {
+                    console.error(response.responseText);
+                },
+                error: function (response) {
+                    console.error(response.responseText);
+                }
+            });
+
+        }
+    })
+}
 
 
 function GetNewPONumber() {
@@ -241,27 +291,7 @@ function OnGridView(e) {
     var url = "/PoDetail/Index?Id=" + data.POId;
     window.location.replace(url);
 }
-function OnGridDelete(e) {
-    var data, GetDeleteStatus;
-    var table = $('#GridPoList').DataTable();
-    data = table.row(e.parentNode).data();
-    swalMy({
-        title: "",
-        text: "are you sure ?",
-        type: "info",
-        showCancelButton: true,
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes",
-        cancelButtonText: "No, I am not sure!",
-        closeOnConfirm: true,
-        closeOnCancel: true
-    },
-        function (isConfirm) {
-            if (isConfirm) {
-                AjaxCall('/Po/PoDelete', JSON.stringify({ "Id": data.POId }), GetDeletedStatus, null);
-            }
-        });
-}
+
 function GetDeletedStatus(data) {
     if (data == "true") {
         BindGrid("PoList", "PoList", '/Po/GetPoList');
@@ -272,8 +302,35 @@ function GetDeletedStatus(data) {
     }
 }
 
-function EditPurchaseOrder(purchaseOrder) {
-    console.log(purchaseOrder);
+function EditPurchaseOrder(POId, PONumber, Supplier, Status, Date1, DeliveryDate, SupplierId, DeliveryAddress, Discount, TermsOfPayment, RefNumber, Address, Suburb, City, Country, Description) {
+    console.log(POId, PONumber, Supplier, Status, Date1, DeliveryDate, SupplierId, DeliveryAddress, Discount, TermsOfPayment, RefNumber, Address, Suburb, City, Country, Description);
+
+    var dDelivery = DeliveryDate.replace(/\D/g, "");
+    console.log(dDelivery);
+    var inputDate =  Date.now;
+    console.log(inputDate);
+
+    $('#PurchaseOrderId').val(POId);
+    $('#PoNumber').val(PONumber);
+    $('#SupplierId').val(SupplierId);
+    $('#Reference').val(RefNumber);
+    $('#Status').val(Status);
+
+    var now = new Date(Number(dDelivery));
+    var day = ("0" + now.getDate()).slice(-2);
+    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    var today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+    $('#DeliveryDate').val(today);
+    $('#TermOfPaymnet').val(TermsOfPayment);
+    $('#Discount').val(Discount);
+    $('#Address').val(Address);
+    $('#DeliveryAddress').val(DeliveryAddress);
+    $('#Suburb').val(Suburb);
+    $('#City').val(City);
+    $('#Country').val(Country);
+    $('#PurchaseOrderList').hide()
+    $('#AddPurchaseOrder').show()
 }
 
 
@@ -320,6 +377,30 @@ function BindGridWOption(divid, tbl, url) {
         //"scrollX": true,
         //"autoWidth": false,
     });
+
+}
+
+function PurchaseOrderDetail(POID) {
+
+    $.ajax({
+        type: "GET",
+        url: "/PoDetail/Index",
+        data: { Id: POID },
+        success: function (response) {
+            $('#AddPurchaseOrderDetail').html(response);
+            AjaxCall('/Po/GetPo', JSON.stringify({ "Id": POID }), GetPOData, null);
+            $('#PurchaseOrderList').hide()
+            $('#AddPurchaseOrder').hide()
+            $('#AddPurchaseOrderDetail').show()
+        },
+        failure: function (response) {
+            console.error(response.responseText);
+        },
+        error: function (response) {
+            console.error(response.responseText);
+        }
+    })
+
 
 }
 
