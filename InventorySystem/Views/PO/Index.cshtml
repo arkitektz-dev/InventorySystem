@@ -444,15 +444,69 @@
 
 <div id="AddPurchaseOrderDetail" style="display:none">
 
+    <div class="p-7">
+        <h4 class="text-left" style="margin-left: 0px;">PO Items</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>PO #</label>
+                    <input type="text" id="txtPoNumber" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>PO Date</label>
+                    <input type="text" id="txtPODate" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Delivery Address</label>
+                    <input type="text" id="txtDelAddress" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <input type="text" id="txtStatus" class="form-control" disabled />
+                </div>
+            </div>
 
-    <div class="col-md-12" style="text-align:center">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Terms Of Payment (TOP)</label>
+                    <input type="text" id="txtTOP" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Delivery Date</label>
+                    <input type="text" id="txtDelDate" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label>Vendor</label>
+                    <input type="text" id="txtVendor" class="form-control" disabled />
+                </div>
+            </div>
 
-        <button type="button" class="btn btn-success" id="btnSubmit">
-            <span>Save</span>
-        </button>
-        <button type="button" class="btn btn-danger" id="closeButton"><i class="fa fa-close"></i>Close</button>
-
+        </div>
     </div>
+    <div class="py-7">
+
+        <div class="px-4 px-md-6">
+            <div class="row">
+                <div class="col-6">
+
+                </div>
+                <div class="col-6 text-right">
+                    <button type="button" class="mb-3 mx-1 btn btn-md btn-default" onclick="OnBack();" data-backdrop="static" data-keyboard="false"> Back</button>
+                    <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="addPurchaseDetail"><i class="fa fa-plus"></i> Add New</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="px-4 px-md-6">
+            <div class="table-responsive">
+                <div id="PoItemsList">
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
