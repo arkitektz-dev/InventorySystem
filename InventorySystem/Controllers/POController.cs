@@ -175,11 +175,11 @@ namespace InventorySystem.Controllers
                            po.TermsOfPayment,
                            po.RefNumber,
                            po.Address,
-                           po.Suburb,
+                           po.Street,
                            po.City,
+                           po.State,
                            po.Country,
                            po.Description,
-
                        }).ToList();
 
 
@@ -225,7 +225,8 @@ namespace InventorySystem.Controllers
                     rowPO.TermsOfPayment = model.TermsOfPayment;
                     rowPO.RefNumber = model.RefNumber;
                     rowPO.Address = model.Address;
-                    rowPO.Suburb = model.Suburb;
+                    rowPO.Street = model.Street;
+                    rowPO.State = model.State;
                     rowPO.City = model.City;
                     rowPO.Country = model.Country;
                     rowPO.Date = DateTime.Now.Date;
@@ -249,7 +250,8 @@ namespace InventorySystem.Controllers
                         modelPo.TermsOfPayment = model.TermsOfPayment;
                         modelPo.RefNumber = model.RefNumber;
                         modelPo.Address = model.Address;
-                        modelPo.Suburb = model.Suburb;
+                        modelPo.Street = model.Street;
+                        modelPo.State = model.State;
                         modelPo.City = model.City;
                         modelPo.Country = model.Country;
                         modelPo.Date = DateTime.Now.Date;
@@ -303,7 +305,8 @@ namespace InventorySystem.Controllers
         public string TermsOfPayment { get; set; }
         public string RefNumber { get; set; }
         public string Address { get; set; }
-        public string Suburb { get; set; }
+        public string Street { get; set; }
+        public string State { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
     }

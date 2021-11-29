@@ -681,7 +681,7 @@ function EditProduct(pid, bcode, pname, pcode, uom, wid, ptid, p, sm, sp, rm, d)
     $('#Description').val();
 
 
-    $('#hiddenform').text('Edit Warehouse');
+    $('#hiddenform').text('Edit Product');
     $('#AddProduct').css('display', '');
     $('#ProductLists').css('display', 'none');
 

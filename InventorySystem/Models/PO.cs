@@ -23,9 +23,11 @@ namespace InventorySystem.Models
         public Nullable<decimal> Discount { get; set; }
         public string TermsOfPayment { get; set; }
         public string RefNumber { get; set; }
+        public string Street { get; set; }
         public string Address { get; set; }
-        public string Suburb { get; set; }
         public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
         public string Country { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string Description { get; set; }

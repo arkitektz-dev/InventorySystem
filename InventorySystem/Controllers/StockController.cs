@@ -129,6 +129,7 @@ namespace InventorySystem.Controllers
                 if (model.StockId == 0)
                 {
                     var rowStock = _Entity.Products.Where(x => x.Barcode == model.Barcode).FirstOrDefault();
+                    var quantityInHand = _Entity.Stocks.Where(x => x.ProductId == rowStock.ProductId && x.Location == model.Location).Select(y=>y.QuantityReceiving).Sum();
                     
 
                     Stock row = new Stock();
@@ -136,7 +137,7 @@ namespace InventorySystem.Controllers
                     row.WarehouseId = rowStock.WarehouseId;
                     row.ProductId = rowStock.ProductId;
                     row.QuantityReceiving = model.QuantityOnReceiving;
-                    row.QuantityOnHand = model.QuantityOnHand;
+                    row.QuantityOnHand = quantityInHand;
 
                     _Entity.Stocks.Add(row);
                     _Entity.SaveChanges();
