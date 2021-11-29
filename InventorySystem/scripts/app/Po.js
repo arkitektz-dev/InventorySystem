@@ -579,7 +579,7 @@ $('#addPurchaseDetail').click(function () {
                 '<td><input type="text" id="Quantity" /></td>' +
                 '<td><input type="text" id="Price" /></td>' + 
                 '<td align="center">' +
-                '<a class="btn btn-success btn-sm" style="color:white" onclick="InsertNewContact(this)" title="Add"> <i class="fa fa-plus"></i></a>' +
+                '<a class="btn btn-success btn-sm" style="color:white" onclick="InsertNewProductDetail(this)" title="Add"> <i class="fa fa-plus"></i></a>' +
                 '&nbsp;<a class="btn btn-danger btn-sm" style="color:white" onclick="DeleteNewContact(this)" title="Cancel"> <i class="fa fa-close"></i></a>' +
                 '</td>' +
                 '</tr > ');
@@ -599,6 +599,47 @@ $('#addPurchaseDetail').click(function () {
 
 })
 
+
+function InsertNewProductDetail(item) {
+
+    const ProductId = $(item).parent().parent().find(':input:eq(0)').val();
+    const Quantity = $(item).parent().parent().find(':input:eq(1)').val();
+    const Price = $(item).parent().parent().find(':input:eq(3)').val();
+    bool isFormComplete = true;
+
+    if (ProductId === '') {
+        $(item).parent().parent().find(':input:eq(0)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(0)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(0)').removeClass("border-danger");
+    }
+
+    if (Quantity === '') {
+        $(item).parent().parent().find(':input:eq(1)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(1)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(1)').removeClass("border-danger");
+    }
+
+    if (Price === '') {
+        $(item).parent().parent().find(':input:eq(2)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(2)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(2)').removeClass("border-danger");
+    }
+
+
+    if (isFormComplete = true) {
+
+    }
+
+
+
+
+}
 
 function CancelUpdate(item) {
     $("#PoItemsList").html("");
