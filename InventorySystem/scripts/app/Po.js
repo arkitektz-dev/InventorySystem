@@ -35,7 +35,8 @@ $(document).ready(function () {
         const Discount = $('#Discount').val();
         const Address = $('#Address').val();
         const DeliveryAddress = $('#DeliveryAddress').val();
-        const Suburb = $('#Suburb').val();
+        const State = $('#State').val();
+        const Street = $('#Street').val();
         const City = $('#City').val();
         const Country = $('#Country').val();
 
@@ -60,13 +61,13 @@ $(document).ready(function () {
             $('#City').removeClass("show-warning");
         }
 
-        if (Suburb === '') {
-            $('#Val_Suburb').html("Please enter Suburb");
-            $('#Suburb').addClass("show-warning");
+        if (Street === '') {
+            $('#Val_Street').html("Please enter Street");
+            $('#Street').addClass("show-warning");
             isFormComplete = false;
         } else {
-            $('#Val_Suburb').html("");
-            $('#Suburb').removeClass("show-warning");
+            $('#Val_Street').html("");
+            $('#Street').removeClass("show-warning");
         }
 
 
@@ -163,7 +164,8 @@ $(document).ready(function () {
             TermsOfPayment: TermOfPaymnet,
             RefNumber: Reference,
             Address: Address,
-            Suburb: Suburb,
+            Street: Street,
+            State: State,
             City: City,
             Country: Country
         }
