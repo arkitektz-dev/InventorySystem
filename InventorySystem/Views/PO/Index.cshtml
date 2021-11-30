@@ -68,7 +68,7 @@
                     <label>Status </label>
                     <select class="form-control" id="Status">
                         <option value="">--Select Status--</option>
-                        <option value="Draft">Draft</option>
+                        <option value="Draft" selected>Draft</option>
                         <option value="Open">Open</option>
                         <option value="Completed">Completed</option>
                     </select>
@@ -124,6 +124,13 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
+                        <label>Suburb</label>
+                        <input type="text" class="form-control" placeholder="Suburb" required="required" id="State" />
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
                         <label>City</label>
                         <input type="text" class="form-control" placeholder="City" required="required" id="City" />
                     </div>
@@ -131,15 +138,9 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>State</label>
-                        <input type="text" class="form-control" placeholder="State" required="required" id="State" />
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group">
                         <label>Postal Code</label>
                         <input type="text" class="form-control" placeholder="Postal Code" required="required" id="PostalCode" />
+                        <span class="text-danger" id="Val_PostalCode"></span>
                     </div>
                 </div>
 
@@ -428,6 +429,8 @@
             </div>
             <div class="col-6 text-right">
                 <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="addProduct"><i class="fa fa-plus"></i> Add New</button>
+                <a href="@Url.Action("PrintPurchaseOrderList","Export")" target="_blank" id="addWarehouse" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Pdf</a>
+                <a href="@Url.Action("ExportPurchaseOrder","Export")" target="_blank" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Excel</a>
             </div>
         </div>
     </div>
@@ -498,9 +501,12 @@
         <div class="px-4 px-md-6">
             <div class="table-responsive">
                 <div id="PoItemsList">
-                   
+
                 </div>
 
+            </div>
+            <div class="col-12 text-right">
+                <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="printPurchaseDetail"><i class="fa fa-print"></i> Print Purchase Order</button>
             </div>
         </div>
     </div>

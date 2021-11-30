@@ -1,0 +1,174 @@
+﻿@model InventorySystem.Dtos.PurchaseOrderDto 
+@{
+    ViewBag.Title = "PurchaseOrder";
+    Layout = null;
+    decimal? total = 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Purchase Orders :: Inventory System</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link href="~/Content/assets/css/fonts/fontawesome/all.min.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link href="~/Content/assets/Invoice/adminlte.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Main content -->
+        <section class="invoice">
+            <!-- title row -->
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="page-header">
+                        <i class="fa fa-globe"></i> Purchase Order.
+                        <small class="float-right">Date: @Model.purchaseOrder.Date.Value.ToString("dd/MM/yyyy")</small>
+                    </h2>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    Vendor/Supplier
+                    <address>
+                        <strong>@Model.supplierDetail.Name.</strong><br>
+                        @Model.supplierDetail.Address<br>
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    Delivery Address
+                    <address>
+                        @Model.purchaseOrder.Address
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <b>PO Number :</b> @Model.purchaseOrder.PONumber<br>
+                    <b>PO Date:</b> @Model.purchaseOrder.Date.Value.ToString("dd/MM/yyyy")<br>
+                    <b>Delivery Date:</b> @Model.purchaseOrder.DeliveryDate.Value.ToString("dd/MM/yyyy") <br />
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-12 table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Qty</th>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Description</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Model.purchaseDetail != null)
+                            {
+                                foreach (var item in Model.purchaseDetail)
+                                {
+
+                                    total += item.Total;
+
+                                    <tr style="background-color: white;">
+                                        <td>@item.Quantity</td>
+                                        <td>@item.Product.ProductName</td>
+                                        <td>@item.Price</td>
+                                        <td>@item.Product.Description</td>
+                                        <td>$@item.Total</td>
+                                    </tr>
+                                }
+                            }
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                    <p class="lead">Description:</p>
+
+                     
+
+                    </p>
+                </div>
+                <!-- /.col -->
+                <div class="col-6">
+                    <p class="lead">Amount Details</p>
+
+                    @if (Model.purchaseDetail != null)
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th style="width:50%">Subtotal:</th>
+                                    <td>$ @total</td>
+                                </tr>
+
+                                <tr>
+                                    <th style="width:50%">Discount:</th>
+                                    <td>$ @Model.purchaseOrder.Discount</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Total:</th>
+                                    <td>$ @(total - Model.purchaseOrder.Discount)</td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th style="width:50%">Subtotal:</th>
+                                    <td>$ 0</td>
+                                </tr>
+
+                                <tr>
+                                    <th style="width:50%">Discount:</th>
+                                    <td>$ @Model.purchaseOrder.Discount</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Total:</th>
+                                    <td>$ 0</td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    }
+
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- Page specific script -->
+    <script>
+        window.addEventListener("load", window.print());
+    </script>
+</body>
+</html>
+
+

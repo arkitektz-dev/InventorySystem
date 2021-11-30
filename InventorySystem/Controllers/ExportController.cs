@@ -16,10 +16,10 @@ namespace InventorySystem.Controllers
     public class ExportController : Controller
     {
         InventorySystemEntities _Entity = new InventorySystemEntities();
-      
+
 
         //Warehouse Print and Excel
-        
+
         public ActionResult Warehouse()
         {
             var list = _Entity.Warehouses.ToList();
@@ -76,7 +76,7 @@ namespace InventorySystem.Controllers
             int counter = 0;
             foreach (var item in list) {
                 counter++;
-                dt.Rows.Add(counter, item.Name,item.Street, item.Address, item.City,item.State, item.PostalCode, item.Country, item.PhoneNo, item.Description);
+                dt.Rows.Add(counter, item.Name, item.Street, item.Address, item.City, item.State, item.PostalCode, item.Country, item.PhoneNo, item.Description);
             }
             dt.AcceptChanges();
             return dt;
@@ -209,7 +209,7 @@ namespace InventorySystem.Controllers
             foreach (var item in list)
             {
                 counter++;
-                dt.Rows.Add(counter, item.Barcode, item.ProductName,item.ProductCode, item.UnitOfMeasure, item.Price, item.SalesMargin, item.SalesPrice, item.RawMaterial, item.Description, item.CreateDate);
+                dt.Rows.Add(counter, item.Barcode, item.ProductName, item.ProductCode, item.UnitOfMeasure, item.Price, item.SalesMargin, item.SalesPrice, item.RawMaterial, item.Description, item.CreateDate);
             }
             dt.AcceptChanges();
             return dt;
@@ -223,7 +223,7 @@ namespace InventorySystem.Controllers
             return View(list);
         }
 
- 
+
         public ActionResult PrintCustomer()
         {
             return new Rotativa.ActionAsPdf("Customer")
@@ -266,7 +266,7 @@ namespace InventorySystem.Controllers
             dt.Columns.Add("PaymentTerms", typeof(string));
             dt.Columns.Add("CreditLimit", typeof(string));
             dt.Columns.Add("BusinessSize", typeof(string));
-            dt.Columns.Add("Discount", typeof(string)); 
+            dt.Columns.Add("Discount", typeof(string));
             dt.Columns.Add("StopCredit", typeof(string));
             dt.Columns.Add("Street", typeof(string));
             dt.Columns.Add("Address", typeof(string));
@@ -281,8 +281,8 @@ namespace InventorySystem.Controllers
             foreach (var item in list)
             {
                 counter++;
-                dt.Rows.Add(counter, item.Code, item.Name, item.AccountEmail, item.CustomerGroup, 
-                    item.PaymentTerms, item.CreditLimit,item.BusinessSize, item.Discount, item.StopCredit,
+                dt.Rows.Add(counter, item.Code, item.Name, item.AccountEmail, item.CustomerGroup,
+                    item.PaymentTerms, item.CreditLimit, item.BusinessSize, item.Discount, item.StopCredit,
                     item.Street, item.Address, item.City, item.State, item.PostalCode, item.Country);
             }
             dt.AcceptChanges();
@@ -294,16 +294,16 @@ namespace InventorySystem.Controllers
         public ActionResult Stocks()
         {
             var list = (from stock in _Entity.Stocks
-                       join product in _Entity.Products on stock.ProductId equals product.ProductId
-                       join warehouse in _Entity.Warehouses on stock.WarehouseId equals warehouse.WarehouseId
-                       select new StockDtos()
-                       {
-                           Location = stock.Location,
-                           WarehouseName = warehouse.Name,
-                           ProductName = product.ProductName,
-                           QuantityReceiving = stock.QuantityReceiving,
-                           QuantityOnHand = stock.QuantityOnHand
-                       }).ToList();
+                        join product in _Entity.Products on stock.ProductId equals product.ProductId
+                        join warehouse in _Entity.Warehouses on stock.WarehouseId equals warehouse.WarehouseId
+                        select new StockDtos()
+                        {
+                            Location = stock.Location,
+                            WarehouseName = warehouse.Name,
+                            ProductName = product.ProductName,
+                            QuantityReceiving = stock.QuantityReceiving,
+                            QuantityOnHand = stock.QuantityOnHand
+                        }).ToList();
 
             return View(list);
         }
@@ -349,7 +349,7 @@ namespace InventorySystem.Controllers
             foreach (var item in list)
             {
                 counter++;
-                dt.Rows.Add(counter,item.Location, item.WarehouseName, item.ProductName, item.QuantityReceiving, item.QuantityOnHand);
+                dt.Rows.Add(counter, item.Location, item.WarehouseName, item.ProductName, item.QuantityReceiving, item.QuantityOnHand);
             }
             dt.AcceptChanges();
             return dt;
@@ -371,6 +371,117 @@ namespace InventorySystem.Controllers
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                 }
             }
+        }
+
+        //Purchase Order Detail Print
+        public ActionResult PurchaseOrder(int PurchaseOrder)
+        {
+
+            PurchaseOrderDto modelPurchaseOrder = new PurchaseOrderDto();
+
+            var purchaseOrder = _Entity.POes.Where(x => x.POId == PurchaseOrder).FirstOrDefault();
+            if (purchaseOrder != null) {
+                modelPurchaseOrder.purchaseOrder = purchaseOrder;
+            }
+
+            var purchaseOrderDetailList = _Entity.PODetails.Where(x => x.POId == PurchaseOrder).ToList();
+            if (purchaseOrderDetailList.Count > 0) {
+                modelPurchaseOrder.purchaseDetail = purchaseOrderDetailList;
+            }
+
+            var supplierDetail = _Entity.Suppliers.Where(x => x.SupplierId == purchaseOrder.SupplierId).FirstOrDefault();
+            if (supplierDetail != null) {
+                modelPurchaseOrder.supplierDetail = supplierDetail;
+            }
+
+            return View(modelPurchaseOrder);
+        }
+
+        public ActionResult PurchaseOrderList()
+        {
+            var list = _Entity.POes.ToList();
+
+            return View(list);
+        }
+
+        public ActionResult PrintPurchaseOrderList()
+        {
+            return new Rotativa.ActionAsPdf("PurchaseOrderList")
+            {
+                FileName = $"PurchaseOrder{DateTime.Now.Date}.pdf",
+                CustomSwitches = "--print-media-type --header-center \"Purchase List\""
+            };
+        }
+
+        public ActionResult ExportPurchaseOrder()
+        {
+            DataTable dt = getPurchaseOrder();
+            //Name of File  
+            string fileName = $"PurchaseOrder{DateTime.Now.Date}.xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                //Add DataTable in worksheet  
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    //Return xlsx Excel File  
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
+
+        public DataTable getPurchaseOrder()
+        {
+            //Creating DataTable  
+            DataTable dt = new DataTable();
+            //Setiing Table Name  
+            dt.TableName = "PurchaseOrder";
+            //Add Columns  
+            dt.Columns.Add("#", typeof(int));
+            dt.Columns.Add("PONumber", typeof(string));
+            dt.Columns.Add("DeliveryDate", typeof(string));
+            dt.Columns.Add("SupplierId", typeof(string));
+            dt.Columns.Add("Status", typeof(string));
+            dt.Columns.Add("DeliveryAddress", typeof(string)); 
+            dt.Columns.Add("Discount", typeof(string)); 
+            dt.Columns.Add("TermsOfPayment", typeof(string)); 
+            dt.Columns.Add("RefNumber", typeof(string)); 
+            dt.Columns.Add("Street", typeof(string)); 
+            dt.Columns.Add("Address", typeof(string)); 
+            dt.Columns.Add("City", typeof(string)); 
+            dt.Columns.Add("State", typeof(string)); 
+            dt.Columns.Add("PostalCode", typeof(string)); 
+            dt.Columns.Add("Country", typeof(string)); 
+            dt.Columns.Add("Date", typeof(string)); 
+            dt.Columns.Add("Description", typeof(string)); 
+            //Add Rows in DataTable  
+
+            var list = _Entity.POes.ToList();
+            int counter = 0;
+            foreach (var item in list)
+            {
+                counter++;
+                dt.Rows.Add(counter,
+                    item.PONumber, 
+                    item.DeliveryDate, 
+                    item.SupplierId,
+                    item.Status,
+                    item.DeliveryAddress,
+                    item.Discount,
+                    item.TermsOfPayment,
+                    item.RefNumber,
+                    item.Street,
+                    item.Address,
+                    item.City,
+                    item.State,
+                    item.PostalCode,
+                    item.Country,
+                    item.Date,
+                    item.Description);
+            }
+            dt.AcceptChanges();
+            return dt;
         }
 
 

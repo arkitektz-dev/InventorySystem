@@ -40,7 +40,8 @@ function fillInAddress() {
     for (const component of place.address_components) {
         const componentType = component.types[0];
 
-        console.log(componentType);
+        //console.log(componentType);
+        console.log(component);
 
         switch (componentType) {
             case "street_number": {
@@ -48,10 +49,19 @@ function fillInAddress() {
                 break;
             }
 
+            case "sublocality_level_1": {
+                if (document.querySelector("#State") != null) {
+                    document.querySelector("#State").value = component.short_name;
+                }
+                break;
+            }
+
             case "route": {
                 address1 += component.short_name;
                 break;
             }
+
+
 
             case "postal_code": {
                 postcode = `${component.long_name}${postcode}`;
@@ -67,7 +77,7 @@ function fillInAddress() {
                 break;
             case "administrative_area_level_1": {
                 if (document.querySelector("#State") != null) {
-                    document.querySelector("#State").value = component.short_name;
+                    //document.querySelector("#State").value = component.short_name;
                 }
                 break;
             }

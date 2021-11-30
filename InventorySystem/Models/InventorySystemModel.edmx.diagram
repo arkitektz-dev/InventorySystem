@@ -5,27 +5,29 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="bd837a4f01da4324a708bcd3c6191e55" Name="Diagram1">
-        <EntityTypeShape EntityType="InventorySystemModel.Contact" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.Customer" Width="1.5" PointX="2.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.PODetail" Width="1.5" PointX="4.75" PointY="5.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.Product" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.ProductPicture" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.ProductStock" Width="1.5" PointX="6.75" PointY="5.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.ProductType" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.RawMaterail" Width="1.5" PointX="8.75" PointY="3.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.Stock" Width="1.5" PointX="8.75" PointY="6.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.Supplier" Width="1.5" PointX="0.75" PointY="9.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.UnitOfMeasure" Width="1.5" PointX="2.75" PointY="9.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.User" Width="1.5" PointX="4.75" PointY="9.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.Warehouse" Width="1.5" PointX="6.75" PointY="9.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.CustomerGroup" Width="1.5" PointX="8.75" PointY="9.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.PaymentTerm" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.PODetailV" Width="1.5" PointX="10.75" PointY="3.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.PoV" Width="1.5" PointX="10.75" PointY="7.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.ProductQtyV" Width="1.5" PointX="10.75" PointY="11.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.ProductV" Width="1.5" PointX="12.75" PointY="0.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.StockV" Width="1.5" PointX="2.75" PointY="12.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.PO" Width="1.5" PointX="13.375" PointY="5.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Contact" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Customer" Width="1.5" PointX="2.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.PO" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="InventorySystemModel.PODetail" Width="1.5" PointX="8" PointY="1.875" />
+        <EntityTypeShape EntityType="InventorySystemModel.Product" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductPicture" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductStock" Width="1.5" PointX="6.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductType" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.RawMaterail" Width="1.5" PointX="8.75" PointY="8.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Stock" Width="1.5" PointX="4.75" PointY="9.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Supplier" Width="1.5" PointX="0.75" PointY="1.625" />
+        <EntityTypeShape EntityType="InventorySystemModel.UnitOfMeasure" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.User" Width="1.5" PointX="10.75" PointY="3.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.Warehouse" Width="1.5" PointX="10.75" PointY="6.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.CustomerGroup" Width="1.5" PointX="10.75" PointY="10.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.PaymentTerm" Width="1.5" PointX="6.75" PointY="11.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.PODetailV" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.PoV" Width="1.5" PointX="0.75" PointY="12.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductQtyV" Width="1.5" PointX="2.75" PointY="12.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.ProductV" Width="1.5" PointX="12.75" PointY="4.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.StockV" Width="1.5" PointX="12.75" PointY="9.75" />
+        <AssociationConnector Association="InventorySystemModel.FK_PO_Supplier" />
+        <AssociationConnector Association="InventorySystemModel.FK_PODetails_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

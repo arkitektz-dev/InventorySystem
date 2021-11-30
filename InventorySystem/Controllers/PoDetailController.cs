@@ -150,6 +150,24 @@ namespace InventorySystem.Controllers
            return Json("[]", JsonRequestBehavior.AllowGet);
         }
 
+        public virtual JsonResult InsertNewProductDetail(int purchaseOrderId, int ProductId, int Quantity, int Price) {
+
+            PODetail row = new PODetail()
+            {
+                POId = purchaseOrderId,
+                ProductId = ProductId,
+                Quantity = Quantity,
+                Price = Price,
+                Total = Price * Quantity
+            };
+
+            _Entity.PODetails.Add(row);
+            _Entity.SaveChanges();
+
+            return Json("true", JsonRequestBehavior.AllowGet);
+
+        }
+
         public PartialViewResult GetProductListDropdown()
         {
             ViewBag.ProductList = new SelectList(_Entity.Products, "ProductId", "ProductName");

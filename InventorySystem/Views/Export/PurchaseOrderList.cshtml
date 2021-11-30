@@ -1,10 +1,9 @@
-﻿@model IList<InventorySystem.Models.Customer>
+﻿@model IList<InventorySystem.Models.PO>
 @{
-    ViewBag.Title = "Supplier";
+    ViewBag.Title = "PurchaseOrderList";
     Layout = null;
     int counter = 0;
 }
-
 
 <!doctype html>
 <html lang="en">
@@ -45,28 +44,29 @@
 
 
     @*<div class="heading">
-        <h1>Customer List</h1>
-    </div>*@
+            <h1>Customer List</h1>
+        </div>*@
 
     <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col">Code</th>
-                <th scope="col">AccountEmail</th>
-                <th scope="col">CustomerGroup</th>
-                <th scope="col">PaymentTerms</th>
-                <th scope="col">CreditLimit</th>
-                <th scope="col">BusinessSize</th>
+                <th scope="col">PO Number</th>
+                <th scope="col">Delivery Date</th>
+                <th scope="col">Supplier Id</th>
+                <th scope="col">Status</th>
+                <th scope="col">Delivery Address</th>
                 <th scope="col">Discount</th>
-                <th scope="col">StopCredit</th>
+                <th scope="col">Term of paymnet</th>
+                <th scope="col">Refernce</th>
                 <th scope="col">Street</th>
                 <th scope="col">Address</th>
                 <th scope="col">Suburb</th>
-                <th scope="col">City</th>
+                <th scope="col">City</th> 
                 <th scope="col">PostalCode</th>
                 <th scope="col">Country</th>
+                <th scope="col">Date</th>
+                <th scope="col">Description</th>
             </tr>
         </thead>
         <tbody>
@@ -79,29 +79,26 @@
 
                 <tr>
                     <td>@counter</td>
-                    <td>@item.Name</td>
-                    <td>@item.Code</td>
-                    <td>@item.AccountEmail</td>
-                    <td>@item.CustomerGroup</td>
-                    <td>@item.PaymentTerms</td>
-                    <td>@item.CreditLimit</td>
-                    <td>@item.BusinessSize</td>
+                    <td>@item.PONumber</td>
+                    <td>@item.DeliveryDate</td>
+                    <td>@item.SupplierId</td>
+                    <td>@item.Status</td>
+                    <td>@item.DeliveryAddress</td>
                     <td>@item.Discount</td>
-                    <td>@item.StopCredit</td>
+                    <td>@item.TermsOfPayment</td>
+                    <td>@item.RefNumber</td>
                     <td>@item.Street</td>
                     <td>@item.Address</td>
                     <td>@item.State</td>
                     <td>@item.City</td>
                     <td>@item.PostalCode</td>
                     <td>@item.Country</td>
+                    <td>@item.Date</td>
+                    <td>@item.Description</td>
                 </tr>
             }
         </tbody>
     </table>
 </body>
 </html>
-
-
-
-
 

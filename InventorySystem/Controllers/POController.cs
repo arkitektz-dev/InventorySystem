@@ -95,7 +95,20 @@ namespace InventorySystem.Controllers
         [HttpPost]
         public ActionResult GetPo(int Id)
         {
-            var lst = _Entity.PoVs.Where(x => x.POId == Id).SingleOrDefault();
+            _Entity.Configuration.ProxyCreationEnabled = false;
+            var lst = _Entity.POes.Where(x => x.POId == Id).Select(x => new {
+                PONumber = x.PONumber,
+                Date = x.Date,
+                Address = x.Address,
+                Status = x.Status,
+                TermsOfPayment = _Entity.PaymentTerms.Where(y => y.PaymentTerm1 == x.TermsOfPayment).FirstOrDefault().Description,
+                DeliveryDate = x.DeliveryDate,
+                Supplier = x.Supplier,
+                State = x.State,
+                City = x.City,
+                Country = x.Country,
+                Street = x.Street,
+            }).FirstOrDefault();
             return Json(lst, JsonRequestBehavior.AllowGet);
         }
 
@@ -169,17 +182,18 @@ namespace InventorySystem.Controllers
                          po.Status,
                          po.Date,
                          po.DeliveryDate,
-                           po.SupplierId,
-                           po.DeliveryAddress,
-                           po.Discount,
-                           po.TermsOfPayment,
-                           po.RefNumber,
-                           po.Address,
-                           po.Street,
-                           po.City,
-                           po.State,
-                           po.Country,
-                           po.Description,
+                         po.SupplierId,
+                         po.DeliveryAddress,
+                         po.Discount,
+                         po.TermsOfPayment,
+                         po.RefNumber,
+                         po.Address,
+                         po.Street,
+                         po.City,
+                         po.State,
+                         po.Country,
+                         po.Description,
+                         po.PostalCode,
                        }).ToList();
 
 
@@ -228,6 +242,7 @@ namespace InventorySystem.Controllers
                     rowPO.Street = model.Street;
                     rowPO.State = model.State;
                     rowPO.City = model.City;
+                    rowPO.PostalCode = model.PostalCode;
                     rowPO.Country = model.Country;
                     rowPO.Date = DateTime.Now.Date;
 
@@ -253,6 +268,7 @@ namespace InventorySystem.Controllers
                         modelPo.Street = model.Street;
                         modelPo.State = model.State;
                         modelPo.City = model.City;
+                        modelPo.PostalCode = model.PostalCode;
                         modelPo.Country = model.Country;
                         modelPo.Date = DateTime.Now.Date;
 
@@ -309,5 +325,6 @@ namespace InventorySystem.Controllers
         public string State { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
+        public string PostalCode { get; set; }
     }
 }

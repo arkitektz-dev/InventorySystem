@@ -14,6 +14,12 @@ namespace InventorySystem.Models
     
     public partial class Supplier
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Supplier()
+        {
+            this.POes = new HashSet<PO>();
+        }
+    
         public int SupplierId { get; set; }
         public string Name { get; set; }
         public string Street { get; set; }
@@ -25,5 +31,8 @@ namespace InventorySystem.Models
         public string PhoneNo { get; set; }
         public string TermOfPayment { get; set; }
         public Nullable<bool> IsDeleted { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PO> POes { get; set; }
     }
 }

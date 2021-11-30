@@ -9,6 +9,7 @@ function LoadPOInfo(PoId) {
 }
 
 function GetPOData(data) {
+    console.log(data);
     $("#txtPoNumber").val("");
     $("#txtPODate").val("");
     $("#txtDelAddress").val("");

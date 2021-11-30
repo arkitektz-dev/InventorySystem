@@ -137,6 +137,7 @@ namespace InventorySystem.Controllers
         {
             if (Session["UserID"] != null)
             {
+                _Entity.Configuration.ProxyCreationEnabled = false;
                 var lst = _Entity.Suppliers.ToList();
                 GridDataSource gobj = new GridDataSource
                 {

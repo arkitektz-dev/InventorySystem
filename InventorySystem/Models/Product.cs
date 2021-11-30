@@ -14,6 +14,12 @@ namespace InventorySystem.Models
     
     public partial class Product
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Product()
+        {
+            this.PODetails = new HashSet<PODetail>();
+        }
+    
         public int ProductId { get; set; }
         public string Barcode { get; set; }
         public string ProductName { get; set; }
@@ -30,5 +36,8 @@ namespace InventorySystem.Models
         public string Description { get; set; }
         public Nullable<bool> IsActive { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PODetail> PODetails { get; set; }
     }
 }

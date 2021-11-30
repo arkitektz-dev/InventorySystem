@@ -21,5 +21,7 @@ namespace InventorySystem.Models
         public Nullable<decimal> Price { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public Nullable<decimal> Total { get; set; }
+    
+        public virtual Product Product { get; set; }
     }
 }

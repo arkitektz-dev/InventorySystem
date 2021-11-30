@@ -429,6 +429,7 @@
     <Content Include="Content\assets\css\fonts\fontawesome\all.min.css" />
     <Content Include="Content\assets\css\fonts\fontawesome\brands.css" />
     <Content Include="Content\assets\css\fonts\fontawesome\brands.min.css" />
+    <Content Include="Content\assets\css\fonts\fontawesome\font-awesome.min.css" />
     <Content Include="Content\assets\css\fonts\fontawesome\fontawesome.css" />
     <Content Include="Content\assets\css\fonts\fontawesome\fontawesome.min.css" />
     <Content Include="Content\assets\css\fonts\fontawesome\regular.css" />
@@ -852,6 +853,8 @@
     <Content Include="Content\assets\img\profile\profile-img-03.jpg" />
     <Content Include="Content\assets\img\profile\profile-img-04.jpg" />
     <Content Include="Content\assets\img\profile\profile-img.jpg" />
+    <Content Include="Content\assets\Invoice\adminlte.css" />
+    <Content Include="Content\assets\Invoice\all.min.css" />
     <Content Include="Content\assets\js\bootstrap.min.js" />
     <Content Include="Content\assets\js\context-menu.js" />
     <Content Include="Content\assets\js\jquery.min.js" />
@@ -1016,6 +1019,7 @@
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
+    <Compile Include="Dtos\PurchaseOrderDto.cs" />
     <Compile Include="Dtos\StockDtos.cs" />
     <Compile Include="enums\PurchaseOrderStatus.cs" />
     <Compile Include="Global.asax.cs">
@@ -1290,6 +1294,9 @@
     <Content Include="Views\Product\GetRawMaterialDropdown.cshtml" />
     <Content Include="Views\Export\Stocks.cshtml" />
     <Content Include="Views\PoDetail\GetProductListDropdown.cshtml" />
+    <Content Include="Views\Export\PurchaseOrderDetail.cshtml" />
+    <Content Include="Views\Export\PurchaseOrder.cshtml" />
+    <Content Include="Views\Export\PurchaseOrderList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

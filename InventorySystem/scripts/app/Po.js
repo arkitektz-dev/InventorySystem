@@ -2,13 +2,13 @@
 
 
 $(document).ready(function () {
-    BindGrid("PoList", "PoList", '/Po/GetPoList');
+    //BindGrid("PoList", "PoList", '/Po/GetPoList');
+    BindGridPO();
 
     $('#addProduct').click(function () {
 
         let purchaseOrderNumber = GetNewPONumber();
-        console.log(purchaseOrderNumber);
-        
+
 
         $('#PurchaseOrderList').hide()
         $('#AddPurchaseOrder').show()
@@ -18,13 +18,13 @@ $(document).ready(function () {
     $('#closeButton').click(function () {
         $('#PurchaseOrderList').show()
         $('#AddPurchaseOrder').hide()
-        Clear(); 
+        Clear();
     });
 
 
     $('#btnSubmit').click(function () {
 
-        let isFormComplete = true; 
+        let isFormComplete = true;
         const PurchaseOrderId = $('#PurchaseOrderId').val();
         const PurchaseNumber = $('#PoNumber').val();
         const SupplierId = $('#SupplierId').val();
@@ -39,8 +39,17 @@ $(document).ready(function () {
         const Street = $('#Street').val();
         const City = $('#City').val();
         const Country = $('#Country').val();
+        const PostalCode = $('#PostalCode').val();
 
-     
+
+        if (PostalCode === '') {
+            $('#Val_PostalCode').html("Please enter postal code");
+            $('#PostalCode').addClass("show-warning");
+            isFormComplete = false;
+        } else {
+            $('#Val_PostalCode').html("");
+            $('#PostalCode').removeClass("show-warning");
+        }
 
         if (Country === '') {
             $('#Val_Country').html("Please enter Country");
@@ -167,11 +176,11 @@ $(document).ready(function () {
             Street: Street,
             State: State,
             City: City,
-            Country: Country
+            Country: Country,
+            PostalCode: PostalCode,
         }
 
 
-        console.log(row);
 
         $.ajax({
             type: "POST",
@@ -186,9 +195,10 @@ $(document).ready(function () {
                         $('#PurchaseOrderList').show()
                         $('#AddPurchaseOrder').hide()
                         Clear();
-                        BindGrid("PoList", "PoList", '/Po/GetPoList');
+                        //BindGrid("PoList", "PoList", '/Po/GetPoList');
+                        BindGridPO();
 
-                    },50)
+                    }, 50)
                 }
             },
             failure: function (response) {
@@ -202,6 +212,46 @@ $(document).ready(function () {
 
     });
 
+    $('#addPurchaseDetail').click(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "/PoDetail/GetProductListDropdown",
+            success: function (response) {
+
+                //Dropdown = response;
+                //$(dropdown).html(Dropdown);
+
+                $('#GridPoItemsList tr:last').after(
+                    '<tr class="addNewRow">' +
+                    `<td>${response}</td>` +
+                    '<td><input type="text" id="Quantity" /></td>' +
+                    '<td><input type="text" id="Price" /></td>' +
+                    '<td align="center">' +
+                    '<a class="btn btn-success btn-sm" style="color:white" onclick="InsertNewProductDetail(this)" title="Add"> <i class="fa fa-plus"></i></a>' +
+                    '&nbsp;<a class="btn btn-danger btn-sm" style="color:white" onclick="DeleteNewProductDetail(this)" title="Cancel"> <i class="fa fa-close"></i></a>' +
+                    '</td>' +
+                    '</tr > ');
+
+
+                //$(this).html(Dropdown);
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        })
+
+
+
+    })
+
+    $("#printPurchaseDetail").on("click", function () {
+        let urlitem = `/Export/PurchaseOrder?PurchaseOrder=${PurchaseDetailId}`;
+        window.open(urlitem, '_blank');
+    })
 
 });
 
@@ -225,7 +275,6 @@ function DeletePurchaseOrder(PurchaseOrderId) {
                 success: function (response) {
 
 
-                    console.log(response);
                     if (response == "true") {
                         Swal.fire(
                             'Deleted!',
@@ -234,7 +283,8 @@ function DeletePurchaseOrder(PurchaseOrderId) {
                         )
 
                         setTimeout(() => {
-                            BindGrid("PoList", "PoList", '/Po/GetPoList');
+                            //BindGrid("PoList", "PoList", '/Po/GetPoList');
+                            BindGridPO();
                         }, 50)
 
 
@@ -299,7 +349,8 @@ function OnGridView(e) {
 
 function GetDeletedStatus(data) {
     if (data == "true") {
-        BindGrid("PoList", "PoList", '/Po/GetPoList');
+        //BindGrid("PoList", "PoList", '/Po/GetPoList');
+        BindGridPO();
         showSuccessToast("Purchase Order Deleted Successfully.");
     }
     else {
@@ -307,13 +358,10 @@ function GetDeletedStatus(data) {
     }
 }
 
-function EditPurchaseOrder(POId, PONumber, Supplier, Status, Date1, DeliveryDate, SupplierId, DeliveryAddress, Discount, TermsOfPayment, RefNumber, Address, Suburb, City, Country, Description) {
-    console.log(POId, PONumber, Supplier, Status, Date1, DeliveryDate, SupplierId, DeliveryAddress, Discount, TermsOfPayment, RefNumber, Address, Suburb, City, Country, Description);
+function EditPurchaseOrder(POId, PONumber, Supplier, Status, Date1, DeliveryDate, SupplierId, DeliveryAddress, Discount, TermsOfPayment, RefNumber, Address, State, City, Country, PostalCode, Street, Description) {
+    Clear();
 
     var dDelivery = DeliveryDate.replace(/\D/g, "");
-    console.log(dDelivery);
-    var inputDate =  Date.now;
-    console.log(inputDate);
 
     $('#PurchaseOrderId').val(POId);
     $('#PoNumber').val(PONumber);
@@ -330,15 +378,14 @@ function EditPurchaseOrder(POId, PONumber, Supplier, Status, Date1, DeliveryDate
     $('#TermOfPaymnet').val(TermsOfPayment);
     $('#Discount').val(Discount);
     $('#Address').val(Address);
-    $('#DeliveryAddress').val(DeliveryAddress);
-    $('#Suburb').val(Suburb);
+    $('#Street').val(Street);
+    $('#State').val(State);
     $('#City').val(City);
     $('#Country').val(Country);
+    $('#PostalCode').val(PostalCode);
     $('#PurchaseOrderList').hide()
     $('#AddPurchaseOrder').show()
 }
-
-
 
 function BindGridWOption(divid, tbl, url) {
     $('#' + divid).html("");
@@ -352,7 +399,7 @@ function BindGridWOption(divid, tbl, url) {
             {
                 extend: 'csvHtml5',
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
+                    columns: [0, 1, 2, 3, 4, 5, 6, 7]
                 }
             },
             {
@@ -383,6 +430,13 @@ function BindGridWOption(divid, tbl, url) {
         //"autoWidth": false,
     });
 
+}
+
+
+function OnBack() {
+    $('#AddPurchaseOrder').hide()
+    $('#AddPurchaseOrderDetail').hide()
+    $('#PurchaseOrderList').show()
 }
 
 function PurchaseOrderDetail(POID) {
@@ -421,7 +475,6 @@ function EditPoDetail(PoDetailId, item) {
                     type: "GET",
                     url: "/PoDetail/GetProductListDropdown",
                     success: function (response) {
-                        console.log(response);
 
                         Dropdown = response;
                         $(dropdown).html(Dropdown);
@@ -435,7 +488,7 @@ function EditPoDetail(PoDetailId, item) {
                     }
                 })
 
-              
+
 
             } else {
                 var html = $(this).text();
@@ -444,7 +497,7 @@ function EditPoDetail(PoDetailId, item) {
                 $(this).html(input);
             }
 
- 
+
         } else {
             $(item).parent().find('#btnEditPoDetail').hide();
             $(item).parent().find('#btnDeletePoDetail').hide();
@@ -456,7 +509,7 @@ function EditPoDetail(PoDetailId, item) {
 
 function UpdatePoDetailValues(thisPoDetailId, item) {
 
-    const ProductId= $(item).parent().parent().find(':input:eq(0)').val();
+    const ProductId = $(item).parent().parent().find(':input:eq(0)').val();
     const Quantity = $(item).parent().parent().find(':input:eq(1)').val();
     const Price = $(item).parent().parent().find(':input:eq(2)').val();
     const isFormComplete = true;
@@ -494,12 +547,11 @@ function UpdatePoDetailValues(thisPoDetailId, item) {
             data: { ProudctDetailId: thisPoDetailId, ProductId: ProductId, Quantity: Quantity, Price: Price },
             success: function (response) {
 
-                console.log("This is sparta",PurchaseDetailId);
                 $("#PoItemsList").html("");
                 setTimeout(() => {
                     BindGridProductItemDetail(PurchaseDetailId);
-                },50)
-                
+                }, 50)
+
 
 
             },
@@ -514,10 +566,9 @@ function UpdatePoDetailValues(thisPoDetailId, item) {
     }
 
 
-    console.log(ProductId, Quantity, Price);
 
-    
-     
+
+
 }
 
 function DeletePoDetail(DeleteId) {
@@ -553,61 +604,26 @@ function DeletePoDetail(DeleteId) {
                     console.error(response.responseText);
                 }
             })
-           
+
 
         }
     })
 
 
-  
+
 
 }
 
 
-$('#addPurchaseDetail').click(function () {
-
-    $.ajax({
-        type: "GET",
-        url: "/PoDetail/GetProductListDropdown",
-        success: function (response) {
-            console.log(response);
-
-            //Dropdown = response;
-            //$(dropdown).html(Dropdown);
-
-            $('#GridPoItemsList tr:last').after(
-                '<tr class="addNewRow">' +
-                `<td>${response}</td>` +
-                '<td><input type="text" id="Quantity" /></td>' +
-                '<td><input type="text" id="Price" /></td>' + 
-                '<td align="center">' +
-                '<a class="btn btn-success btn-sm" style="color:white" onclick="InsertNewProductDetail(this)" title="Add"> <i class="fa fa-plus"></i></a>' +
-                '&nbsp;<a class="btn btn-danger btn-sm" style="color:white" onclick="DeleteNewContact(this)" title="Cancel"> <i class="fa fa-close"></i></a>' +
-                '</td>' +
-                '</tr > ');
-     
-
-            //$(this).html(Dropdown);
-        },
-        failure: function (response) {
-            console.error(response.responseText);
-        },
-        error: function (response) {
-            console.error(response.responseText);
-        }
-    })
-
-  
-
-})
 
 
+//Editing
 function InsertNewProductDetail(item) {
 
     const ProductId = $(item).parent().parent().find(':input:eq(0)').val();
     const Quantity = $(item).parent().parent().find(':input:eq(1)').val();
-    const Price = $(item).parent().parent().find(':input:eq(3)').val();
-    bool isFormComplete = true;
+    const Price = $(item).parent().parent().find(':input:eq(2)').val();
+    const isFormComplete = true;
 
     if (ProductId === '') {
         $(item).parent().parent().find(':input:eq(0)').addClass("border-danger");
@@ -634,7 +650,29 @@ function InsertNewProductDetail(item) {
     }
 
 
-    if (isFormComplete = true) {
+    if (isFormComplete == true) {
+
+        $.ajax({
+            type: "GET",
+            url: "/PoDetail/InsertNewProductDetail",
+            data: { purchaseOrderId: PurchaseDetailId, ProductId: ProductId, Quantity: Quantity, Price: Price },
+            success: function (response) {
+
+                $("#PoItemsList").html("");
+                setTimeout(() => {
+                    BindGridProductItemDetail(PurchaseDetailId);
+                }, 50)
+
+
+
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        })
 
     }
 
@@ -642,6 +680,11 @@ function InsertNewProductDetail(item) {
 
 
 }
+
+function DeleteNewProductDetail(item) {
+    $(item).parent().parent().remove();
+}
+
 
 function CancelUpdate(item) {
     $("#PoItemsList").html("");
@@ -651,21 +694,19 @@ function CancelUpdate(item) {
 }
 
 function BindGridProductItemDetail(POID) {
-    console.log("The purchase id number is ", POID)
     var poId = $('#txtPoNumber').val();
     $('#PoItemsList').html("");
     $('#PoItemsList').append('<table id="GridPoItemsList" class="table table-striped dataTable no-footer" width="100%"></table>');
     $('#GridPoItemsList').DataTable({
         sAjaxSource: '/PoDetail/GetPOItemsList?PONumber=' + POID,
-        columns: [ 
+        columns: [
             { title: "ProductName", data: "ProductName" },
             { title: "Quantity", data: "Quantity" },
-            { title: "Price", data: "Price" }, 
+            { title: "Price", data: "Price" },
             {
                 title: "Action",
                 data: null,
                 render: function (data, type, row) {
-                    console.log(data, type, row);
                     btnview = `<a class="btn btn-warning btn-large btn-sm" style="color: white;" id="btnEditPoDetail" onclick="EditPoDetail('${data.PODetailId}',this)" title="Edit;"> <i class="fa fa-edit"></i></a>`;
                     btnview = btnview + '&nbsp;<a class="btn btn-danger btn-sm" style="color: white;" id="btnDeletePoDetail" onclick="DeletePoDetail(' + data.PODetailId + ')" title="Delete Record"> <i class="fa fa-trash"></i></a>';
                     btnview = btnview + '&nbsp;<a class="btn btn-success btn-sm" style="color: white; display:none;" id="btnUpdatePoDetail" onclick="UpdatePoDetailValues(' + data.PODetailId + ',this)" title="Update"> <i class="fa fa-check"></i></a>';
@@ -707,11 +748,11 @@ function GetPOData(data) {
 
     $("#txtPoNumber").val(data.PONumber);
     $("#txtPODate").val(parseJsonDateforRemarks(data.Date));
-    $("#txtDelAddress").val(data.DeliveryAddress);
+    $("#txtDelAddress").val(data.Street + " " + data.Address + " " + data.State + ", " + data.City + ", " + data.Country);
     $("#txtStatus").val(data.Status);
     $("#txtTOP").val(data.TermsOfPayment);
     $("#txtDelDate").val(parseJsonDateforRemarks(data.DeliveryDate));
-    $("#txtVendor").val(data.Supplier);
+    $("#txtVendor").val(data.Supplier.Name);
 
 
 }
@@ -723,7 +764,7 @@ function BindGridPoNumber() {
     $('#PoItemsList').append('<table id="GridPoItemsList" class="table table-striped dataTable no-footer" width="100%">  </table>');
     $('#GridPoItemsList').DataTable({
         sAjaxSource: '/PoDetail/GetPOItemsList?PONumber=' + txtPoNumber,
-        columns: [ 
+        columns: [
             { title: "Id", data: "ProductId", visible: true },
             { title: "Product", data: "ProductName" },
             { title: "Quantity", data: "Quantity" },
@@ -732,7 +773,6 @@ function BindGridPoNumber() {
                 title: "Action",
                 data: null,
                 render: function (data, type, row) {
-                    console.log(data, type, row)
                     btnview = `<a class="btn btn-warning btn-large btn-sm" style="color: white;" id="btnEditPoDetail" onclick="EditPoDetail('${data.PoDetailId}',this)" title="Edit;"> <i class="fa fa-edit"></i></a>`;
                     btnview = btnview + '&nbsp;<a class="btn btn-danger btn-sm" style="color: white;" id="btnDeletePoDetail" onclick="DeletePoDetail(' + data.PoDetailId + ')" title="Delete Record"> <i class="fa fa-trash"></i></a>';
                     btnview = btnview + '&nbsp;<a class="btn btn-success btn-sm" style="color: white; display:none;" id="btnUpdatePoDetail" onclick="UpdatePoDetailValues(' + data.PoDetailId + ',this)" title="Update"> <i class="fa fa-check"></i></a>';
@@ -750,18 +790,77 @@ function BindGridPoNumber() {
 
 function Clear() {
 
-     $('#PurchaseOrderId').val('');
-     $('#PoNumber').val('');
-     $('#SupplierId').val('');
-     $('#Reference').val('');
-     $('#Status').val('');
-     $('#DeliveryDate').val('');
+    $('.show-warning').removeClass('show-warning');
+    $('.text-danger').text('');
+    $('#PurchaseOrderId').val('');
+    $('#PoNumber').val('');
+    $('#SupplierId').val('');
+    $('#Reference').val('');
+    $('#Status').val('');
+    $('#DeliveryDate').val('');
     $('#TermOfPaymnet').val('');
     $('#Discount').val('');
     $('#Address').val('');
     $('#DeliveryAddress').val('');
-    $('#Suburb').val('');
+    $('#Street').val('');
+    $('#State').val('');
     $('#City').val('');
+    $('#PostalCode').val('');
     $('#Country').val('');
+
+    
+
+}
+
+
+function BindGridPO() {
+    $('#PoList').html("");
+    $('#PoList').append('<table id="GridPoList" class="table table-striped dataTable no-footer" width="100%"></table>');
+    $('#GridPoList').DataTable({
+        sAjaxSource: '/Po/GetPoList',
+        columns: [
+            { title: "Id", data: "POId", visible: false },
+            { title: "PO #", data: "PONumber" },
+            { title: "Supplier", data: "Supplier", width: "100px" },
+            { title: "Status", data: "Status" },
+            { title: "Created On", data: "Date", width: "100px", render: function (value) { return parseJsonDateforRemarks(value); } },
+            { title: "Delivery", data: "Date", render: function (value) { return parseJsonDateforRemarks(value); } },
+            {
+                title: "",
+                data: null,
+                render: function (data, type, row) {
+                    //btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="OnGridView(this)" title="PO Items;"> Items </i></button>`;
+                    btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="PurchaseOrderDetail(${data.POId})" title="PO Items;"> Items </i></button>`;
+                    return btnview;
+                },
+                width: "80px",
+                sortable: false,
+                className: "text-center"
+            },
+            {
+                title: "Action",
+                data: null,
+                render: function (data, type, row) {
+                    btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="EditPurchaseOrder( ${data.POId}, '${data.PONumber}', '${data.Supplier}', '${data.Status}', '${data.Date}', '${data.DeliveryDate}', ${data.SupplierId}, '${data.DeliveryAddress}', ${data.Discount}, '${data.TermsOfPayment}', '${data.RefNumber}', '${data.Address}', '${data.State}', '${data.City}', '${data.Country}', '${data.PostalCode}', '${data.Street}', '${data.Description}')" title="Edit;"> <i class="fa fa-edit"></i></button>`;
+                    btnview = btnview + `&nbsp;<button class="btn btn-danger btn-sm icon-btn ml-2 mb-2m" onclick="DeletePurchaseOrder(${data.POId})" title="Delete Record"> <i class="fa fa-trash"></i></button>`;
+                    return btnview;
+                },
+                width: "180px",
+                sortable: false,
+                className: "text-center"
+            }
+        ],
+        dom: 'Blfrtip',
+        buttons: [],
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "pageLength": 10,
+        initComplete: function () {
+            var btns = $('.dt-button');
+            btns.addClass('btn btn-success btn-sm');
+            btns.css('margin', '2px');
+            btns.removeClass('dt-button');
+
+        }
+    });
 
 }
