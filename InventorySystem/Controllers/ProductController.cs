@@ -293,6 +293,7 @@ namespace InventorySystem.Controllers
         {
             if (Session["UserID"] != null)
             {
+                _Entity.Configuration.ProxyCreationEnabled = false;
                 var lst = _Entity.Products.Where(x => x.IsActive == true).ToList();
                 var stock = _Entity.Stocks.ToList();
                 foreach (var item in lst)

@@ -3,6 +3,7 @@
     ViewBag.Title = "PurchaseOrder";
     Layout = null;
     decimal? total = 0;
+    decimal? disountAmount = 0;
 }
 
 <!DOCTYPE html>
@@ -81,11 +82,11 @@
                                     total += item.Total;
 
                                     <tr style="background-color: white;">
-                                        <td>@item.Quantity</td>
+                                        <td>@item.Quantity.Value.ToString("N0")</td>
                                         <td>@item.Product.ProductName</td>
-                                        <td>@item.Price</td>
+                                        <td>@item.Price.Value.ToString("N2")</td>
                                         <td>@item.Product.Description</td>
-                                        <td>$@item.Total</td>
+                                        <td>$@item.Total.Value.ToString("N2")</td>
                                     </tr>
                                 }
                             }
@@ -117,17 +118,21 @@
                             <table class="table">
                                 <tr>
                                     <th style="width:50%">Subtotal:</th>
-                                    <td>$ @total</td>
+                                    <td>$ @total.Value.ToString("N2")</td>
                                 </tr>
+
+                                @if (Model.purchaseOrder.Discount != null) {
+                                    disountAmount = total * Model.purchaseOrder.Discount / 100;
+                                }
 
                                 <tr>
                                     <th style="width:50%">Discount:</th>
-                                    <td>$ @Model.purchaseOrder.Discount</td>
+                                    <td> <strong>@disountAmount.Value.ToString("N2") (@Model.purchaseOrder.Discount %)</strong></td>
                                 </tr>
 
                                 <tr>
                                     <th>Total:</th>
-                                    <td>$ @(total - Model.purchaseOrder.Discount)</td>
+                                    <td>$ @((total - disountAmount).Value.ToString("N2"))</td>
                                 </tr>
                             </table>
                         </div>
