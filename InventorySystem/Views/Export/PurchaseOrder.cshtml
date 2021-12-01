@@ -37,17 +37,17 @@
             <!-- info row -->
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
-                    Vendor/Supplier
+                    <strong>Vendor/Supplier</strong>
                     <address>
                         <strong>@Model.supplierDetail.Name.</strong><br>
-                        @Model.supplierDetail.Address<br>
+                        @Model.supplierDetail.Street @Model.supplierDetail.Address @Model.supplierDetail.State @Model.supplierDetail.City @Model.supplierDetail.Country  <br>
                     </address>
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                    Delivery Address
+                    <strong>Delivery Address</strong>
                     <address>
-                        @Model.purchaseOrder.Address
+                        @Model.purchaseOrder.Street  @Model.purchaseOrder.Address @Model.purchaseOrder.State @Model.purchaseOrder.City @Model.purchaseOrder.Country
                     </address>
                 </div>
                 <!-- /.col -->
