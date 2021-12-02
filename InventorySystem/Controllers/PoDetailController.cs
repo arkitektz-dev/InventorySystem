@@ -158,6 +158,7 @@ namespace InventorySystem.Controllers
             decimal? total = 0;
             decimal? discountAmount = 0;
 
+
             PODetail row = new PODetail()
             {
                 POId = purchaseOrderId,
@@ -167,57 +168,75 @@ namespace InventorySystem.Controllers
                 Total = Price * Quantity
             };
 
-            _Entity.PODetails.Add(row);
-            _Entity.SaveChanges();
-
-
-            //Get SubTotal
-            var purchaseOrderDetailList = _Entity.PODetails.Where(x => x.POId == purchaseOrderId).ToList();
-            if (purchaseOrderDetailList.Count > 0)
-            {
-                foreach (var item in purchaseOrderDetailList) {
-                    subTotal += item.Total;
-                }
+            var purchaseOrder1 = _Entity.POes.Where(x => x.POId == purchaseOrderId).FirstOrDefault();
+            if (purchaseOrder1 != null) { 
+               // if(purchaseOrder.Status != "C")
             }
 
 
-            //Get Discount
-            var purchaseOrderDiscount = _Entity.POes.Where(x => x.POId == purchaseOrderId).FirstOrDefault();
-            if (purchaseOrderDiscount != null)
+            var existingPoDetail = _Entity.PODetails.Where(x => x.ProductId == ProductId && x.POId == purchaseOrderId).FirstOrDefault();
+            if(existingPoDetail == null)
             {
-                discount = purchaseOrderDiscount.Discount;
-            }
 
 
-            //Perform discount
-            if (discount != 0)
-            {
-                discountAmount = ((subTotal * discount) / 100);
-                total = subTotal - discountAmount;
-            }
-            else {                
-                total = subTotal; 
-            }
-
-
-            //set purchase order
-            var purchaseOrder = _Entity.POes.Where(x => x.POId == purchaseOrderId).FirstOrDefault();
-            if (purchaseOrderDetailList != null)
-            {
-                purchaseOrder.SubTotal = subTotal;
-                purchaseOrder.DiscountAmount = discountAmount;
-                purchaseOrder.Total = total;
-
+                _Entity.PODetails.Add(row);
                 _Entity.SaveChanges();
+
+
+                //Get SubTotal
+                var purchaseOrderDetailList = _Entity.PODetails.Where(x => x.POId == purchaseOrderId).ToList();
+                if (purchaseOrderDetailList.Count > 0)
+                {
+                    foreach (var item in purchaseOrderDetailList)
+                    {
+                        subTotal += item.Total;
+                    }
+                }
+
+
+                //Get Discount
+                var purchaseOrderDiscount = _Entity.POes.Where(x => x.POId == purchaseOrderId).FirstOrDefault();
+                if (purchaseOrderDiscount != null)
+                {
+                    discount = purchaseOrderDiscount.Discount;
+                }
+
+
+                //Perform discount
+                if (discount != 0)
+                {
+                    discountAmount = ((subTotal * discount) / 100);
+                    total = subTotal - discountAmount;
+                }
+                else
+                {
+                    total = subTotal;
+                }
+
+
+                //set purchase order
+                var purchaseOrder = _Entity.POes.Where(x => x.POId == purchaseOrderId).FirstOrDefault();
+                if (purchaseOrderDetailList != null)
+                {
+                    purchaseOrder.SubTotal = subTotal;
+                    purchaseOrder.DiscountAmount = discountAmount;
+                    purchaseOrder.Total = total;
+
+                    _Entity.SaveChanges();
+                }
+
+
+
+
+
+
+
+                return Json("true", JsonRequestBehavior.AllowGet);
             }
+            else
+                return Json("ItemAlreadyExist", JsonRequestBehavior.AllowGet);
 
 
-
-
-
-
-
-            return Json("true", JsonRequestBehavior.AllowGet);
 
         }
 
@@ -228,6 +247,15 @@ namespace InventorySystem.Controllers
             return PartialView();
         }
 
+        [HttpGet]
+        public JsonResult GetProductPrice(int id)
+        {
+            _Entity.Configuration.ProxyCreationEnabled = false;
+            var priceObj = _Entity.Products.Where(x => x.ProductId == id).FirstOrDefault();
+            return Json(priceObj.Price, JsonRequestBehavior.AllowGet);
+        }
+
+     
 
 
 

@@ -19,11 +19,11 @@ function GetPOData(data) {
     $("#txtVendor").val("");
 
     $("#txtPoNumber").val(data.PONumber);
-    $("#txtPODate").val(parseJsonDateforRemarks(data.Date));
+    $("#txtPODate").val(GetFormattedDate(data.Date));
     $("#txtDelAddress").val(data.DeliveryAddress);
     $("#txtStatus").val(data.Status);
     $("#txtTOP").val(data.TermsOfPayment);
-    $("#txtDelDate").val(parseJsonDateforRemarks(data.DeliveryDate));
+    $("#txtDelDate").val(GetFormattedDate(data.DeliveryDate));
     $("#txtVendor").val(data.Supplier);
 
 

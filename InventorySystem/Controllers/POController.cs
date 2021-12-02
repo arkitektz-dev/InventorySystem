@@ -107,7 +107,7 @@ namespace InventorySystem.Controllers
                 State = x.State,
                 City = x.City,
                 Country = x.Country,
-                Street = x.Street,
+                Street = String.IsNullOrEmpty(x.Street) ? "" : x.Street,
             }).FirstOrDefault();
             return Json(lst, JsonRequestBehavior.AllowGet);
         }

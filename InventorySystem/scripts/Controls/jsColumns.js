@@ -53,8 +53,8 @@ function GetCol(tbl) {
                 { title: "PO #", data: "PONumber" },
                 { title: "Supplier", data: "Supplier" },
                 { title: "Status", data: "Status" },
-                { title: "Created On", data: "Date", render: function (value) { return parseJsonDateforRemarks(value); } },
-                { title: "Delivery", data: "Date", render: function (value) { return parseJsonDateforRemarks(value); } },
+                { title: "Created On", data: "Date", render: function (value) { return GetFormattedDate(value); } },
+                { title: "Delivery", data: "Date", render: function (value) { return GetFormattedDate(value); } },
                 {
                     title: "",
                     data: null,

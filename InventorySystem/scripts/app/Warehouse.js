@@ -123,7 +123,6 @@
 });
 
 function EditWarehouse(Address, City, Country, Description, IsDeleted, Name, PhoneNo, State, PostalCode, WarehouseId, Street) {
-	debugger;
 	if (WarehouseId !== "null")
 		$('#WarehouseId').val(WarehouseId);
 	else

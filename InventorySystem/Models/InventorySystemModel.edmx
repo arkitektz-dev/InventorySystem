@@ -157,6 +157,18 @@ warning 6002: The table/view 'InventorySystem.dbo.PaymentTerm' does not have a p
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Note" Type="varchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="Receiving">
+          <Key>
+            <PropertyRef Name="ReceivingId" />
+          </Key>
+          <Property Name="ReceivingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GSRNNumber" Type="varchar" MaxLength="50" />
+          <Property Name="POId" Type="int" />
+          <Property Name="GSRNDate" Type="datetime" />
+          <Property Name="VendorDONumber" Type="varchar" MaxLength="50" />
+          <Property Name="VendorInvoiceNumber" Type="varchar" MaxLength="50" />
+          <Property Name="TotalInvoice" Type="money" />
+        </EntityType>
         <EntityType Name="Stock">
           <Key>
             <PropertyRef Name="StockId" />
@@ -341,6 +353,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="ProductStock" EntityType="Self.ProductStock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RawMaterails" EntityType="Self.RawMaterails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receiving" EntityType="Self.Receiving" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitOfMeasure" EntityType="Self.UnitOfMeasure" Schema="dbo" store:Type="Tables" />
@@ -474,6 +487,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="PO" EntitySet="POes" />
           </AssociationSet>
+          <EntitySet Name="Receivings" EntityType="InventorySystemModel.Receiving" />
         </EntityContainer>
         <EntityType Name="Contact">
           <Key>
@@ -791,6 +805,18 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Receiving">
+          <Key>
+            <PropertyRef Name="ReceivingId" />
+          </Key>
+          <Property Name="ReceivingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GSRNNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="POId" Type="Int32" />
+          <Property Name="GSRNDate" Type="DateTime" Precision="3" />
+          <Property Name="VendorDONumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="VendorInvoiceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TotalInvoice" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1099,6 +1125,19 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="PONumber" ColumnName="PONumber" />
                 <ScalarProperty Name="POId" ColumnName="POId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Receivings">
+            <EntityTypeMapping TypeName="InventorySystemModel.Receiving">
+              <MappingFragment StoreEntitySet="Receiving">
+                <ScalarProperty Name="TotalInvoice" ColumnName="TotalInvoice" />
+                <ScalarProperty Name="VendorInvoiceNumber" ColumnName="VendorInvoiceNumber" />
+                <ScalarProperty Name="VendorDONumber" ColumnName="VendorDONumber" />
+                <ScalarProperty Name="GSRNDate" ColumnName="GSRNDate" />
+                <ScalarProperty Name="POId" ColumnName="POId" />
+                <ScalarProperty Name="GSRNNumber" ColumnName="GSRNNumber" />
+                <ScalarProperty Name="ReceivingId" ColumnName="ReceivingId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

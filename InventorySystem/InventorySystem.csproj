@@ -968,6 +968,7 @@
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\app\DataTable.js" />
     <Content Include="scripts\app\jsLayout.js" />
+    <Content Include="scripts\app\Receiving.js" />
     <Content Include="scripts\app\So.js" />
     <Content Include="scripts\app\Stock.js" />
     <Content Include="scripts\app\POItems.js" />
@@ -1016,6 +1017,7 @@
     <Compile Include="Controllers\PoDetailController.cs" />
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ReceivingController.cs" />
     <Compile Include="Controllers\SalesOrderController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
@@ -1087,6 +1089,9 @@
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\RawMaterail.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Receiving.cs">
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Stock.cs">
@@ -1300,6 +1305,7 @@
     <Content Include="Views\Export\PurchaseOrder.cshtml" />
     <Content Include="Views\Export\PurchaseOrderList.cshtml" />
     <Content Include="Views\SalesOrder\Index.cshtml" />
+    <Content Include="Views\Receiving\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

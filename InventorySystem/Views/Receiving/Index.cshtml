@@ -1,0 +1,130 @@
+﻿@{
+    ViewBag.Title = "Receivings";
+}
+
+<style>
+    .modal-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        pointer-events: auto;
+        background-color: white;
+        background-clip: padding-box;
+        border: 1px solid white;
+        border-radius: 0.3rem;
+        outline: 0;
+        left: 20%;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        padding: 8px;
+    }
+
+    #tbl-raw-material tbody tr td:nth-child(3) {
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<div id="AddReceiving" class="pt-5 px-4" style="display:none">
+    <h4 class="form-header" id="hiddenform">
+        Add Receiving
+    </h4>
+
+
+    @using (Html.BeginForm("AddEditSpec", "Specs", null, FormMethod.Post, new { @id = "myForm", @class = "forms-sample", enctype = "multipart/form-data", role = "form" }))
+    {
+        <div class="row">
+
+            <input type="hidden" id="ReceivingId" />
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>GSRN Number</label>
+                    <input type="text" class="form-control" placeholder="GSRNNumber" required="required" id="GSRNNumber" disabled maxlength="30" />
+                    <span class="text-danger" id="Val_GSRNNumber"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Purchase Order</label>
+                    @Html.DropDownList("POId", new SelectList(ViewBag.PurchaseOrders, "POId", "PONumber"), "Please select Purchase Order", new { @class = "form-control" })
+                    <span class="text-danger" id="Val_POId"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>GSRN Date</label>
+                    <input type="date" class="form-control" placeholder="GSRN Date" id="GSRNDate" />
+                    <span class="text-danger" id="Val_GSRNDate"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Vendor DO Number</label>
+                    <input type="text" class="form-control" placeholder="Vendor DO Number" required="required" id="VendorDONumber" maxlength="30" />
+                    <span class="text-danger" id="Val_VendorDONumber"></span>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Vendor Invoice Number</label>
+                    <input type="text" class="form-control" placeholder="Vendor Invoice Number" required="required" id="VendorInvoiceNumber" maxlength="30" />
+                    <span class="text-danger" id="Val_VendorInvoiceNumber"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Total Invoice</label>
+                    <input type="text" class="form-control" placeholder="Total Invoice" required="required" id="TotalInvoice" disabled maxlength="30" />
+                </div>
+            </div>
+
+            <div class="col-md-12" style="text-align:center">
+                <button type="button" class="btn btn-success" id="btnSubmit">Save</button>
+                <button type="button" class="btn btn-danger" id="closeButton"><i class="fa fa-close"></i>Close</button>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+<div id="ReceivingLists" class="py-7">
+    <h4 class="text-left" style="margin-left: 20px;">Receivings</h4>
+    <div class="px-4 px-md-6">
+        <div class="row">
+            <div class="col-6">
+
+            </div>
+            <div class="col-6 text-right">
+                <button type="button" id="addReceiving" class="mb-3 mx-1 btn btn-md btn-theme" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus"></i> Add New</button>
+                <a href="@Url.Action("PrintReceiving","Export")" target="_blank" id="addWarehouse" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Pdf</a>
+                <a href="@Url.Action("ExportReceivingExcel","Export")" target="_blank" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Excel</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 px-md-6">
+        <div class="table-responsive">
+            <div id="ReceivingList"></div>
+        </div>
+    </div>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/scripts/app/Receiving.js"></script>
