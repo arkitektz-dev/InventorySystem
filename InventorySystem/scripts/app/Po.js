@@ -361,28 +361,67 @@ function GetDeletedStatus(data) {
 function EditPurchaseOrder(POId, PONumber, Supplier, Status, Date1, DeliveryDate, SupplierId, DeliveryAddress, Discount, TermsOfPayment, RefNumber, Address, State, City, Country, PostalCode, Street, Description) {
     Clear();
 
+    if (Status == "Completed") {
+        Swal.fire({
+            icon: 'error',
+            title: 'Purchase Order error',
+            text: 'You cannot edit a completed purchase order'
+        })
+        return;
+    }
+    
     var dDelivery = DeliveryDate.replace(/\D/g, "");
 
-    $('#PurchaseOrderId').val(POId);
-    $('#PoNumber').val(PONumber);
-    $('#SupplierId').val(SupplierId);
-    $('#Reference').val(RefNumber);
-    $('#Status').val(Status);
+    if (POId !== null)
+        if (POId !== 'null')
+            $('#PurchaseOrderId').val(POId);
+    if (PONumber !== null)
+        if (PONumber !== 'null')
+             $('#PoNumber').val(PONumber);
+    if (SupplierId !== null)
+        if (SupplierId !== 'null')
+             $('#SupplierId').val(SupplierId);
+    if (RefNumber !== null)
+        if (RefNumber !== 'null')
+             $('#Reference').val(RefNumber);
+    if (Status !== null)
+        if (Status !== 'null')
+            $('#Status').val(Status);
 
     var now = new Date(Number(dDelivery));
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
     var today = now.getFullYear() + "-" + (month) + "-" + (day);
 
-    $('#DeliveryDate').val(today);
-    $('#TermOfPaymnet').val(TermsOfPayment);
-    $('#Discount').val(Discount);
-    $('#Address').val(Address);
-    $('#Street').val(Street);
-    $('#State').val(State);
-    $('#City').val(City);
-    $('#Country').val(Country);
-    $('#PostalCode').val(PostalCode);
+    if (DeliveryDate !== null)
+        if (DeliveryDate !== 'null')
+          $('#DeliveryDate').val(today);
+    if (TermsOfPayment !== null)
+        if (TermsOfPayment !== 'null')
+           $('#TermOfPaymnet').val(TermsOfPayment);
+    if (Discount !== null)
+        if (Discount !== 'null')
+          $('#Discount').val(Discount);
+    if (Address !== null)
+        if (Address !== 'null')
+             $('#Address').val(Address);
+    if (Street !== null)
+        if (Street !== 'null')
+           $('#Street').val(Street);
+    if (State !== null)
+        if (State !== 'null')
+            $('#State').val(State);
+    if (City !== null)
+        if (City !== 'null')
+            $('#City').val(City);
+    if (Country !== null)
+        if (Country !== 'null')
+             $('#Country').val(Country);
+    if (PostalCode !== null)
+        if (PostalCode !== 'null')
+            $('#PostalCode').val(PostalCode);
+
+
     $('#PurchaseOrderList').hide()
     $('#AddPurchaseOrder').show()
 }

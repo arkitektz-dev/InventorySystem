@@ -7,7 +7,6 @@
       <Diagram DiagramId="bd837a4f01da4324a708bcd3c6191e55" Name="Diagram1">
         <EntityTypeShape EntityType="InventorySystemModel.Contact" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="InventorySystemModel.Customer" Width="1.5" PointX="2.75" PointY="6.75" />
-        <EntityTypeShape EntityType="InventorySystemModel.PO" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="InventorySystemModel.PODetail" Width="1.5" PointX="8" PointY="1.875" />
         <EntityTypeShape EntityType="InventorySystemModel.Product" Width="1.5" PointX="5.75" PointY="1" />
         <EntityTypeShape EntityType="InventorySystemModel.ProductPicture" Width="1.5" PointX="4.75" PointY="6.75" />
@@ -26,8 +25,9 @@
         <EntityTypeShape EntityType="InventorySystemModel.ProductQtyV" Width="1.5" PointX="2.75" PointY="12.75" />
         <EntityTypeShape EntityType="InventorySystemModel.ProductV" Width="1.5" PointX="12.75" PointY="4.75" />
         <EntityTypeShape EntityType="InventorySystemModel.StockV" Width="1.5" PointX="12.75" PointY="9.75" />
-        <AssociationConnector Association="InventorySystemModel.FK_PO_Supplier" />
         <AssociationConnector Association="InventorySystemModel.FK_PODetails_Product" />
+        <EntityTypeShape EntityType="InventorySystemModel.PO" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="InventorySystemModel.FK_PO_Supplier" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

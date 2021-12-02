@@ -152,6 +152,12 @@ namespace InventorySystem.Controllers
 
         public virtual JsonResult InsertNewProductDetail(int purchaseOrderId, int ProductId, int Quantity, int Price) {
 
+
+            decimal? subTotal = 0;
+            decimal? discount = 0;
+            decimal? total = 0;
+            decimal? discountAmount = 0;
+
             PODetail row = new PODetail()
             {
                 POId = purchaseOrderId,
@@ -163,6 +169,53 @@ namespace InventorySystem.Controllers
 
             _Entity.PODetails.Add(row);
             _Entity.SaveChanges();
+
+
+            //Get SubTotal
+            var purchaseOrderDetailList = _Entity.PODetails.Where(x => x.POId == purchaseOrderId).ToList();
+            if (purchaseOrderDetailList.Count > 0)
+            {
+                foreach (var item in purchaseOrderDetailList) {
+                    subTotal += item.Total;
+                }
+            }
+
+
+            //Get Discount
+            var purchaseOrderDiscount = _Entity.POes.Where(x => x.POId == purchaseOrderId).FirstOrDefault();
+            if (purchaseOrderDiscount != null)
+            {
+                discount = purchaseOrderDiscount.Discount;
+            }
+
+
+            //Perform discount
+            if (discount != 0)
+            {
+                discountAmount = ((subTotal * discount) / 100);
+                total = subTotal - discountAmount;
+            }
+            else {                
+                total = subTotal; 
+            }
+
+
+            //set purchase order
+            var purchaseOrder = _Entity.POes.Where(x => x.POId == purchaseOrderId).FirstOrDefault();
+            if (purchaseOrderDetailList != null)
+            {
+                purchaseOrder.SubTotal = subTotal;
+                purchaseOrder.DiscountAmount = discountAmount;
+                purchaseOrder.Total = total;
+
+                _Entity.SaveChanges();
+            }
+
+
+
+
+
+
 
             return Json("true", JsonRequestBehavior.AllowGet);
 

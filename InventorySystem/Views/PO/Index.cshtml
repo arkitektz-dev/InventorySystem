@@ -17,6 +17,14 @@
         outline: 0;
         left: 20%;
     }
+
+    ::-webkit-scrollbar-thumb {
+        background: #ffffff !important;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #ffffff !important;
+    }
 </style>
 
 <style>
@@ -500,10 +508,15 @@
     </div>
 
     <div class="px-4 px-md-6">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="addPurchaseDetail"><i class="fa fa-plus"></i> Add New</button>
+            </div>
+        </div>
         <div class="row"> 
             <div class="col-md-12 text-center">
                 <button type="button" class="mb-3 mx-1 btn btn-md btn-danger" onclick="OnBack();" data-backdrop="static" data-keyboard="false"> Save</button>
-                <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="addPurchaseDetail"><i class="fa fa-plus"></i> Add New</button>
+                
                 <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="printPurchaseDetail"><i class="fa fa-print"></i> Print Purchase Order</button>
                
             </div>
