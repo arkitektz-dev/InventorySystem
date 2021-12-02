@@ -28,6 +28,7 @@
         <EntityTypeShape EntityType="InventorySystemModel.StockV" Width="1.5" PointX="12.75" PointY="9.75" />
         <AssociationConnector Association="InventorySystemModel.FK_PO_Supplier" />
         <AssociationConnector Association="InventorySystemModel.FK_PODetails_Product" />
+        <EntityTypeShape EntityType="InventorySystemModel.Receiving" Width="1.5" PointX="9.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

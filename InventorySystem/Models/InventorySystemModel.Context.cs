@@ -46,5 +46,6 @@ namespace InventorySystem.Models
         public virtual DbSet<ProductQtyV> ProductQtyVs { get; set; }
         public virtual DbSet<ProductV> ProductVs { get; set; }
         public virtual DbSet<StockV> StockVs { get; set; }
+        public virtual DbSet<Receiving> Receivings { get; set; }
     }
 }
