@@ -91,14 +91,19 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Customer Code</label>
-                    @Html.DropDownList("CustomerCodeId", (IEnumerable<SelectListItem>)ViewBag.CustomerCode, new { @class = "form-control" })
+                    <select id="CustomerCodeId" class="form-control">
+                        <option value="">---Select a sales user ----</option>
+                    </select>
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Contact Person</label>
-                    @Html.DropDownList("ContactId", (IEnumerable<SelectListItem>)ViewBag.ContactPerson, new { @class = "form-control" })
+                    <select id="ContactId" class="form-control">
+                        <option value="">---Select a sales user ----</option>
+                    </select>
+
                 </div>
             </div>
 

@@ -90,6 +90,38 @@ namespace InventorySystem.Controllers
             return View();
         }
 
-        
+        public JsonResult GetAssignedSalesCustomer(int SalesPersonId)
+        {
+            _Entity.Configuration.ProxyCreationEnabled = false;
+            List<Customer> listCustomer = new List<Customer>();
+
+            var customers = _Entity.Customers.Where(x => x.UserId == SalesPersonId).ToList();
+            if (customers.Count() > 0) {
+                foreach (var item in customers) { 
+                    var findCustomer = _Entity.Customers.Where(x => x.CustomerId == item.CustomerId).FirstOrDefault();
+                    if (findCustomer != null) {
+                        listCustomer.Add(findCustomer);
+                    }
+
+                    return Json(customers, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("[]", JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetCustomerContact(int CustomerId) {
+
+            List<Contact> listContact = new List<Contact>();
+            var contact = _Entity.Contacts.Where(x => x.CustomerId == CustomerId).ToList();
+            if (contact.Count() > 0) {
+                foreach (var item in contact) {
+                    listContact.Add(item);
+                }
+
+                return Json(listContact, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json("[]", JsonRequestBehavior.AllowGet);
+        }
     }
 }
