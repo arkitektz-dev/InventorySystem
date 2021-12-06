@@ -169,6 +169,30 @@ warning 6002: The table/view 'InventorySystem.dbo.PaymentTerm' does not have a p
           <Property Name="VendorInvoiceNumber" Type="varchar" MaxLength="50" />
           <Property Name="TotalInvoice" Type="money" />
         </EntityType>
+        <EntityType Name="SO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SoNumber" Type="nvarchar(max)" />
+          <Property Name="SoDate" Type="date" />
+          <Property Name="EstimatedDateofDispatch" Type="date" />
+          <Property Name="DeliveryDate" Type="date" />
+          <Property Name="SalesPersonId" Type="int" />
+          <Property Name="CustomerCodeId" Type="int" />
+          <Property Name="ContactPersonId" Type="int" />
+          <Property Name="CustomerReference" Type="nvarchar(max)" />
+          <Property Name="BillCustomerCodeId" Type="int" />
+          <Property Name="SoStatus" Type="nvarchar(max)" />
+          <Property Name="DeliveryAddress" Type="nvarchar(max)" />
+          <Property Name="Street" Type="nvarchar(max)" />
+          <Property Name="Suburb" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
+          <Property Name="PostalCode" Type="int" />
+          <Property Name="Country" Type="nvarchar(max)" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Stock">
           <Key>
             <PropertyRef Name="StockId" />
@@ -354,6 +378,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RawMaterails" EntityType="Self.RawMaterails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Receiving" EntityType="Self.Receiving" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SO" EntityType="Self.SO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Stock" EntityType="Self.Stock" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UnitOfMeasure" EntityType="Self.UnitOfMeasure" Schema="dbo" store:Type="Tables" />
@@ -488,6 +513,7 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
             <End Role="PO" EntitySet="POes" />
           </AssociationSet>
           <EntitySet Name="Receivings" EntityType="InventorySystemModel.Receiving" />
+          <EntitySet Name="SOes" EntityType="InventorySystemModel.SO" />
         </EntityContainer>
         <EntityType Name="Contact">
           <Key>
@@ -817,6 +843,30 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
           <Property Name="VendorInvoiceNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TotalInvoice" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
+        <EntityType Name="SO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SoNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SoDate" Type="DateTime" Precision="0" />
+          <Property Name="EstimatedDateofDispatch" Type="DateTime" Precision="0" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="0" />
+          <Property Name="SalesPersonId" Type="Int32" />
+          <Property Name="CustomerCodeId" Type="Int32" />
+          <Property Name="ContactPersonId" Type="Int32" />
+          <Property Name="CustomerReference" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BillCustomerCodeId" Type="Int32" />
+          <Property Name="SoStatus" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveryAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Street" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Suburb" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="Int32" />
+          <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1138,6 +1188,31 @@ warning 6002: The table/view 'InventorySystem.dbo.StockV' does not have a primar
                 <ScalarProperty Name="POId" ColumnName="POId" />
                 <ScalarProperty Name="GSRNNumber" ColumnName="GSRNNumber" />
                 <ScalarProperty Name="ReceivingId" ColumnName="ReceivingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SOes">
+            <EntityTypeMapping TypeName="InventorySystemModel.SO">
+              <MappingFragment StoreEntitySet="SO">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Suburb" ColumnName="Suburb" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="DeliveryAddress" ColumnName="DeliveryAddress" />
+                <ScalarProperty Name="SoStatus" ColumnName="SoStatus" />
+                <ScalarProperty Name="BillCustomerCodeId" ColumnName="BillCustomerCodeId" />
+                <ScalarProperty Name="CustomerReference" ColumnName="CustomerReference" />
+                <ScalarProperty Name="ContactPersonId" ColumnName="ContactPersonId" />
+                <ScalarProperty Name="CustomerCodeId" ColumnName="CustomerCodeId" />
+                <ScalarProperty Name="SalesPersonId" ColumnName="SalesPersonId" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="EstimatedDateofDispatch" ColumnName="EstimatedDateofDispatch" />
+                <ScalarProperty Name="SoDate" ColumnName="SoDate" />
+                <ScalarProperty Name="SoNumber" ColumnName="SoNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

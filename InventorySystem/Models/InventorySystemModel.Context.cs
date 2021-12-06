@@ -47,5 +47,6 @@ namespace InventorySystem.Models
         public virtual DbSet<StockV> StockVs { get; set; }
         public virtual DbSet<PO> POes { get; set; }
         public virtual DbSet<Receiving> Receivings { get; set; }
+        public virtual DbSet<SO> SOes { get; set; }
     }
 }

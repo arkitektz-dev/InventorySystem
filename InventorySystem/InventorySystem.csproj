@@ -1095,6 +1095,9 @@
     <Compile Include="Models\Receiving.cs">
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SO.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Stock.cs">
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>
@@ -1307,6 +1310,7 @@
     <Content Include="Views\Export\PurchaseOrderList.cshtml" />
     <Content Include="Views\SalesOrder\Index.cshtml" />
     <Content Include="Views\Receiving\Index.cshtml" />
+    <Content Include="Views\Export\SalesOrder.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

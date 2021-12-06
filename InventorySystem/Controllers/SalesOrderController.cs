@@ -123,5 +123,103 @@ namespace InventorySystem.Controllers
 
             return Json("[]", JsonRequestBehavior.AllowGet);
         }
+
+
+        public virtual JsonResult NewSaleOrderNumberApi()
+        {
+
+            var lastSaleOrder = _Entity.SOes.OrderByDescending(x => x.Id).FirstOrDefault();
+            var lastSaleOrderCode = "SO" + DateTime.Now.Year.ToString() + DateTime.Now.Month.ToString();
+            if (lastSaleOrder == null)
+                lastSaleOrderCode += "01";
+            else
+                lastSaleOrderCode += (Convert.ToInt32(lastSaleOrder.SoNumber.Substring(lastSaleOrder.SoNumber.Length - 2)) + 1).ToString("00");
+
+            return Json(lastSaleOrderCode, JsonRequestBehavior.AllowGet);
+        }
+
+        public virtual JsonResult GetSOList()
+        {
+
+            //var lst = _Entity.POes.ToList();
+
+            var lst = (from so in _Entity.SOes
+                       join customer in _Entity.Customers on so.CustomerCodeId equals customer.CustomerId into pso
+                       from p in pso.DefaultIfEmpty()
+                       select new
+                       {
+                           so.Id,
+                           so.SoNumber,
+                           so.CustomerCodeId,
+                           so.SoStatus,
+                           so.CustomerReference
+                       }).ToList();
+
+
+            GridDataSource gobj = new GridDataSource
+            {
+                data = lst.ToList(),
+                length = lst.Count
+            };
+            return Json(gobj, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        public virtual JsonResult GetSalesDetail(int Id) {
+
+            var row = _Entity.SOes.Where(x => x.Id == Id).FirstOrDefault();
+            return Json(row, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult AddSalesOrder(SO param) {
+
+            if (param != null) {
+
+                if (param.Id == 0) {
+
+                    _Entity.SOes.Add(param);
+                    _Entity.SaveChanges();
+
+                    return Json("true", JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    //Edit
+
+
+                    var row = _Entity.SOes.Where(x => x.Id == param.Id).FirstOrDefault();
+                    if (row != null)
+                    {
+
+                        _Entity.Entry(row).CurrentValues.SetValues(param);
+
+                        _Entity.SaveChanges();
+
+                        return Json("true", JsonRequestBehavior.AllowGet);
+                    }
+                     
+
+                }
+
+                 
+            }
+
+            return Json("[]", JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult DeleteSalesOrder(int Id) {
+
+            var rowSaleOrder = _Entity.SOes.Where(x => x.Id == Id).FirstOrDefault();
+            if (rowSaleOrder != null) {
+                _Entity.SOes.Remove(rowSaleOrder);
+                _Entity.SaveChanges();
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+
+            return Json("false", JsonRequestBehavior.AllowGet);
+        }
     }
 }

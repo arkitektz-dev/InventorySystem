@@ -484,6 +484,100 @@ namespace InventorySystem.Controllers
             return dt;
         }
 
+        //Sale Order Print
+
+        public ActionResult SalesOrder()
+        {
+            var row = _Entity.SOes.ToList();
+
+            return View(row);    
+        }
+
+        public ActionResult PrintSaleOrderList()
+        {
+            return new Rotativa.ActionAsPdf("SalesOrder")
+            {
+                FileName = $"SalesOrder{DateTime.Now.Date}.pdf",
+                CustomSwitches = "--print-media-type --header-center \"Sale Order List\""
+            };
+        }
+
+
+        public ActionResult ExportSalesOrder()
+        {
+            DataTable dt = getSalesOrder();
+            //Name of File  
+            string fileName = $"SalesOrder{DateTime.Now.Date}.xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                //Add DataTable in worksheet  
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    //Return xlsx Excel File  
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
+
+        public DataTable getSalesOrder()
+        {
+            //Creating DataTable  
+            DataTable dt = new DataTable();
+            //Setiing Table Name  
+            dt.TableName = "SalesOrder";
+            //Add Columns  
+            dt.Columns.Add("#", typeof(string));
+            dt.Columns.Add("SoNumber", typeof(string));
+            dt.Columns.Add("SoDate", typeof(string));
+            dt.Columns.Add("EstimatedDateofDispatch", typeof(string));
+            dt.Columns.Add("DeliveryDate", typeof(string));
+            dt.Columns.Add("SalesPersonId", typeof(string));
+            dt.Columns.Add("CustomerCodeId", typeof(string));
+            dt.Columns.Add("ContactPersonId", typeof(string));
+            dt.Columns.Add("CustomerReference", typeof(string));
+            dt.Columns.Add("BillCustomerCodeId", typeof(string));
+            dt.Columns.Add("SoStatus", typeof(string));
+            dt.Columns.Add("DeliveryAddress", typeof(string));
+            dt.Columns.Add("Street", typeof(string));
+            dt.Columns.Add("Suburb", typeof(string));
+            dt.Columns.Add("City", typeof(string));
+            dt.Columns.Add("PostalCode", typeof(string));
+            dt.Columns.Add("Country", typeof(string));
+            dt.Columns.Add("Discount", typeof(string));
+            dt.Columns.Add("Description", typeof(string));
+            //Add Rows in DataTable  
+
+            var list = _Entity.SOes.ToList();
+            int counter = 0;
+            foreach (var item in list)
+            {
+                counter++;
+                dt.Rows.Add(counter,
+                    item.SoNumber,
+                    item.SoDate.Value.Date.ToString("dd/MM/yyyy"),
+                    item.EstimatedDateofDispatch.Value.Date.ToString("dd/MM/yyyy"),
+                    item.DeliveryDate.Value.Date.ToString("dd/MM/yyyy"),
+                    item.SalesPersonId,
+                    item.CustomerCodeId,
+                    item.ContactPersonId,
+                    item.CustomerReference,
+                    item.BillCustomerCodeId,
+                    item.SoStatus,
+                    item.DeliveryAddress,
+                    item.Street,
+                    item.Suburb,
+                    item.City,
+                    item.PostalCode,
+                    item.Country,
+                    item.Discount,
+                    item.Description
+                    );
+            }
+            dt.AcceptChanges();
+            return dt;
+        }
 
     }
 

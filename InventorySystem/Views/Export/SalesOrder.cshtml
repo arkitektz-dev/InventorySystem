@@ -1,0 +1,113 @@
+﻿@model IList<InventorySystem.Models.SO>
+@{
+    ViewBag.Title = "Supplier";
+    Layout = null;
+    int counter = 0;
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .heading {
+            text-align: center;
+            color: black;
+        }
+
+        tr th {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+
+    @*<div class="heading">
+            <h1>Customer List</h1>
+        </div>*@
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>SoNumber</th>
+                <th>SoDate</th>
+                <th>EstimatedDateofDispatch</th>
+                <th>DeliveryDate</th>
+                <th>SalesPersonId</th>
+                <th>CustomerCodeId</th>
+                <th>ContactPersonId</th>
+                <th>CustomerReference</th>
+                <th>BillCustomerCodeId</th>
+                <th>SoStatus</th>
+                <th>DeliveryAddress</th>
+                <th>Street</th>
+                <th>Suburb</th>
+                <th>City</th>
+                <th>PostalCode</th>
+                <th>Country</th>
+                <th>Discount</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                {
+                    counter++;
+                }
+
+                <tr>
+                    <td>@counter</td> 
+                    <td>@item.SoNumber</td> 
+                    <td>@item.SoDate.Value.Date.ToString("dd/MM/yyyy")</td> 
+                    <td>@item.EstimatedDateofDispatch.Value.Date.ToString("dd/MM/yyyy")</td> 
+                    <td>@item.DeliveryDate.Value.Date.ToString("dd/MM/yyyy")</td> 
+                    <td>@item.SalesPersonId</td> 
+                    <td>@item.CustomerCodeId</td> 
+                    <td>@item.ContactPersonId</td> 
+                    <td>@item.CustomerReference</td> 
+                    <td>@item.BillCustomerCodeId</td> 
+                    <td>@item.SoStatus</td> 
+                    <td>@item.DeliveryAddress</td> 
+                    <td>@item.Street</td> 
+                    <td>@item.Suburb</td> 
+                    <td>@item.City</td> 
+                    <td>@item.PostalCode</td> 
+                    <td>@item.Country</td> 
+                    <td>@item.Discount</td> 
+                    <td>@item.Description</td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+
+
+

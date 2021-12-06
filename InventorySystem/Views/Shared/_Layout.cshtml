@@ -69,8 +69,19 @@
 
             return today;
         }
+
+        function CustomerFormatedDate(unformattedDate) {
+
+            let dDelivery = unformattedDate.replace(/\D/g, "");
+            let now = new Date(Number(dDelivery));
+            let day = ("0" + now.getDate()).slice(-2);
+            let month = ("0" + (now.getMonth() + 1)).slice(-2);
+            let today = now.getFullYear() + "-" + (month) + "-" + (day);
+
+            return today;
+        }
     </script>
-    <script>
+    @*<script>
         (function () {
             var proxied = window.XMLHttpRequest.prototype.send;
             window.XMLHttpRequest.prototype.send = function () {
@@ -80,7 +91,7 @@
                 var pointer = this
                 var intervalId = window.setInterval(function () {
 
-                    console.log("from this pointer 0");
+                   // console.log("from this pointer 0");
                   //  document.querySelector('.preloaderWrapper').classList.remove('preloaderOut');
                  //  $('#loading').show();
                     if (pointer.readyState != 4) {
@@ -92,18 +103,18 @@
                     //If you want to pass the Ajax request object, pass the 'pointer' below
                     clearInterval(intervalId);
 
-                    console.log("from this pointer 2");
+                  //  console.log("from this pointer 2");
                    // document.querySelector('.preloaderWrapper').classList.add('preloaderOut');
                   // $('#loading').hide();
 
                 }, 1);//I found a delay of 1 to be sufficient, modify it as you need.
-                console.log("from this pointer 3");
+              //  console.log("from this pointer 3");
                 return proxied.apply(this, [].slice.call(arguments));
             };
 
 
         })();
-    </script>
+    </script>*@
     <link href="~/Scripts/sweetalert/sweetalert.css" rel="stylesheet" />
 
     <style>

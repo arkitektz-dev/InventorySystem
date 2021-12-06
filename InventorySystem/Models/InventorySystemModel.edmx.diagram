@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bd837a4f01da4324a708bcd3c6191e55" Name="Diagram1">
+      <Diagram DiagramId="bd837a4f01da4324a708bcd3c6191e55" Name="Diagram1" ZoomLevel="56">
         <EntityTypeShape EntityType="InventorySystemModel.Contact" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="InventorySystemModel.Customer" Width="1.5" PointX="2.75" PointY="6.75" />
         <EntityTypeShape EntityType="InventorySystemModel.PODetail" Width="1.5" PointX="8" PointY="1.875" />
@@ -29,6 +29,7 @@
         <EntityTypeShape EntityType="InventorySystemModel.PO" Width="1.5" PointX="3" PointY="0.75" />
         <AssociationConnector Association="InventorySystemModel.FK_PO_Supplier" />
         <EntityTypeShape EntityType="InventorySystemModel.Receiving" Width="1.5" PointX="9.375" PointY="13.75" />
+        <EntityTypeShape EntityType="InventorySystemModel.SO" Width="1.5" PointX="11.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
