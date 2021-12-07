@@ -1025,6 +1025,7 @@
     <Compile Include="Controllers\TypeController.cs" />
     <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="Dtos\PurchaseOrderDto.cs" />
+    <Compile Include="Dtos\SaleOrderDto.cs" />
     <Compile Include="Dtos\StockDtos.cs" />
     <Compile Include="enums\PurchaseOrderStatus.cs" />
     <Compile Include="Global.asax.cs">
@@ -1314,6 +1315,7 @@
     <Content Include="Views\SalesOrder\Index.cshtml" />
     <Content Include="Views\Receiving\Index.cshtml" />
     <Content Include="Views\Export\SalesOrder.cshtml" />
+    <Content Include="Views\Export\GetSalesOrderPrint.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

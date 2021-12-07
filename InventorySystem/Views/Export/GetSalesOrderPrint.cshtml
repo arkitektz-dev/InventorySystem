@@ -1,0 +1,169 @@
+﻿ @model InventorySystem.Dtos.SaleOrderDto
+ @{ 
+     Layout = null;
+     decimal? subTotal = 0;
+     decimal? gstTotal = 0;
+ }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Purchase Orders :: Inventory System</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link href="~/Content/assets/css/fonts/fontawesome/all.min.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link href="~/Content/assets/Invoice/adminlte.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Main content -->
+        <section class="invoice">
+
+            <!-- info row -->
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+
+                    <address>
+                        @Model.saleOrder.DeliveryAddress <br>
+                        @Model.saleOrder.Suburb <br>
+                        @Model.saleOrder.City @Model.saleOrder.PostalCode<br>
+                        @Model.saleOrder.Country <br>
+
+
+                        Email: @Model.cust.AccountEmail
+                    </address>
+                </div>
+                <!-- /.col -->
+
+                <div class="col-sm-4 invoice-col">
+
+                </div>
+
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <b>Quotation Number:</b> @Model.saleOrder.SoNumber<br>
+                    <b>Quotation Date:</b> @Model.saleOrder.SoDate<br>
+                    <b>Delivery Date:</b> @Model.saleOrder.DeliveryDate
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    <h4><strong>Customer</strong></h4>
+
+                    <address>
+                        @Model.cust.Address <br>
+                        @Model.cust.State <br>
+                        @Model.cust.City @Model.saleOrder.PostalCode<br>
+                        @Model.cust.Country <br>
+
+
+                    </address>
+                </div>
+                <!-- /.col -->
+
+                <div class="col-sm-4 invoice-col">
+
+                </div>
+
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    Customer Refernece : @Model.saleOrder.CustomerReference<br>
+                </div>
+                <!-- /.col -->
+            </div>
+
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-12 table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product Code</th>
+                                <th>Product Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.SaleOrderItem)
+                            {
+
+                                subTotal += item.Total;
+
+                                <tr>
+                                    <td>@item.ProudctCode</td>
+                                    <td>@item.ProuductDescription</td>
+                                    <td>@item.Quantity.Value.ToString("N0")</td>
+                                    <td>$ @item.UnitPrice.Value.ToString("N2")</td>
+                                    <td>$ @item.Total.Value.ToString("N2")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <!-- /.row -->
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                  
+                </div>
+                <!-- /.col -->
+
+                <div class="col-sm-4 invoice-col">
+
+                </div>
+
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+
+                    @{
+                        gstTotal = (Model.saleOrder.Total * 17) / 100;
+                        subTotal = subTotal - gstTotal;
+                    }
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th style="width:50%">Subtotal:</th>
+                                <td>$ @gstTotal</td>
+                            </tr>
+
+                            <tr>
+                                <th style="width:50%">GST:</th>
+                                <td>$ @gstTotal</td>
+                            </tr>
+
+                            <tr>
+                                <th>Total:</th>
+                                <td>$ @subTotal</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                   
+                </div>
+                <!-- /.col -->
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- Page specific script -->
+    <script>
+        window.addEventListener("load", window.print());
+    </script>
+</body>
+</html>
+
+

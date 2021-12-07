@@ -581,6 +581,47 @@ namespace InventorySystem.Controllers
 
         //Sales Order Detail Print
 
+        public ActionResult GetSalesOrderPrint(string SoNumber)
+        {
+            SaleOrderDto model = new SaleOrderDto();
+            List<SaleOrderItem> listProduct = new List<SaleOrderItem>();
+
+
+            var salesOrder = _Entity.SOes.Where(x => x.SoNumber == SoNumber).FirstOrDefault();
+            if (salesOrder == null) {
+                return HttpNotFound();
+            }
+
+            var salesDetail = _Entity.SODetails.Where(x => x.SOId == salesOrder.Id).ToList();
+            var customerDetail = _Entity.Customers.Where(x => x.CustomerId == salesOrder.CustomerCodeId).FirstOrDefault();
+
+            foreach (var item in salesDetail) {
+                var rowProduct = _Entity.Products.Where(x => x.ProductId == item.ProductId).FirstOrDefault();
+                if (rowProduct != null) {
+                    var rowProductMini = new SaleOrderItem()
+                    {
+                        ProudctCode = rowProduct.ProductCode,
+                        ProuductDescription = rowProduct.Description,
+                        Quantity = item.Quantity,
+                        Total = item.Total,
+                        UnitPrice = item.Price
+                    };
+
+                    listProduct.Add(rowProductMini);
+                }
+            }
+
+            model.saleOrder = salesOrder;
+            model.saleDetail = salesDetail;
+            model.cust = customerDetail;
+            model.SaleOrderItem = listProduct;
+
+
+
+            
+            return View(model);
+        }
+
 
     }
 

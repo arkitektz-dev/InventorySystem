@@ -170,6 +170,11 @@ $(document).ready(function () {
 
     })
 
+    $('#printSalesOrder').click(function () {
+        let SoName = $("#txtSoNumber").val()
+        let urlitem = `/Export/GetSalesOrderPrint?SoNumber=${SoName}`;
+        window.open(urlitem, '_blank');
+    })
 
 });
 

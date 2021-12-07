@@ -172,6 +172,7 @@ namespace InventorySystem.Controllers
             var row = (from so in _Entity.SOes
                        join customer in _Entity.Customers on so.CustomerCodeId equals customer.CustomerId into pso
                        from p in pso.DefaultIfEmpty()
+                       where so.Id == Id
                        select new
                        {
                            so.Id,
@@ -274,6 +275,7 @@ namespace InventorySystem.Controllers
                 var lst = (from so in _Entity.SODetails
                            join product in _Entity.Products on so.ProductId equals product.ProductId into pso
                            from p in pso.DefaultIfEmpty()
+                           where so.SOId == row.Id
                            select new
                            {
                                 so.SODetailId,
