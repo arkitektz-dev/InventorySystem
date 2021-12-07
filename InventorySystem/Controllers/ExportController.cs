@@ -579,6 +579,9 @@ namespace InventorySystem.Controllers
             return dt;
         }
 
+        //Sales Order Detail Print
+
+
     }
 
 

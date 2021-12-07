@@ -33,5 +33,8 @@ namespace InventorySystem.Models
         public string Country { get; set; }
         public Nullable<decimal> Discount { get; set; }
         public string Description { get; set; }
+        public Nullable<decimal> SubTotal { get; set; }
+        public Nullable<decimal> DiscountAmount { get; set; }
+        public Nullable<decimal> Total { get; set; }
     }
 }

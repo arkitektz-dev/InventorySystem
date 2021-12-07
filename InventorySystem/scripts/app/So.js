@@ -1,5 +1,8 @@
-﻿
+﻿var CurrentSaleOrder = 0;
 
+
+
+BindGridSo();
 
 $(document).ready(function () {
 
@@ -131,8 +134,320 @@ $(document).ready(function () {
         $("#SaleOrderViewList").hide();
     });
 
+
+    $('#addSalesOrderDetail').click(function () {
+
+        $.ajax({
+            type: "GET",
+            url: "/PoDetail/GetProductListDropdown",
+            success: function (response) {
+                console.log(response);
+                $('#GridSOItemList tr:last').after(
+                    '<tr class="addNewRow">' +
+                    `<td>${response}</td>` +
+                    '<td><input type="number" class="form-control" type="text" id="Quantity" placeholder="Quantity" /></td>' +
+                    '<td><input class="form-control" disabled type="text" id="Price" /></td>' +
+                    '<td align="center">' +
+                    '<a class="btn btn-success btn-sm" style="color:white" onclick="InsertNewProductDetail(this)" title="Add"> <i class="fa fa-plus"></i></a>' +
+                    '&nbsp;<a class="btn btn-danger btn-sm" style="color:white" onclick="DeleteNewProductDetail(this)" title="Cancel"> <i class="fa fa-close"></i></a>' +
+                    '</td>' +
+                    '</tr > ');
+
+                $('#ProductNameList').trigger('change');
+
+
+                //$(this).html(Dropdown);
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        })
+
+
+
+    })
+
+
 });
 
+function InsertNewProductDetail(item) {
+
+
+    const ProductId = $(item).parent().parent().find(':input:eq(0)').val();
+    const Quantity = $(item).parent().parent().find(':input:eq(1)').val();
+    const Price = $(item).parent().parent().find(':input:eq(2)').val();
+    let isFormComplete = true;
+
+    if (ProductId === '') {
+        $(item).parent().parent().find(':input:eq(0)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(0)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(0)').removeClass("border-danger");
+    }
+
+    if (Quantity === '') {
+        $(item).parent().parent().find(':input:eq(1)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(1)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(1)').removeClass("border-danger");
+    }
+
+    if (Price === '') {
+        $(item).parent().parent().find(':input:eq(2)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(2)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(2)').removeClass("border-danger");
+    }
+
+    var SONumber = $("#txtSoNumber").val();
+
+    if (isFormComplete == true) {
+
+        $.ajax({
+            type: "GET",
+            url: "/SalesOrder/InsertNewProductDetail",
+            data: { SONumber: SONumber, ProductId: ProductId, Quantity: Quantity, Price: Price },
+            success: function (response) {
+
+                if (response == "true") {
+                    $("#SOItemList").html("");
+                    setTimeout(() => {
+                        BindGridSalesItemDetail();
+                    }, 50)
+
+                }
+                else if (response == "ItemAlreadyExist") {
+                    toastr.error('Product is associated with another record');
+                    return false;
+                }
+
+
+
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        })
+
+    }
+
+
+
+
+}
+
+function DeleteNewProductDetail(item) {
+    $(item).parent().parent().remove();
+}
+
+function EditSODetail(PoDetailId, item) {
+    $(item).parent().parent().children('td').each(function (index) {
+        if (index < 3) {
+
+            if (index == 0) {
+                let Dropdown = "";
+                const dropdown = this;
+                $.ajax({
+                    type: "GET",
+                    url: "/PoDetail/GetProductListDropdown",
+                    success: function (response) {
+
+                        Dropdown = response;
+                        $(dropdown).html(Dropdown);
+                        //$(this).html(Dropdown);
+                    },
+                    failure: function (response) {
+                        console.error(response.responseText);
+                    },
+                    error: function (response) {
+                        console.error(response.responseText);
+                    }
+                })
+
+
+
+            } else {
+
+                if (index == 1) {
+                    var html = $(this).text();
+                    var input = $('<input type="text" class="form-control" />');
+                    input.val(html);
+                    $(this).html(input);
+                }
+
+                if (index == 2) {
+                    var html = $(this).text();
+                    var input = $('<input type="text" class="form-control" id="Price" disabled />');
+                    input.val(html);
+                    $(this).html(input);
+                }
+
+
+            }
+
+
+        } else {
+            $(item).parent().find('#btnEditSoDetail').hide();
+            $(item).parent().find('#btnDeleteSoDetail').hide();
+            $(item).parent().find('#btnUpdatePoDetail').show();
+            $(item).parent().find('#btnCancelUpdate').show();
+        }
+    });
+}
+
+function UpdateSODetailValues(thisPoDetailId, item) {
+
+    const ProductId = $(item).parent().parent().find(':input:eq(0)').val();
+    const Quantity = $(item).parent().parent().find(':input:eq(1)').val();
+    const Price = $(item).parent().parent().find(':input:eq(2)').val();
+    const isFormComplete = true;
+
+    if (ProductId === '') {
+        $(item).parent().parent().find(':input:eq(0)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(0)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(0)').removeClass("border-danger");
+    }
+
+    if (Quantity === '') {
+        $(item).parent().parent().find(':input:eq(1)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(1)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(1)').removeClass("border-danger");
+    }
+
+    if (Price === '') {
+        $(item).parent().parent().find(':input:eq(2)').addClass("border-danger");
+        $(item).parent().parent().find(':input:eq(2)').focus();
+        isFormComplete = false;
+    } else {
+        $(item).parent().parent().find(':input:eq(2)').removeClass("border-danger");
+    }
+
+
+    if (isFormComplete == true) {
+
+        $.ajax({
+            type: "GET",
+            url: "/SalesOrder/UpdateSoDetail",
+            data: { ProductDetailId: thisPoDetailId, ProductId: ProductId, Quantity: Quantity, Price: Price },
+            success: function (response) {
+
+                if (response == "true") {
+                    $("#SOItemList").html("");
+                    setTimeout(() => {
+                        BindGridSalesItemDetail();
+                    }, 50)
+
+
+                }
+                else if (response == "ItemAlreadyExist") {
+                    toastr.error('Product is associated with another record');
+                    return false;
+                }
+
+
+               
+
+
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        })
+
+    }
+
+
+
+
+
+}
+
+function CancelUpdate(item) {
+    $("#SOItemList").html("");
+    setTimeout(() => {
+        BindGridSalesItemDetail();
+    }, 50)
+}
+
+
+function DeleteSoDetail(DeleteId) {
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                type: "GET",
+                url: "/SalesOrder/DeleteSalesDetail",
+                data: { DetailId: DeleteId },
+                success: function (response) {
+
+                    $("#SOItemList").html("");
+                    setTimeout(() => {
+                        BindGridSalesItemDetail();
+                    }, 50)
+
+
+
+                },
+                failure: function (response) {
+                    console.error(response.responseText);
+                },
+                error: function (response) {
+                    console.error(response.responseText);
+                }
+            })
+
+
+        }
+    })
+
+
+
+
+}
+
+
+
+function getProductPrice(obj) {
+
+    console.log('ss')
+    $.ajax({
+        type: "GET",
+        url: "/PoDetail/GetProductPrice?id=" + $(obj).val(),
+        success: function (response) {
+            $(obj).parent().parent().children().find('#Price').val(response)
+        },
+        failure: function (response) {
+            console.error(response.responseText);
+        },
+        error: function (response) {
+            console.error(response.responseText);
+        }
+    });
+}
 
 function GetAssignedSalesCustomer(selectSalesUser, selectedCustomerCode) {
     $.ajax({
@@ -292,7 +607,7 @@ function BindGridSo() {
                 data: null,
                 render: function (data, type, row) {
                     //btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="OnGridView(this)" title="PO Items;"> Items </i></button>`;
-                    btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" title="So Items;"> Items </i></button>`;
+                    btnview = `<button class="btn btn-warning btn-large btn-sm"  style="color: white;" onclick="SalesItemDetailView(${data.Id})" title="So Items;"> Items </i></button>`;
                     return btnview;
                 },
                 width: "80px",
@@ -426,4 +741,87 @@ function Clear() {
 
 }
 
-BindGridSo();
+function SalesItemDetailView(Id) {
+
+    $.ajax({
+        type: "GET",
+        url: "/SalesOrder/GetSalesDetail",
+        data: { Id: Id },
+        success: function (response) {
+            console.log(response);
+            Clear();
+            GetNewSONUmber()
+            $("#AddSaleOrder").hide();
+            $("#SaleOrderViewList").hide();
+            $("#AddSaleOrderDetail").show();
+
+            //Fill Values
+            $("#txtSoNumber").val(response.SoNumber);
+            $("#txtSoDate").val(GetFormattedDate(`${response.SoDate}`));
+            $("#txtDeliveryDate").val(GetFormattedDate(`${response.DeliveryDate}`));
+            $("#txtCustomerName").val(response.CustomerName);
+            $("#txtSoStatuses").val(response.SoStatus);
+            $("#txtSaleCustomerName").val(response.CustomerName);
+            BindGridSalesItemDetail();
+             
+        },
+        failure: function (response) {
+            console.error(response.responseText);
+        },
+        error: function (response) {
+            console.error(response.responseText);
+        }
+    })
+}
+
+function BindGridSalesItemDetail() {
+    var SoNumber = $('#txtSoNumber').val();
+    $('#SOItemList').html("");
+    $('#SOItemList').append('<table id="GridSOItemList" class="table table-striped dataTable no-footer" width="100%"></table>');
+    $('#GridSOItemList').DataTable({
+        sAjaxSource: '/SalesOrder/GetSOItemsList?SONumber=' + SoNumber,
+        columns: [
+            { title: "ProductName", data: "ProductName" },
+            { title: "Quantity", data: "Quantity" },
+            { title: "Price", data: "Price" },
+            {
+                title: "Action",
+                data: null,
+                render: function (data, type, row) {
+                    btnview = '';
+                    if ($('#txtStatus').val() !== "Completed")
+                        btnview = btnview + `<a class="btn btn-warning btn-large btn-sm btnEdit" style="color: white;" id="btnEditSoDetail" onclick="EditSODetail('${data.SODetailId}',this)" title="Edit;"> <i class="fa fa-edit"></i></a>`;
+                    btnview = btnview + '&nbsp;<a class="btn btn-danger btn-sm" style="color: white;" id="btnDeleteSoDetail" onclick="DeleteSoDetail(' + data.SODetailId + ')" title="Delete Record"> <i class="fa fa-trash"></i></a>';
+                    btnview = btnview + '&nbsp;<a class="btn btn-success btn-sm" style="color: white; display:none;" id="btnUpdatePoDetail" onclick="UpdateSODetailValues(' + data.SODetailId + ',this)" title="Update"> <i class="fa fa-check"></i></a>';
+                    btnview = btnview + '&nbsp;<a class="btn btn-danger btn-sm" style="color: white; display:none;" id="btnCancelUpdate" onclick="CancelUpdate(this)" title="Cancel"> <i class="fa fa-close"></i></a>';
+                    return btnview;
+                },
+                width: "200px",
+                sortable: false,
+                className: "text-center"
+            }
+        ],
+        dom: 'Blfrtip',
+        paging: false,
+        buttons: [],
+        "pageLength": 10,
+        initComplete: function () {
+            var btns = $('.dt-button');
+            btns.addClass('btn btn-success btn-sm');
+            btns.css('margin', '2px');
+            btns.removeClass('dt-button');
+
+        }
+    });
+
+}
+
+
+function OnBack() {
+
+    $("#AddSaleOrder").hide();
+    $("#AddSaleOrderDetail").hide();
+    $("#SaleOrderViewList").show();
+    BindGridSo();
+}
+
