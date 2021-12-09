@@ -26,13 +26,19 @@ namespace InventorySystem.Models
         }
     
         public virtual DbSet<Contact> Contacts { get; set; }
+        public virtual DbSet<Courier> Couriers { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<PO> POes { get; set; }
         public virtual DbSet<PODetail> PODetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductPicture> ProductPictures { get; set; }
         public virtual DbSet<ProductStock> ProductStocks { get; set; }
         public virtual DbSet<ProductType> ProductTypes { get; set; }
         public virtual DbSet<RawMaterail> RawMaterails { get; set; }
+        public virtual DbSet<Receiving> Receivings { get; set; }
+        public virtual DbSet<Shipment> Shipments { get; set; }
+        public virtual DbSet<SO> SOes { get; set; }
+        public virtual DbSet<SODetail> SODetails { get; set; }
         public virtual DbSet<Stock> Stocks { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<UnitOfMeasure> UnitOfMeasures { get; set; }
@@ -45,9 +51,5 @@ namespace InventorySystem.Models
         public virtual DbSet<ProductQtyV> ProductQtyVs { get; set; }
         public virtual DbSet<ProductV> ProductVs { get; set; }
         public virtual DbSet<StockV> StockVs { get; set; }
-        public virtual DbSet<PO> POes { get; set; }
-        public virtual DbSet<Receiving> Receivings { get; set; }
-        public virtual DbSet<SODetail> SODetails { get; set; }
-        public virtual DbSet<SO> SOes { get; set; }
     }
 }

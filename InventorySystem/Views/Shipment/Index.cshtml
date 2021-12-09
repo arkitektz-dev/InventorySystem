@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .modal-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 80%;
+        pointer-events: auto;
+        background-color: white;
+        background-clip: padding-box;
+        border: 1px solid white;
+        border-radius: 0.3rem;
+        outline: 0;
+        left: 20%;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #ffffff !important;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #ffffff !important;
+    }
+</style>
+
+<style>
+
+    .show-warning {
+        border: 1px solid red;
+    }
+</style>
+
+
+<div class="py-7" id="displayShipmentList">
+    <h4 class="text-left" style="margin-left: 20px;">Shipmnet List</h4>
+    <div class="px-4 px-md-6">
+        <div class="row">
+            <div class="col-6">
+
+            </div>
+            <div class="col-6 text-right">
+                <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="addShipment"><i class="fa fa-plus"></i> Add New</button>
+                <a href="@Url.Action("PrintSupplier","Export")" target="_blank" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Pdf</a>
+                <a href="@Url.Action("ExportSupplierExcel","Export")" target="_blank" class="mb-3 mx-1 btn btn-md btn-theme"><i class="fa fa-print"></i> Excel</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="px-4 px-md-6">
+        <div class="table-responsive">
+            <div id="ShipmentList"></div>
+        </div>
+    </div>
+</div>
+
+
+<div id="AddShipment" class="pt-5 px-4" style="display:none;">
+    <h4 class="form-header" id="txtShipmnetHeading">
+        Create Shipment
+    </h4>
+    <form class="forms-sample">
+        <div class="row">
+
+            <input type="hidden" id="ShipmentId" />
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>DO Number</label>
+                    <input type="text" class="form-control" placeholder="DO Number" required="required" id="DONumber" maxlength="30" disabled />
+                    <span class="text-danger" id="Val_DONumber"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>DO Date</label>
+                    <input type="date" class="form-control" placeholder="DO Date" required="required" id="DODate" />
+                    <span class="text-danger" id="Val_DODate"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>SO Number</label>
+                    @Html.DropDownList("SONumber", (IEnumerable<SelectListItem>)ViewBag.SalesOrderList, new { @class = "form-control" })
+                    <span class="text-danger" id="Val_SONumber"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Courier</label>
+                    @Html.DropDownList("Courier", (IEnumerable<SelectListItem>)ViewBag.CourierList, new { @class = "form-control" })
+                    <span class="text-danger" id="Val_Courier"></span>
+                </div>
+            </div>
+
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Installer</label>
+                    <input type="text" class="form-control" placeholder="Installer" required="required" id="Installer" maxlength="30" />
+                    <span class="text-danger" id="Val_Installer"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="Status" class="form-control">
+                        <option value="">---Select a status ----</option>
+                        <option value="List">List</option>
+                        <option value="Collected">Collected</option>
+                        <option value="Freighted">Freighted</option>
+                        <option value="WentWithInstaller">Went with installer</option>
+                        <option value="Installed">Installed</option>
+                    </select>
+                    <span class="text-danger" id="Val_Status"></span>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Tracking Number</label>
+                    <input type="text" class="form-control" placeholder="Tracking Number" required="required" id="TrackingNumber" />
+                    <span class="text-danger" id="Val_TrackingNumber"></span>
+                </div>
+            </div>
+
+
+
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" class="form-control" placeholder="Description" required="required" id="Description" />
+                    <span class="text-danger" id="Val_Description"></span>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="col-md-12" style="text-align:center">
+
+                <button type="button" class="btn btn-success" id="btnCreateShipping">
+                    Save
+                </button>
+                <button type="button" class="btn btn-danger" id="closeButton"><i class="fa fa-close"></i>Close</button>
+
+            </div>
+
+        </div>
+    </form>
+
+    <div class="px-4 px-md-6">
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="button" class="mb-3 mx-1 btn btn-md btn-theme" id="printSalesOrder"><i class="fa fa-print"></i> Print Shipment</button>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="py-7">
+        <div class="px-4 px-md-6">
+            <div class="table-responsive">
+                <div id="SalesOrderItemlist"></div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="~/scripts/app/Shipment.js"></script>

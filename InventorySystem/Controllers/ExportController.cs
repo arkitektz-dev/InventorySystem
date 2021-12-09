@@ -622,7 +622,7 @@ namespace InventorySystem.Controllers
             return View(model);
         }
 
-
+        
     }
 
 

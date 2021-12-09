@@ -970,6 +970,7 @@
     <Content Include="scripts\app\DataTable.js" />
     <Content Include="scripts\app\jsLayout.js" />
     <Content Include="scripts\app\Receiving.js" />
+    <Content Include="scripts\app\Shipment.js" />
     <Content Include="scripts\app\So.js" />
     <Content Include="scripts\app\Stock.js" />
     <Content Include="scripts\app\POItems.js" />
@@ -1020,6 +1021,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ReceivingController.cs" />
     <Compile Include="Controllers\SalesOrderController.cs" />
+    <Compile Include="Controllers\ShipmentController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\TypeController.cs" />
@@ -1032,6 +1034,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Contact.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Courier.cs">
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Customer.cs">
@@ -1094,6 +1099,9 @@
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Receiving.cs">
+      <DependentUpon>InventorySystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Shipment.cs">
       <DependentUpon>InventorySystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SO.cs">
@@ -1316,6 +1324,7 @@
     <Content Include="Views\Receiving\Index.cshtml" />
     <Content Include="Views\Export\SalesOrder.cshtml" />
     <Content Include="Views\Export\GetSalesOrderPrint.cshtml" />
+    <Content Include="Views\Shipment\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1326,6 +1335,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\assets\auth\javascript\" />
+    <Folder Include="viewModel\" />
     <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>

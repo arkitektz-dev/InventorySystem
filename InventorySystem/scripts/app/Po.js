@@ -809,7 +809,7 @@ function GetPOData(data) {
     
 
     $("#txtPoNumber").val(data.PONumber);
-    $("#txtPODate").val(GetFormattedDate(data.Date));
+    $("#txtPODate").val(CustomerFormatedDate(data.Date));
     $("#txtDelAddress").val(data.Street + " " + data.Address + " " + data.State + ", " + data.City + ", " + data.Country);
     $("#txtStatus").val(data.Status);
     $("#txtTOP").val(data.TermsOfPayment);
