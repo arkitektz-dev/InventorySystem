@@ -622,7 +622,124 @@ namespace InventorySystem.Controllers
             return View(model);
         }
 
-        
+        public ActionResult ShipmentOrderPrint(string ShipmentNumber)
+        {
+            ShipmentOrderDto model = new ShipmentOrderDto();
+            List<SaleOrderItem> listProduct = new List<SaleOrderItem>();
+
+            var rowShipment = _Entity.Shipments.Where(x => x.DONumber == ShipmentNumber).FirstOrDefault();
+            if (rowShipment != null) { 
+                model.Shipment = rowShipment;
+            }
+
+            var rowSalesOrder = _Entity.SOes.Where(x => x.Id == rowShipment.SalesOrderId).FirstOrDefault();
+            if (rowSalesOrder != null) {
+                model.SalesOrder = rowSalesOrder;
+            }
+
+            var rowCustomer = _Entity.Customers.Where(x => x.CustomerId == rowSalesOrder.CustomerCodeId).FirstOrDefault();
+            if (rowCustomer != null) {
+                model.Customer = rowCustomer;
+            }
+
+            var salesDetail = _Entity.SODetails.Where(x => x.SOId == rowSalesOrder.Id).ToList();
+            var customerDetail = _Entity.Customers.Where(x => x.CustomerId == rowSalesOrder.CustomerCodeId).FirstOrDefault();
+
+            foreach (var item in salesDetail)
+            {
+                var rowProduct = _Entity.Products.Where(x => x.ProductId == item.ProductId).FirstOrDefault();
+                if (rowProduct != null)
+                {
+                    var rowProductMini = new SaleOrderItem()
+                    {
+                        ProudctCode = rowProduct.ProductCode,
+                        ProuductDescription = rowProduct.Description,
+                        Quantity = item.Quantity,
+                        Total = item.Total,
+                        UnitPrice = item.Price
+                    };
+
+                    listProduct.Add(rowProductMini);
+                }
+            }
+
+            model.SalesItemList = listProduct;
+
+            return View(model);
+        }
+
+        public ActionResult ShipmentList()
+        {
+            var row = _Entity.Shipments.ToList();
+
+            return View(row);
+        }
+
+        public ActionResult PrintShipmentList()
+        {
+            return new Rotativa.ActionAsPdf("ShipmentList")
+            {
+                FileName = $"Shipment{DateTime.Now.Date}.pdf",
+                CustomSwitches = "--print-media-type --header-center \"Shipment List\""
+            };
+        }
+
+        public ActionResult ExportShipment()
+        {
+            DataTable dt = getShipment();
+            //Name of File  
+            string fileName = $"Shipment{DateTime.Now.Date}.xlsx";
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                //Add DataTable in worksheet  
+                wb.Worksheets.Add(dt);
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    //Return xlsx Excel File  
+                    return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+                }
+            }
+        }
+
+        public DataTable getShipment()
+        {
+            //Creating DataTable  
+            DataTable dt = new DataTable();
+            //Setiing Table Name  
+            dt.TableName = "SalesOrder";
+            //Add Columns  
+            dt.Columns.Add("#", typeof(string)); 
+            dt.Columns.Add("DONumber", typeof(string));
+            dt.Columns.Add("DODate", typeof(string));
+            dt.Columns.Add("SalesOrderId", typeof(string));
+            dt.Columns.Add("CourierId", typeof(string));
+            dt.Columns.Add("Installer", typeof(string));
+            dt.Columns.Add("Status", typeof(string));
+            dt.Columns.Add("TrackingNumber", typeof(string));
+            dt.Columns.Add("Description", typeof(string));
+            //Add Rows in DataTable  
+
+            var list = _Entity.Shipments.ToList();
+            int counter = 0;
+            foreach (var item in list)
+            {
+                counter++;
+                dt.Rows.Add(counter,
+                    item.DONumber,
+                    item.DODate.Value.Date.ToString("dd/MM/yyyy"), 
+                    item.SalesOrderId, 
+                    item.CourierId,
+                    item.Installer,
+                    item.Status,
+                    item.TrackingNumber,
+                    item.Description
+                    );
+            }
+            dt.AcceptChanges();
+            return dt;
+        }
+
     }
 
 

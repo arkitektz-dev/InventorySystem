@@ -217,6 +217,12 @@ namespace InventorySystem.Controllers
                 {
                     //Edit
 
+                    var previousData = _Entity.SOes.Where(x => x.Id == param.Id).FirstOrDefault();
+
+                    param.SubTotal = previousData.SubTotal;
+                    param.DiscountAmount = previousData.DiscountAmount;
+                    param.Total = previousData.Total;
+
 
                     var row = _Entity.SOes.Where(x => x.Id == param.Id).FirstOrDefault();
                     if (row != null)

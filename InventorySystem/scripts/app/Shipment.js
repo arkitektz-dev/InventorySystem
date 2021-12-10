@@ -301,5 +301,12 @@ function DeleteShipment(ShipmnetId) {
     })
 }
 
+$("#printShipmnet").on("click", function () {
+    var SaleOrder = $("#DONumber").val();
+    let urlitem = `/Export/ShipmentOrderPrint?ShipmentNumber=${SaleOrder}`;
+    window.open(urlitem, '_blank');
+})
+
+
 
 BindGridShipmnetList();

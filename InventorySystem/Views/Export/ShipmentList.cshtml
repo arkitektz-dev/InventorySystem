@@ -1,0 +1,90 @@
+﻿@model IList<InventorySystem.Models.Shipment>
+@{
+    ViewBag.Title = "Supplier";
+    Layout = null;
+    int counter = 0;
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .heading {
+            text-align: center;
+            color: black;
+        }
+
+        tr th {
+            background-color: black;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>DO Number</th>
+                <th>DO Date</th>
+                <th>Sales Order</th> 
+                <th>Installer</th> 
+                <th>Status</th> 
+                <th>TrackingNumber</th> 
+                <th>Description</th> 
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                {
+                    counter++;
+                }
+
+                <tr>
+                    <td>@counter</td> 
+                    <td>@item.DONumber</td> 
+                    <td>@item.DODate.Value.Date.ToString("dd/MM/yyyy")</td> 
+                    <td>@item.SalesOrderId</td> 
+                    <td>@item.Installer</td> 
+                    <td>@item.Status</td> 
+                    <td>@item.TrackingNumber</td> 
+                    <td>@item.Description</td> 
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+
+
+
+
+

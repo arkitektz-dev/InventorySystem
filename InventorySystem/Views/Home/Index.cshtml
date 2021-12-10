@@ -6,7 +6,7 @@
 @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">*@
 @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>*@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
+<script src="https://cdn'h'js.cloudflare.com/ajax/libs/Chart.js/2.2.1/Chart.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         BindGrid("RealTimeList", "RealTimeList", '/Home/GetRealTimeList');
@@ -65,8 +65,55 @@
 
         }
 
-        
-    });                               //-------------
+
+        $.ajax({
+            type: "GET",
+            url: '/Home/DashboardTopCard', 
+            success: function (data) {
+                console.log(data);
+
+                $("#PurchaseOrder").text(data.PurchaseOrder);
+                $("#SaleOrder").text(data.SalesOrder);
+                $("#Receiving").text(data.Receiving);
+                $("#Shipment").text(data.Shipment);
+
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: '/Home/GetSalesData',
+            success: function (data) {
+                
+                console.log("This is a data",data);
+
+
+                var ctx = document.getElementById("stackedBarChart");
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: data.Label,
+                        datasets: [{
+                            label: 'Sales',
+                            data: data.Value,
+                            backgroundColor: ["#5797fc", "#e65252", "#4ecc48", "#ffcc29"],
+                            hoverBackgroundColor: ["#5797fc", "#e65252", "#4ecc48", "#ffcc29"],
+                        }]
+                    },
+                    options: {
+                        responsive: false,
+                        legend: {
+                            display: false //This will do the task
+                        }
+
+                    }
+                });
+
+            }
+        });
+
+     
+    });                                
 </script>
 <section class="content">
     <div class="row" style="padding-bottom:10px;">
@@ -78,7 +125,7 @@
             <!-- small box -->
             <div class="small-box bg-aqua ml-1">
                 <div class="inner">
-                    <h3>2</h3>
+                    <h3 id="PurchaseOrder">2</h3>
                     <p>Purchase Orders</p>
                 </div>
                 <div class="icon">
@@ -94,13 +141,13 @@
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>0<sup style="font-size: 20px"></sup></h3>
+                    <h3 id="SaleOrder">0</h3>
                     <p>Sales Orders</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-cart-plus"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="/SalesOrder" class="small-box-footer">
                     More info <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -110,13 +157,13 @@
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3 id="Receiving">0</h3>
                     <p>Receiving</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-truck"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="/Receiving" class="small-box-footer">
                     More info <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -126,13 +173,13 @@
             <!-- small box -->
             <div class="small-box bg-red  mr-1">
                 <div class="inner">
-                    <h3>0</h3>
+                    <h3 id="Shipment">0</h3>
                     <p>Shipment</p>
                 </div>
                 <div class="icon">
                     <i class="fa fa-plane"></i>
                 </div>
-                <a href="#" class="small-box-footer">
+                <a href="/Shipment" class="small-box-footer">
                     More info <i class="fa fa-arrow-circle-right"></i>
                 </a>
             </div>
@@ -161,7 +208,7 @@
         <div class="col-lg-6">
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Sales vs Purchase (Last 6 Months)</h3>
+                    <h3 class="box-title">Sales</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse">
                             <i class="fa fa-minus"></i>
@@ -171,7 +218,7 @@
                 </div>
                 <div class="box-body">
                     <div class="chart">
-                        <canvas id="barChart" style="height:230px"></canvas>
+                        <canvas id="stackedBarChart" style="height:230px"></canvas>
                     </div>
                 </div>
                 <!-- /.box-body -->

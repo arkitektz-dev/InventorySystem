@@ -10,6 +10,7 @@ $(document).ready(function () {
     $("#SalesUserId").change(function () {
         let selectSalesUser = $("#SalesUserId").val();
 
+
         GetAssignedSalesCustomer(selectSalesUser, 0);
 
 
@@ -455,6 +456,7 @@ function getProductPrice(obj) {
 }
 
 function GetAssignedSalesCustomer(selectSalesUser, selectedCustomerCode) {
+    document.getElementById("CustomerCodeId").innerHTML = `<option value="">-- Select Sales Person --</option>`;
     $.ajax({
         type: "GET",
         url: "/SalesOrder/GetAssignedSalesCustomer?SalesPersonId=" + selectSalesUser,
@@ -492,6 +494,7 @@ function GetAssignedSalesCustomer(selectSalesUser, selectedCustomerCode) {
 }
 
 function GetCustomerContact(selectSalesUser, selectContactPersonId) {
+    document.getElementById("ContactId").innerHTML =  `<option value="">---Select a contact person ----</option>`;
     $.ajax({
         type: "GET",
         url: "/SalesOrder/GetCustomerContact?CustomerId=" + selectSalesUser,

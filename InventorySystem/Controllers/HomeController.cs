@@ -1,4 +1,5 @@
-﻿using InventorySystem.Models;
+﻿using InventorySystem.Dtos;
+using InventorySystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -71,7 +72,35 @@ namespace InventorySystem.Controllers
             else
                 return Json("[]");
         }
+
+        public virtual JsonResult DashboardTopCard() {
+
+            DashboardDtos model = new DashboardDtos();
+            model.PurchaseOrder = _Entity.POes.Where(x => x.Status == "Completed").Count();
+            model.SalesOrder = _Entity.SOes.Where(x => x.SoStatus == "Completed").Count();
+            model.Receiving = _Entity.Receivings.Count();
+            model.Shipment = _Entity.Shipments.Count();
+
+
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+        public virtual JsonResult GetSalesData()
+        {
+            DashboardChart model = new DashboardChart();
+
+            model.Label = _Entity.SOes.OrderByDescending(x => x.Id).Take(10).Select(x => x.SoDate.ToString()).ToList();
+            model.Value = _Entity.SOes.OrderByDescending(x => x.Id).Take(10).Select(x => x.Total.ToString()).ToList();
+             
+
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
     }
+
+
     public class PieData
     {
         public List<string> Count_ListRazer { get; set; } // store count lists 

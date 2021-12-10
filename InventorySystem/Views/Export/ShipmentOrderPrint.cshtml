@@ -1,0 +1,125 @@
+﻿@model InventorySystem.Dtos.ShipmentOrderDto
+@{
+    ViewBag.Title = "ShipmentOrderPrint";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Purchase Orders :: Inventory System</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link href="~/Content/assets/css/fonts/fontawesome/all.min.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link href="~/Content/assets/Invoice/adminlte.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Main content -->
+        <section class="invoice">
+            <!-- title row -->
+            <div class="row">
+                <div class="col-12">
+                    Shipment/Delivery Order
+                    <br />
+                    <br />
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- info row -->
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    From
+                    <address>
+                        @Model.SalesOrder.DeliveryAddress<br>
+                        @Model.SalesOrder.Street<br>
+                        @Model.SalesOrder.Suburb<br>
+                        @Model.SalesOrder.City @Model.SalesOrder.PostalCode<br>
+                        @Model.SalesOrder.Country<br>
+                        <br/>
+                        Email: @Model.Customer.AccountEmail
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <b>DO Number:</b> @Model.Shipment.DONumber<br>
+                    <b>DO Date:</b> @Model.Shipment.DODate.Value.ToString("dd/MM/yyyy")<br>
+                    <b>Delivery Date:</b> @Model.SalesOrder.DeliveryDate.Value.ToString("dd/MM/yyyy") <br>
+                    <b>SO Number:</b> @Model.SalesOrder.SoNumber
+                </div>
+                <!-- /.col -->
+            </div>
+             
+            <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                    <strong>Customer </strong> 
+                    <address>
+                        @Model.Customer.Address<br>
+                        @Model.Customer.Street<br>
+                        @Model.Customer.State<br>
+                        @Model.Customer.City @Model.Customer.PostalCode<br>
+                        @Model.Customer.Country<br>
+                    </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                    <b>Customer Reference:</b> @Model.SalesOrder.CustomerReference<br> 
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-12 table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product Code</th>
+                                <th>Prouduct Description</th>
+                                <th>Quantity</th> 
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            @if(Model.SalesItemList != null){
+                                foreach (var item in Model.SalesItemList) { 
+                                    <tr>
+                                        <td>@item.ProudctCode </td>
+                                        <td>@item.ProuductDescription </td>
+                                        <td>@item.Quantity </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+           
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- Page specific script -->
+    <script>
+     window.addEventListener("load", window.print());
+    </script>
+</body>
+</html>
+
+
