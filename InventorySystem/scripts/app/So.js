@@ -765,8 +765,8 @@ function SalesItemDetailView(Id) {
 
             //Fill Values
             $("#txtSoNumber").val(response.SoNumber);
-            $("#txtSoDate").val(GetFormattedDate(`${response.SoDate}`));
-            $("#txtDeliveryDate").val(GetFormattedDate(`${response.DeliveryDate}`));
+            $("#txtSoDate").val(GetFormattedDateBySlash(`${response.SoDate}`));
+            $("#txtDeliveryDate").val(GetFormattedDateBySlash(`${response.DeliveryDate}`));
             $("#txtCustomerName").val(response.CustomerName);
             $("#txtSoStatuses").val(response.SoStatus);
             $("#txtSaleCustomerName").val(response.CustomerName);

@@ -61,14 +61,33 @@
     <script>
         function GetFormattedDate(unformattedDate) {
             
+            //let dDelivery = unformattedDate.replace(/\D/g, "");
+            //let now = new Date(Number(dDelivery));
+            //let day = ("0" + now.getDate()).slice(-2);
+            //let month = ("0" + (now.getMonth() + 1)).slice(-2);
+            //let today = (day) + "-" + (month) + "-" + now.getFullYear();
+
             let dDelivery = unformattedDate.replace(/\D/g, "");
             let now = new Date(Number(dDelivery));
             let day = ("0" + now.getDate()).slice(-2);
             let month = ("0" + (now.getMonth() + 1)).slice(-2);
-            let today = (day) + "-" + (month) + "-" + now.getFullYear();
+            let today = (day) + "/" + (month) + "/" + now.getFullYear();
 
             return today;
         }
+
+        function GetFormattedDateBySlash(unformattedDate) {
+
+            let dDelivery = unformattedDate.replace(/\D/g, "");
+            let now = new Date(Number(dDelivery));
+            let day = ("0" + now.getDate()).slice(-2);
+            let month = ("0" + (now.getMonth() + 1)).slice(-2);
+            let today = (day) + "/" + (month) + "/" + now.getFullYear();
+
+            return today;
+        }
+
+
 
         function CustomerFormatedDate(unformattedDate) {
 
