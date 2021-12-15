@@ -402,24 +402,14 @@ namespace InventorySystem.Controllers
             var saleDetailId = _Entity.SODetails.Where(x => x.SODetailId == ProductDetailId).FirstOrDefault();
             if (saleDetailId != null)
             {
-                var existingSoDetail = _Entity.SODetails.Where(x => x.ProductId == ProductId && x.SOId == saleDetailId.SOId).FirstOrDefault();
-                if (existingSoDetail == null)
-                {
-                    saleDetailId.ProductId = ProductId;
-                    saleDetailId.Quantity = Quantity;
-                    saleDetailId.Price = Price;
-                    saleDetailId.Total = Price * Quantity;
+                saleDetailId.ProductId = ProductId;
+                saleDetailId.Quantity = Quantity;
+                saleDetailId.Price = Price;
+                saleDetailId.Total = Price * Quantity;
 
 
-                    _Entity.SaveChanges();
+                _Entity.SaveChanges();
 
-                    return Json("true", JsonRequestBehavior.AllowGet);
-                }
-                else {
-                    return Json("ItemAlreadyExist", JsonRequestBehavior.AllowGet);
-                }
-
-                 
                 return Json("true", JsonRequestBehavior.AllowGet);
             }
 

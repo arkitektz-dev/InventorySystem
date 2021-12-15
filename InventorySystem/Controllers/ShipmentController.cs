@@ -26,7 +26,19 @@ namespace InventorySystem.Controllers
         {
             SelectListItem item = new SelectListItem();
 
-            var salesOrderList = _Entity.SOes.Where(x => x.SoStatus == "Completed").ToList();
+            var completeSalesOrder = _Entity.SOes.Where(x => x.SoStatus == "Completed").ToList();
+            var duplicateSalesOrder = _Entity.SOes.Where(x => x.SoStatus == "Completed").ToList(); 
+
+            foreach (var saleOrder in completeSalesOrder) {
+                var isUSed = _Entity.Shipments.Where(x => x.SalesOrderId == saleOrder.Id).FirstOrDefault();
+                if (isUSed != null) {
+                    duplicateSalesOrder.Remove(saleOrder);
+                }
+            }
+
+
+            var salesOrderList = duplicateSalesOrder.ToList();
+
             var Listcouriers = _Entity.Couriers.ToList();
 
             List<SelectListItem> salesList = new List<SelectListItem>();
@@ -82,9 +94,10 @@ namespace InventorySystem.Controllers
             return Json(lastShipmnetOrderCode, JsonRequestBehavior.AllowGet);
         }
 
-        public virtual JsonResult GetProductList(int SalesId) 
+        public virtual JsonResult GetProductList(int SalesId)
         {
-            if (SalesId != 0) {
+            if (SalesId != 0)
+            {
                 //var lst = _Entity.SODetails.Where(x => x.SOId == SalesId).ToList();
 
                 var lst = (from detail in _Entity.SODetails
@@ -115,14 +128,14 @@ namespace InventorySystem.Controllers
                        join saleOrder in _Entity.SOes on shipment.SalesOrderId equals saleOrder.Id
                        join customer in _Entity.Customers on saleOrder.CustomerCodeId equals customer.CustomerId
                        select new
-                       { 
+                       {
                            shipment.Id,
                            shipment.DONumber,
                            shipment.DODate,
                            shipment.Status,
                            saleOrder.SoNumber,
                            customer.Name
-                           
+
                        }).ToList();
 
             GridDataSource gobj = new GridDataSource
@@ -143,7 +156,8 @@ namespace InventorySystem.Controllers
             return Json("true", JsonRequestBehavior.AllowGet);
         }
 
-        public virtual JsonResult GetShipmnetById(int Shipment) {
+        public virtual JsonResult GetShipmnetById(int Shipment)
+        {
 
             var row = _Entity.Shipments.Where(x => x.Id == Shipment).FirstOrDefault();
 
@@ -163,7 +177,8 @@ namespace InventorySystem.Controllers
 
                 return Json("true", JsonRequestBehavior.AllowGet);
             }
-            else {
+            else
+            {
                 //Edit
 
                 var row = _Entity.Shipments.Where(x => x.Id == model.Id).FirstOrDefault();
@@ -179,9 +194,9 @@ namespace InventorySystem.Controllers
 
 
                 return Json("true", JsonRequestBehavior.AllowGet);
-            
+
             }
-             
+
         }
 
 

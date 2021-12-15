@@ -783,7 +783,9 @@ function SalesItemDetailView(Id) {
 }
 
 function BindGridSalesItemDetail() {
+  
     var SoNumber = $('#txtSoNumber').val();
+   // $('#GridSOItemList tbody').empty();
     $('#SOItemList').html("");
     $('#SOItemList').append('<table id="GridSOItemList" class="table table-striped dataTable no-footer" width="100%"></table>');
     $('#GridSOItemList').DataTable({
@@ -821,7 +823,7 @@ function BindGridSalesItemDetail() {
 
         }
     });
-
+   
 }
 
 
