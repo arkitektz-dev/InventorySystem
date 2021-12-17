@@ -1,0 +1,9 @@
+﻿
+@{
+    ViewBag.Title = "GetNewSalesOrderList";
+    Layout = null;
+}
+
+<label>SO Number</label>
+@Html.DropDownList("SONumber", (IEnumerable<SelectListItem>)ViewBag.SalesOrderList, new { @class = "form-control", @onchange= "ShowTableNumber()" })
+<span class="text-danger" id="Val_SONumber"></span>

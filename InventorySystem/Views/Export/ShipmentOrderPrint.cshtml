@@ -2,6 +2,8 @@
 @{
     ViewBag.Title = "ShipmentOrderPrint";
     Layout = null;
+    decimal? total = 0;
+    decimal? disountAmount = 0;
 }
 
 <!DOCTYPE html>
@@ -41,7 +43,7 @@
                         @Model.SalesOrder.Suburb<br>
                         @Model.SalesOrder.City @Model.SalesOrder.PostalCode<br>
                         @Model.SalesOrder.Country<br>
-                        <br/>
+                        <br />
                         Email: @Model.Customer.AccountEmail
                     </address>
                 </div>
@@ -58,10 +60,10 @@
                 </div>
                 <!-- /.col -->
             </div>
-             
+
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
-                    <strong>Customer </strong> 
+                    <strong>Customer </strong>
                     <address>
                         @Model.Customer.Address<br>
                         @Model.Customer.Street<br>
@@ -76,7 +78,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
-                    <b>Customer Reference:</b> @Model.SalesOrder.CustomerReference<br> 
+                    <b>Customer Reference:</b> @Model.SalesOrder.CustomerReference<br>
                 </div>
                 <!-- /.col -->
             </div>
@@ -89,16 +91,22 @@
                             <tr>
                                 <th>Product Code</th>
                                 <th>Prouduct Description</th>
-                                <th>Quantity</th> 
+                                <th>Quantity</th>
+                                <th>Price</th>
                             </tr>
                         </thead>
-                        <tbody> 
-                            @if(Model.SalesItemList != null){
-                                foreach (var item in Model.SalesItemList) { 
+                        <tbody>
+                            @if (Model.SalesItemList != null)
+                            {
+                                foreach (var item in Model.SalesItemList)
+                                {
+                                    total += item.Total;
+
                                     <tr>
                                         <td>@item.ProudctCode </td>
                                         <td>@item.ProuductDescription </td>
                                         <td>@item.Quantity </td>
+                                        <td>@item.UnitPrice </td>
                                     </tr>
                                 }
                             }
@@ -109,7 +117,73 @@
             </div>
             <!-- /.row -->
 
-           
+            <div class="row">
+                <!-- accepted payments column -->
+                <div class="col-6">
+                    <p class="lead">Description:</p>
+
+
+
+                    <p></p>
+                </div>
+                <!-- /.col -->
+                <div class="col-6">
+                    <p class="lead">Amount Details</p>
+
+                    @if (Model.SalesOrder != null)
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th style="width:50%">Subtotal:</th>
+                                    <td>$ @total.Value.ToString("N2")</td>
+                                </tr>
+
+                                @if (Model.SalesOrder.Discount != null)
+                                {
+                                    disountAmount = total * Model.SalesOrder.Discount / 100;
+                                }
+
+                                <tr>
+                                    <th style="width:50%">Discount:</th>
+                                    <td> <strong>@disountAmount.Value.ToString("N2") (@Model.SalesOrder.Discount %)</strong></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Total:</th>
+                                    <td>$ @((total - disountAmount).Value.ToString("N2"))</td>
+                                </tr>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th style="width:50%">Subtotal:</th>
+                                    <td>$ 0</td>
+                                </tr>
+
+                                <tr>
+                                    <th style="width:50%">Discount:</th>
+                                    <td>$ @Model.SalesOrder.Discount</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Total:</th>
+                                    <td>$ 0</td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                    }
+
+                </div>
+                <!-- /.col -->
+            </div>
+
             <!-- /.row -->
         </section>
         <!-- /.content -->

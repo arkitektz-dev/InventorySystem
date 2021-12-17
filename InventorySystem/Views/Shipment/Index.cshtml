@@ -36,7 +36,7 @@
 
 
 <div class="py-7" id="displayShipmentList">
-    <h4 class="text-left" style="margin-left: 20px;">Shipmnet List</h4>
+    <h4 class="text-left" style="margin-left: 20px;">Shipment List</h4>
     <div class="px-4 px-md-6">
         <div class="row">
             <div class="col-6">
@@ -84,7 +84,7 @@
             </div>
 
             <div class="col-md-6">
-                <div class="form-group">
+                <div class="form-group" id="ChangeForEdit">
                     <label>SO Number</label>
                     @Html.DropDownList("SONumber", (IEnumerable<SelectListItem>)ViewBag.SalesOrderList, new { @class = "form-control" })
                     <span class="text-danger" id="Val_SONumber"></span>

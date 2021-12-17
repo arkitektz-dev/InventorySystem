@@ -1,4 +1,9 @@
 ﻿
+function ShowTableNumber() {
+    var SaleOrder = $("#SONumber").val();
+
+    BindGridSalesOrderItemlist(SaleOrder);
+}
 
 $(document).ready(function () {
 
@@ -7,6 +12,9 @@ $(document).ready(function () {
 
         BindGridSalesOrderItemlist(SaleOrder);
     });
+
+
+
 
     $("#btnCreateShipping").on('click', function () {
 
@@ -30,6 +38,9 @@ $(document).ready(function () {
         isFormComplete = textFieldValidion(TrackingNumber, "TrackingNumber", "Val_TrackingNumber", "Please select Tracking Number");
         isFormComplete = textFieldValidion(Description, "Description", "Val_Description", "Please enter Description");
 
+        if ($("#SONumber").val() == '') {
+            isFormComplete = false;
+        }
 
         var row = {
             Id: ShipmentId,
@@ -71,6 +82,23 @@ $(document).ready(function () {
 
     $("#addShipment").on('click', function () {
         DefaultShipmentfunctions();
+        Clear();
+        $.ajax({
+            type: "GET",
+            url: "/Shipment/GetNewSalesOrderList",
+            success: function (dropdownResponse) {
+                 
+                $("#ChangeForEdit").html(dropdownResponse);  
+
+
+            },
+            failure: function (response) {
+                console.error(response.responseText);
+            },
+            error: function (response) {
+                console.error(response.responseText);
+            }
+        });
 
         $("#displayShipmentList").hide();
         $("#AddShipment").show();
@@ -78,7 +106,7 @@ $(document).ready(function () {
 
     $("#closeButton").on('click', function () {
        // DefaultShipmentfunctions();
-
+        Clear();
         $("#displayShipmentList").show();
         $("#AddShipment").hide();
     })
@@ -209,19 +237,45 @@ function EditShipment(ShipmentId) {
         data: { Shipment: ShipmentId },
         success: function (response) {
             console.log(response);
-            $("#ShipmentId").val(response.Id);
-            $("#DONumber").val(response.DONumber);
-            //$("#DODate").val(GetFormattedDate(response.DODate));
-            $("#SONumber").val(response.SalesOrderId);
-            $("#Courier").val(response.CourierId);
-            $("#Installer").val(response.Installer);
-            $("#Status").val(response.Status);
-            $("#TrackingNumber").val(response.TrackingNumber);
-            $("#Description").val(response.Description);
 
-            document.getElementById('DODate').value = CustomerFormatedDate(response.DODate)
+            $.ajax({
+                type: "GET",
+                url: "/Shipment/GetSalesOrderList", 
+                success: function (dropdownResponse) { 
 
-            $("#txtShipmnetHeading").text("Edit Shipment")
+                    $("#ShipmentId").val(response.Id);
+                    $("#DONumber").val(response.DONumber);
+                    //$("#DODate").val(GetFormattedDate(response.DODate));
+                    $("#ChangeForEdit").html(dropdownResponse);
+                    $("#SONumber").val(response.SalesOrderId);
+                    $("#Courier").val(response.CourierId);
+                    $("#Installer").val(response.Installer);
+                    $("#Status").val(response.Status);
+                    $("#TrackingNumber").val(response.TrackingNumber);
+                    $("#Description").val(response.Description);
+
+                    var SaleOrder = $("#SONumber").val();
+
+                    BindGridSalesOrderItemlist(SaleOrder);
+
+
+                    document.getElementById('DODate').value = CustomerFormatedDate(response.DODate)
+
+                    $("#txtShipmnetHeading").text("Edit Shipment")
+
+                   
+                },
+                failure: function (response) {
+                    console.error(response.responseText);
+                },
+                error: function (response) {
+                    console.error(response.responseText);
+                }
+            });
+
+
+
+           
         },
         failure: function (response) {
             console.error(response.responseText);

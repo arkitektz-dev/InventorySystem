@@ -199,6 +199,78 @@ namespace InventorySystem.Controllers
 
         }
 
+        public virtual ActionResult GetSalesOrderList()
+        {
+            SelectListItem item = new SelectListItem();
+
+            var salesOrderList = _Entity.SOes.Where(x => x.SoStatus == "Completed").ToList();
+
+            List<SelectListItem> salesList = new List<SelectListItem>();
+
+            foreach (var saleOrder in salesOrderList)
+            {
+                item = new SelectListItem();
+                item.Value = saleOrder.Id.ToString();
+                item.Text = saleOrder.SoNumber;
+                salesList.Add(item);
+            }
+            item = new SelectListItem()
+            {
+                Text = "-- Select SO Name --",
+                Value = ""
+            };
+            salesList.Insert(0, item);
+
+
+            ViewBag.SalesOrderList = salesList; 
+            return View();
+        }
+
+        public virtual ActionResult GetNewSalesOrderList()
+        {
+
+            SelectListItem item = new SelectListItem();
+
+            var completeSalesOrder = _Entity.SOes.Where(x => x.SoStatus == "Completed").ToList();
+            var duplicateSalesOrder = _Entity.SOes.Where(x => x.SoStatus == "Completed").ToList();
+
+            foreach (var saleOrder in completeSalesOrder)
+            {
+                var isUSed = _Entity.Shipments.Where(x => x.SalesOrderId == saleOrder.Id).FirstOrDefault();
+                if (isUSed != null)
+                {
+                    duplicateSalesOrder.Remove(saleOrder);
+                }
+            }
+
+
+            var salesOrderList = duplicateSalesOrder.ToList();
+
+            List<SelectListItem> salesList = new List<SelectListItem>();
+
+            foreach (var saleOrder in salesOrderList)
+            {
+                item = new SelectListItem();
+                item.Value = saleOrder.Id.ToString();
+                item.Text = saleOrder.SoNumber;
+                salesList.Add(item);
+            }
+            item = new SelectListItem()
+            {
+                Text = "-- Select SO Name --",
+                Value = ""
+            };
+            salesList.Insert(0, item);
+
+
+
+
+
+            ViewBag.SalesOrderList = salesList;
+
+            return View();
+        }
 
     }
+
 }

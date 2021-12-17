@@ -1330,6 +1330,8 @@
     <Content Include="Views\Shipment\Index.cshtml" />
     <Content Include="Views\Export\ShipmentOrderPrint.cshtml" />
     <Content Include="Views\Export\ShipmentList.cshtml" />
+    <Content Include="Views\Shipment\GetSalesOrderList.cshtml" />
+    <Content Include="Views\Shipment\GetNewSalesOrderList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
