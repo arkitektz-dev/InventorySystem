@@ -340,7 +340,7 @@ function DeleteShipment(ShipmnetId) {
 
 
                     } else {
-                        toastr.error('Product is associated with another record');
+                        toastr.error('Please check and try again');
                     }
                 },
                 failure: function (response) {

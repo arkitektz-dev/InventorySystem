@@ -155,7 +155,7 @@ function deleteReceivingRequest(receivingId) {
 
 
                     } else {
-                        toastr.error('Product is associated with another record');
+                        toastr.error('Please check and delete again');
                     }
                 },
                 failure: function (response) {

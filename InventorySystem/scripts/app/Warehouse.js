@@ -192,7 +192,7 @@ function DeleteWarehouse(warehouseId) {
 
 
 
-					if (response == "true") { 
+					if (response == "true") {
 						Swal.fire(
 							'Deleted!',
 							'Your record has been deleted.',
@@ -204,7 +204,11 @@ function DeleteWarehouse(warehouseId) {
 						}, 50)
 
 
+					} else {
+						showErrorToast("This warehouse exsits in product please check and delete again");
 					}
+
+					
 				},
 				failure: function (response) {
 					console.error(response.responseText);

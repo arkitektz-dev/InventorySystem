@@ -189,6 +189,8 @@ function DeleteSupplier(supplierId) {
 						}, 2000)
 
 
+					} else {
+						showErrorToast("please check and delete again");
 					}
 				},
 				failure: function (response) {

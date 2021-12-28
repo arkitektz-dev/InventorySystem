@@ -150,6 +150,8 @@ function DeleteProductType(typeId) {
 						}, 50)
 
 
+					} else {
+						showErrorToast("Please check and delete again");
 					}
 				},
 				failure: function (response) {

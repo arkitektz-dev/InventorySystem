@@ -43,7 +43,7 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
 
-   
+
 
 
 
@@ -60,7 +60,7 @@
     <link href="~/Content/jquery.toast.css" rel="stylesheet" />
     <script>
         function GetFormattedDate(unformattedDate) {
-            
+
             //let dDelivery = unformattedDate.replace(/\D/g, "");
             //let now = new Date(Number(dDelivery));
             //let day = ("0" + now.getDate()).slice(-2);
@@ -101,41 +101,41 @@
         }
     </script>
     @*<script>
-        (function () {
-            var proxied = window.XMLHttpRequest.prototype.send;
-            window.XMLHttpRequest.prototype.send = function () {
-                console.log("Start loader");
-                //Here is where you can add any code to process the request. 
-                //If you want to pass the Ajax request object, pass the 'pointer' below
-                var pointer = this
-                var intervalId = window.setInterval(function () {
-
-                   // console.log("from this pointer 0");
-                  //  document.querySelector('.preloaderWrapper').classList.remove('preloaderOut');
-                 //  $('#loading').show();
-                    if (pointer.readyState != 4) {
-                        console.log("from this pointer 1");
-                        return;
-                    }
-                    console.log(pointer.responseText);
-                    //Here is where you can add any code to process the response.
+            (function () {
+                var proxied = window.XMLHttpRequest.prototype.send;
+                window.XMLHttpRequest.prototype.send = function () {
+                    console.log("Start loader");
+                    //Here is where you can add any code to process the request.
                     //If you want to pass the Ajax request object, pass the 'pointer' below
-                    clearInterval(intervalId);
+                    var pointer = this
+                    var intervalId = window.setInterval(function () {
 
-                  //  console.log("from this pointer 2");
-                   // document.querySelector('.preloaderWrapper').classList.add('preloaderOut');
-                  // $('#loading').hide();
+                       // console.log("from this pointer 0");
+                      //  document.querySelector('.preloaderWrapper').classList.remove('preloaderOut');
+                     //  $('#loading').show();
+                        if (pointer.readyState != 4) {
+                            console.log("from this pointer 1");
+                            return;
+                        }
+                        console.log(pointer.responseText);
+                        //Here is where you can add any code to process the response.
+                        //If you want to pass the Ajax request object, pass the 'pointer' below
+                        clearInterval(intervalId);
 
-                }, 1);//I found a delay of 1 to be sufficient, modify it as you need.
-              //  console.log("from this pointer 3");
-                return proxied.apply(this, [].slice.call(arguments));
-            };
+                      //  console.log("from this pointer 2");
+                       // document.querySelector('.preloaderWrapper').classList.add('preloaderOut');
+                      // $('#loading').hide();
+
+                    }, 1);//I found a delay of 1 to be sufficient, modify it as you need.
+                  //  console.log("from this pointer 3");
+                    return proxied.apply(this, [].slice.call(arguments));
+                };
 
 
-        })();
-    </script>*@
+            })();
+        </script>*@
     <link href="~/Scripts/sweetalert/sweetalert.css" rel="stylesheet" />
-
+    <script src="~/scripts/jquery.toast.js"></script>
     <style>
 
         ::-webkit-scrollbar-thumb {
@@ -255,6 +255,7 @@
         .dt-buttons {
             text-align: center !important;
         }
+
         .loader-warper {
             position: absolute; /* Sit on top of the page content */
             width: 100%; /* Full width (cover the whole page) */
@@ -270,6 +271,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .loader {
             width: 50px;
             height: 50px;

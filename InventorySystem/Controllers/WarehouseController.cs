@@ -57,7 +57,7 @@ namespace InventorySystem.Controllers
                 return Json("false", JsonRequestBehavior.AllowGet);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return Json("false", JsonRequestBehavior.AllowGet);
             }

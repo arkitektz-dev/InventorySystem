@@ -289,7 +289,7 @@ function DeletePurchaseOrder(PurchaseOrderId) {
 
 
                     } else {
-                        toastr.error('Product is associated with another record');
+                        toastr.error('This purchase order exsits in purchase detail or receiving please check and delete again');
                     }
                 },
                 failure: function (response) {

@@ -47,8 +47,8 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                     <b>Quotation Number:</b> @Model.saleOrder.SoNumber<br>
-                    <b>Quotation Date:</b> @Model.saleOrder.SoDate<br>
-                    <b>Delivery Date:</b> @Model.saleOrder.DeliveryDate
+                    <b>Quotation Date:</b> @Model.saleOrder.SoDate.Value.ToString("dd/MM/yyyy")<br>
+                    <b>Delivery Date:</b> @Model.saleOrder.DeliveryDate.Value.ToString("dd/MM/yyyy")
                 </div>
                 <!-- /.col -->
             </div>
@@ -127,17 +127,19 @@
                 <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
 
-                    @{
-                        gstTotal = (Model.saleOrder.Total * 17) / 100;
-                        subTotal = subTotal - gstTotal;
-                    }
+                    
 
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
                                 <th style="width:50%">Subtotal:</th>
-                                <td>$ @gstTotal</td>
+                                <td>$ @subTotal</td>
                             </tr>
+
+                            @{
+                                gstTotal = (subTotal * 17) / 100;
+                                subTotal = subTotal - gstTotal;
+                            }
 
                             <tr>
                                 <th style="width:50%">GST:</th>

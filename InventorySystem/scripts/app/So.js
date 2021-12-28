@@ -409,12 +409,18 @@ function DeleteSoDetail(DeleteId) {
                 url: "/SalesOrder/DeleteSalesDetail",
                 data: { DetailId: DeleteId },
                 success: function (response) {
+                    if (response == "true") {
 
-                    $("#SOItemList").html("");
-                    setTimeout(() => {
-                        BindGridSalesItemDetail();
-                    }, 50)
+                        $("#SOItemList").html("");
+                        setTimeout(() => {
+                            BindGridSalesItemDetail();
+                        }, 50)
 
+
+                    } else {
+                        toastr.error('please check and delete again ');
+                    }
+                 
 
 
                 },
@@ -707,7 +713,7 @@ function DeleteSalesOrder(SalesOrderId) {
 
 
                     } else {
-                        toastr.error('Product is associated with another record');
+                        showErrorToast("The sales order exsits in either shipment, sales detail please check and delete again");
                     }
                 },
                 failure: function (response) {

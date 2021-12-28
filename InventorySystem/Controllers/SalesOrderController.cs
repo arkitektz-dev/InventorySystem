@@ -419,17 +419,27 @@ namespace InventorySystem.Controllers
 
         public virtual JsonResult DeleteSalesDetail(int DetailId)
         {
-
-            var salesDetailId = _Entity.SODetails.Where(x => x.SODetailId == DetailId).FirstOrDefault();
-            if (salesDetailId != null)
+            try
             {
-                _Entity.SODetails.Remove(salesDetailId);
-                _Entity.SaveChanges();
 
-                return Json("true", JsonRequestBehavior.AllowGet);
+                var salesDetailId = _Entity.SODetails.Where(x => x.SODetailId == DetailId).FirstOrDefault();
+                if (salesDetailId != null)
+                {
+                    _Entity.SODetails.Remove(salesDetailId);
+                    _Entity.SaveChanges();
+
+                    return Json("true", JsonRequestBehavior.AllowGet);
+                }
+
+                return Json("false", JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex) {
+
+                return Json("false", JsonRequestBehavior.AllowGet);
             }
 
-            return Json("[]", JsonRequestBehavior.AllowGet);
+
         }
 
 

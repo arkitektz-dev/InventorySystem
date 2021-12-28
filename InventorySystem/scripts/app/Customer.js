@@ -396,6 +396,8 @@ function DeleteCustomer(CustomerId) {
 						}, 2000)
 
 
+					} else {
+						showErrorToast("This customer exsits in contact please check and delete again ");
 					}
 				},
 				failure: function (response) {
@@ -546,6 +548,8 @@ function DeleteContact(contactId) {
 						}, 2000)
 
 
+					} else {
+						showErrorToast("This contact exsits in  SalesOrder please check and delete again");
 					}
 				},
 				failure: function (response) {
