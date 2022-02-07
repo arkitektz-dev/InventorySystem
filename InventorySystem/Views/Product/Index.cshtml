@@ -264,7 +264,8 @@
 
             <div class="tab-pane fade" id="nav-image" role="tabpanel" aria-labelledby="nav-image-tab">
                 <div class="row">
-                    <img src="https://sc04.alicdn.com/kf/Hba8e544f89d44d5ea46475cdb48ccbacu.jpg" style="width:36%;" class="img-fluid" alt="Responsive image">
+                    <img id="blah" onclick="document.getElementById('imgInp').click()" src="https://blogmedia.evbstatic.com/wp-content/uploads/engineering/2018/08/09141147/Flexible-Reusable-React-File-Uploader.png" style="width:50%;" class="img-fluid" alt="Responsive image">
+                    <input accept="image/*" type='file' style="display:none;" id="imgInp" />
                 </div>
             </div>
 
@@ -395,4 +396,14 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="~/scripts/app/Product.js"></script>
- 
+ <script>
+
+     var imgInp = document.getElementById("imgInp");
+
+     imgInp.onchange = evt => {
+         const [file] = imgInp.files
+         if (file) {
+             blah.src = URL.createObjectURL(file)
+         }
+     }
+ </script>
